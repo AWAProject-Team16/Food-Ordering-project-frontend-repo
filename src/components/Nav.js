@@ -5,8 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 export default class Nav extends Component {
   render() {
     return (
-      <div>
-        Nav
+      <div className={ styles.nav }>
         <ul>
           <li>
             <NavLink to="/" activeClassName="selected">Home</NavLink>
