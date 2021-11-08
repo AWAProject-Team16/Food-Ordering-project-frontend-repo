@@ -1,0 +1,15 @@
+.ShoppingCart {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    background-color: lightgray;
+    padding-bottom: 40px;
+    padding-top: 20px;
+  }
+
+  .ShoppingCartTitle {
+    align-self: center;
+    font-size: 20px;
+    padding-bottom: 25px;
+  }
+  
