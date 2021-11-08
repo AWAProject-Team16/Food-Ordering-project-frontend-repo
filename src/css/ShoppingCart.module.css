@@ -14,3 +14,23 @@
     padding-bottom: 25px;
   }
   
+  .CheckoutArea {
+    min-width: 1024px;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .CheckoutContent {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .CheckoutInfo {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
