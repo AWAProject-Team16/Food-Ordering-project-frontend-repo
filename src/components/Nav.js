@@ -8,10 +8,14 @@ export default class Nav extends Component {
       <div className={ styles.nav }>
         <ul>
           <li>
-            <NavLink to="/" activeClassName="selected">Home</NavLink>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <NavLink to="/restaurant" activeClassName="selected">Restaurant</NavLink>
+            <Link to="/restaurant">Restaurant</Link>
+          </li>
+          <li>
+            <Link to="/shoppingcart">ShoppingCart</Link>
+            {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
           </li>
         </ul>
       </div>
