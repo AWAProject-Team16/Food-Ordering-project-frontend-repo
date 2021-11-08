@@ -1,0 +1,25 @@
+:root {
+  --white-color: #fff;
+  --back-color: #000;
+  --text-color: #333;
+  /* --main-color: #CD1718; */
+  /* --ground-color: #F4F5F7; */
+
+}
+
+* {
+  /* box-sizing: inherit; */
+  font-size: 16px;
+  line-height: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);
+}
+
+.App {
+  width: 100%;
+  max-width: 1024px;
+  min-height: 600px;
+  background-color: ghostwhite;
+  margin: auto;
+  /* position: relative; */
+}
