@@ -8,7 +8,12 @@ const ShoppingCart = props => {
             All products
         </div>
         {
-            props.items.map(i => <ShoppingCartProduct {...i} key={ i.id }/>)
+            props.contents.map(i => <ShoppingCartProduct {...i} 
+                                    IncreaseAmount={props.IncreaseAmount} 
+                                    DecreaseAmount={props.DecreaseAmount}
+                                    DeleteProduct={props.DeleteProduct}
+                                    key={ i.id }
+                                    />)
         }
     </div>
 }

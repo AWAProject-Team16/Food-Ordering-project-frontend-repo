@@ -6,7 +6,7 @@
 
   .Productqty {
     font-weight: bold;
-    margin-left: 40px;
+    margin-left: 10px;
   }
 
   .ProductName {
@@ -16,5 +16,14 @@
   .ProductCost {
     margin-left: auto;
     padding-left: 40px;
-    margin-right: 60px;
+    margin-right: 40px;
+  }
+
+  .Qtybutton {
+      margin-left: 10px;
+      margin-right: 10px;
+  }
+
+  .Removebutton {
+      margin-right: 20px;
   }

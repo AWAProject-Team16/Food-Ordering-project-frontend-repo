@@ -1,6 +1,7 @@
 .TotalCostBox {
     background-color: lightgray;
     padding: 50px 50px 50px 50px;
+    min-width: 350px;
 }
 
 .CostTitle {
