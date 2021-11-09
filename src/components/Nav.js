@@ -7,9 +7,14 @@ export default class Nav extends Component {
     return (
       <div className={ styles.nav }>
         <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
+        <li>
+            <Link to="/" className={styles.logo}>Slurps</Link>
+       </li>
+       </ul>
+        <input className={styles.searchbar}type="text" placeholder="Search.."></input>
+        <button className={styles.button}>Log in</button>
+        <button className={styles.button2}>Register</button>
+        <ul>
           <li>
             <Link to="/restaurant">Restaurant</Link>
           </li>
