@@ -1,7 +1,7 @@
 .footer {
   clear: both;
-  width: 100%;
-  max-width: 990px;
+  width: 95%;
+  /* max-width: 990px; */
   margin: 0 auto;
   position: relative;
 }
@@ -11,8 +11,8 @@ p {
 
 /* ---- footer-collumn ---- */
 .footerCollumn {
-  width: 100%;
-  max-width: 990px;
+  width: 95%;
+  /* max-width: 990px; */
   min-height: 200px;
   margin: 0 auto;
   display: flex;
