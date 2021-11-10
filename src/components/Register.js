@@ -13,6 +13,17 @@ function isPasswordStrong(password) {
   return regex.test(password);
 }
 
+function validateUsername() {
+  const username = document.querySelector('input[name="username"]');
+  const usernameErrorMessage = document.querySelector(`.${styles.errormessage}.username`);
+
+  if (!username.value.trim()) {
+    usernameErrorMessage.style.display = "inline";
+  } else {
+    usernameErrorMessage.style.display = "none";
+  }
+}
+
 function validateEmail() {
   const email = document.querySelector('input[name="email"]');
   const emailErrorMessage = document.querySelector(`.${styles.errormessage}.email`);
@@ -26,7 +37,7 @@ function validateEmail() {
 
 function validatePassword() {
   const password = document.querySelector('input[name="password"]');
-  const passwordErrorMessage = document.getElementsByClassName(`${styles.errormessage} password`)[0];
+  const passwordErrorMessage = document.querySelector(`.${styles.errormessage}.password`);
 
   if (!isPasswordStrong(password.value)) {
     passwordErrorMessage.style.display = "inline";
@@ -38,7 +49,7 @@ function validatePassword() {
 function validateConfirmPassword() {
   const password = document.querySelector('input[name="password"]');
   const confirmPassword = document.querySelector('input[name="confirm_password"]');
-  const confirmPasswordErrorMessage = document.getElementsByClassName(`${styles.errormessage} confirm_password`)[0];
+  const confirmPasswordErrorMessage = document.querySelector(`.${styles.errormessage}.confirm_password`);
 
   if (password.value !== confirmPassword.value) {
     confirmPasswordErrorMessage.style.display = "inline";
@@ -60,7 +71,7 @@ function validateAcceptTerms() {
 
 function hideErrorMessage(event) {
   const errorMessage = event.target?.parentNode?.getElementsByClassName(styles.errormessage)[0];
-  errorMessage.style.display = "none";
+  if (errorMessage) errorMessage.style.display = "none";
 }
 
 function hideCheckboxErrorMessage(event) {
@@ -72,13 +83,14 @@ function getFormDataAndCallAPI() {
   const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
   let userObj = {}
   formData.forEach((value, key) => userObj[key] = value);
+
   axios.post('/users/register', userObj)
-    .then((response) =>{
+    .then((response) => {
       console.log(response);
       alert("Register successfully. You can log in now.")
     })
-    .catch((err) =>console.error(err))
-  
+    .catch((err) => console.error(err))
+
 }
 
 function registerNow() {
@@ -88,6 +100,7 @@ function registerNow() {
     event.preventDefault();
   };
 
+  validateUsername();
   validateEmail();
   validatePassword();
   validateConfirmPassword();
@@ -106,8 +119,13 @@ function renderRegistrationForm() {
             <div className={styles.formgroup}>
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">Username</label>
-              <input type="text" className={styles.formcontrol} name="username" />
+              <label htmlFor="">
+                Username
+                <span htmlFor="" className={`${styles.errormessage} username`}>
+                  Username cannot be empty!
+                </span>
+              </label>
+              <input type="text" className={styles.formcontrol} name="username" onFocus={(event) => hideErrorMessage(event)} />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
@@ -116,14 +134,14 @@ function renderRegistrationForm() {
                   Password must have lowercase letters, uppercase letters, numbers, special characters, and at least 12 characters!
                 </span>
               </label>
-              <input type="password" className={styles.formcontrol} name="password" onFocus={() => hideErrorMessage(event)} />
+              <input type="password" className={styles.formcontrol} name="password" onFocus={(event) => hideErrorMessage(event)} />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Confirm Password
                 <span htmlFor="" className={`${styles.errormessage} confirm_password`}>Password does not match!</span>
               </label>
-              <input type="password" className={styles.formcontrol} name="confirm_password" onFocus={() => hideErrorMessage(event)} />
+              <input type="password" className={styles.formcontrol} name="confirm_password" onFocus={(event) => hideErrorMessage(event)} />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Fullname</label>
@@ -134,7 +152,7 @@ function renderRegistrationForm() {
                 Email
                 <span htmlFor="" className={`${styles.errormessage} email`}>Please enter a valid email!</span>
               </label>
-              <input type="email" className={styles.formcontrol} name="email" onFocus={() => hideErrorMessage(event)} />
+              <input type="email" className={styles.formcontrol} name="email" onFocus={(event) => hideErrorMessage(event)} />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Home Address</label>
@@ -149,7 +167,7 @@ function renderRegistrationForm() {
             </div>
             <div className={styles.checkbox}>
               <label>
-                <input type="checkbox" onFocus={() => hideCheckboxErrorMessage(event)} />
+                <input type="checkbox" onFocus={(event) => hideCheckboxErrorMessage(event)} />
                 I accept the Terms of Use & Privacy Policy.
                 <div htmlFor="" className={styles.checkboxerrormessage} >
                   You must agree with our terms and policy!
