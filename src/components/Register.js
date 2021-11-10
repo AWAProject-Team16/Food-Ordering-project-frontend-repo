@@ -116,14 +116,14 @@ function renderRegistrationForm() {
                   Password must have lowercase letters, uppercase letters, numbers, special characters, and at least 12 characters!
                 </span>
               </label>
-              <input type="password" className={styles.formcontrol} name="password" onFocus={() => hideErrorMessage(event)} />
+              <input type="password" className={styles.formcontrol} name="password"  />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Confirm Password
                 <span htmlFor="" className={`${styles.errormessage} confirm_password`}>Password does not match!</span>
               </label>
-              <input type="password" className={styles.formcontrol} name="confirm_password" onFocus={() => hideErrorMessage(event)} />
+              <input type="password" className={styles.formcontrol} name="confirm_password" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Fullname</label>
@@ -134,7 +134,7 @@ function renderRegistrationForm() {
                 Email
                 <span htmlFor="" className={`${styles.errormessage} email`}>Please enter a valid email!</span>
               </label>
-              <input type="email" className={styles.formcontrol} name="email" onFocus={() => hideErrorMessage(event)} />
+              <input type="email" className={styles.formcontrol} name="email"  />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Home Address</label>
@@ -149,7 +149,7 @@ function renderRegistrationForm() {
             </div>
             <div className={styles.checkbox}>
               <label>
-                <input type="checkbox" onFocus={() => hideCheckboxErrorMessage(event)} />
+                <input type="checkbox" />
                 I accept the Terms of Use & Privacy Policy.
                 <div htmlFor="" className={styles.checkboxerrormessage} >
                   You must agree with our terms and policy!
