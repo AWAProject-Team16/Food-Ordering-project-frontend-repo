@@ -39,36 +39,56 @@ class ShoppingCart extends React.Component {
   
     IncreaseAmount = (id, cost) => {
       let NewShoppingCart = [...this.state.ShoppingCart];
-      NewShoppingCart[id-1].qty += 1;
+      let indexnumber = this.Indexfinder(NewShoppingCart, id)
+      NewShoppingCart[indexnumber].qty += 1;
       let NewCost = this.state.TotalCost;
       NewCost = NewCost + cost;
+      NewCost = parseFloat(NewCost.toFixed(2));
       this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
       // console.log(NewShoppingCart);
     }
   
     DecreaseAmount = (id, cost) => {
       let NewShoppingCart = [...this.state.ShoppingCart];
-      NewShoppingCart[id-1].qty -= 1;
-      let NewCost = this.state.TotalCost;
-      NewCost = NewCost - cost;
-      this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
+      let indexnumber = this.Indexfinder(NewShoppingCart, id)
+      if (NewShoppingCart[indexnumber].qty > 1) {
+        NewShoppingCart[indexnumber].qty -= 1;
+        let NewCost = this.state.TotalCost;
+        NewCost = NewCost - cost;
+        NewCost = parseFloat(NewCost.toFixed(2));
+        this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
+        // console.log(NewCost);
+      } else {
       // console.log(NewCost);
+        // console.log("ei näin")
+        // this.DeleteProduct(id, 1, cost)
+      }
     }
   
     DeleteProduct = (id, qty, cost) => {
       let NewShoppingCart = [...this.state.ShoppingCart];
-      NewShoppingCart.splice(id-1, 1);
+      let indexnumber = this.Indexfinder(NewShoppingCart, id)
+      NewShoppingCart.splice(indexnumber, 1);
       let NewCost = this.state.TotalCost;
       let LostCost = qty * cost;
       NewCost = NewCost - LostCost
+      NewCost = parseFloat(NewCost.toFixed(2));
       this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
+    }
+
+    Indexfinder (ArraytoSearch, id) {
+      return (
+        ArraytoSearch.findIndex(Item => Item.id === id)
+      )
     }
   
     
     render()
     {
       return <div className={styles.CheckoutArea}>
-        <CheckoutTitle />
+        <h1 className={styles.CheckoutTitle}>
+            Checkout
+        </h1>
         <div className={styles.CheckoutContent}>
           <ProductArea 
             contents={ this.state.ShoppingCart } 
