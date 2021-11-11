@@ -14,3 +14,35 @@ P {
   display: block;
   padding-bottom: 36px;
 }
+
+.search {
+  height: 38px;
+  border-radius: 10px;
+  border: solid;
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  outline: none;
+  width: 220px;
+}
+
+.searchInput {
+  border: none;
+  font-size: 15px;
+  margin-left: 10px;
+  width: 190px;
+}
+.icon {
+  font-size: 25px;
+  color: #797979;
+  margin-right: 6px;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+}
+
+.name {
+  padding-top: 12px;
+}

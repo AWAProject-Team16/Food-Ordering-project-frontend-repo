@@ -12,7 +12,7 @@ export default class RouterURL extends Component {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/restaurants" element={<Restaurant restaurants={ Data.restaurants } />}>
-          <Route path=":restaurants.restaurantId" element={ <RestaurantDetailView restaurants={ Data.restaurants } /> } />
+          <Route path=":restaurantId" element={ <RestaurantDetailView restaurants={ Data.restaurants } /> } />
         </Route>
         <Route path="/shoppingcart" element={<ShoppingCart />} />
       </Routes>

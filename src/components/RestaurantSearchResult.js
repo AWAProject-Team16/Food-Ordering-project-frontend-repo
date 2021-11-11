@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from '../css/RestaurantDetail.module.css';
+import styles from '../css/RestaurantSearchResult.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
-export default function RestaurantDetail(props) {
+export default function RestaurantSearchResult(props) {
   return (
     <Col lg={4}>
       <Link to={ props.idRestaurant }>
