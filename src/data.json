@@ -1,0 +1,202 @@
+{
+  "restaurants": [
+    {
+      "idRestaurant": "1",
+      "idUser": "1",
+      "name": "ASUS Strix G531GT HN553T",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp01.png",
+      "menu": "ASUS",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "2",
+      "idUser": "1",
+      "name": "Acer Swift 5 SF514 53T",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp02.png",
+      "menu": "ACER",
+      "category": "laptop",
+      "type": "type type type type",
+      "description":"Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "3",
+      "idUser": "1",
+      "name": "MSI GF63 9SCSRi5 512GB SSD/NvidRestaurantia GTX1650Ti",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp03.png",
+      "menu": "MSI",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "4",
+      "idUser": "1",
+      "name": "MacBook Pro 16 2019 Touch Bar 2.3GHz Core i9 1TB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp04.png",
+      "menu": "MACBOOK",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "5",
+      "idUser": "1",
+      "name": "MacBook Pro 13 2020 Touch Bar 2.0GHz Core i5 512GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp12.png",
+      "menu": "MACBOOK",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "6",
+      "idUser": "1",
+      "name": "ASUS Expertbook B9450FA BM0616R i7 1TB SSD",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp06.png",
+      "menu": "ASUS",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "7",
+      "idUser": "1",
+      "name": "Dell XPS 15 9500 i7 10750H/16GB/512GB/GTX 1650 Ti 4GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp07.png",
+      "menu": "DELL",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "8",
+      "idUser": "1",
+      "name": "Acer Nitro 5 AN515 54 779S i7 9750H/8GB/512GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp10.png",
+      "menu": "ACER",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "9",
+      "idUser": "1",
+      "name": "Dell Vostro 5481/Core i5-8265U/V4I5227W",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp09.png",
+      "menu": "DELL",
+      "category": "laptop",
+      "type": "type type type type",
+      "description":"Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "10",
+      "idUser": "1",
+      "name": "Dell Inspiron N7490 i5 512GB/NVidRestaurantIA MX250",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp08.png",
+      "menu": "DELL",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "11",
+      "idUser": "1",
+      "name": "MacBook Air 13 2020 1.1GHz Core i5 512GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp11.png",
+      "menu": "MACBOOK",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "12",
+      "idUser": "1",
+      "name": "MacBook Pro 13 2019 Touch Bar 2.4GHz Core i5",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "operating_hour": "8AM - 20PM",
+      "image": "sp05.png",
+      "menu": "MACBOOK",
+      "category": "laptop",
+      "type": "type type type type",
+      "description": "Bugger and pizzza"
+    }
+  ],
+
+  "users": [
+    {
+      "idUser": 1,
+      "username": "hieu",
+      "mail": "h@h"
+    },
+    {
+      "idUser": 2,
+      "username": "thao",
+      "mail": "t@t"
+    },
+    {
+      "idUser": 3,
+      "username": "linh",
+      "mail": "l@l"
+    }
+  ],
+  
+  "purchases": [
+    {
+      "idPurchase": 1,
+      "idUser": 1,
+      "productsPurchase": [
+        {
+          "idRestaurant": "1",
+          "qty": 1
+        }
+      ],
+      "total": 5000
+    },
+    {
+      "idPurchase": 2,
+      "idUser": 2,
+      "productsPurchase": [
+        {
+          "idRestaurant": "2",
+          "qty": 2
+        }
+      ],
+      "total": 5000
+    },
+    {
+      "idPurchase": 3,
+      "idUser": 2,
+      "productsPurchase": [
+        {
+          "idRestaurant": "2",
+          "qty": 5
+        }
+      ],
+      "total": 5000
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+.presentationModeGrid {
+  clear: both;
+  width: 100%;
+  min-height: 600px;
+  padding-top: 15px;
+  position: relative;
+  background-color: ghostwhite;
+}
+
+P {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  padding-bottom: 36px;
+}
