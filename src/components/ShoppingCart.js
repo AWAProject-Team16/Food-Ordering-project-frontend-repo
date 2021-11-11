@@ -1,5 +1,4 @@
 import React from 'react'
-import CheckoutTitle from './CheckoutTitle';
 import TotalCostBox from "./Totalcost";
 import ProductArea from "./ProductArea"
 import styles from './../css/ShoppingCart.module.css'
