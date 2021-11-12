@@ -198,5 +198,48 @@
       ],
       "total": 5000
     }
+  ],
+  "menus": [
+    {
+      "idMenu": "1",
+      "idRestaurant": "1",
+      "name": "breakfast"
+    },
+    {
+      "idMenu": "2",
+      "idRestaurant": "1",
+      "name": "lunch"
+    },
+    {
+      "idMenu": "3",
+      "idRestaurant": "1",
+      "name": "dinner"
+    }
+  ],
+  "products": [
+    {
+      "idProduct": "1",
+      "idRestaurant": "1",
+      "idMenu": "1",
+      "name": "bread",
+      "cost": 15,
+      "image": "sp01.png" 
+      },
+    {
+      "idProduct": "2",
+      "idRestaurant": "1",
+      "idMenu": "2",
+      "name": "mini buffet",
+      "cost": 15,
+      "image": "sp02.png" 
+      },
+    {
+      "idProduct": "3",
+      "idRestaurant": "1",
+      "idMenu": "3",
+      "name": "suop, salat",
+      "cost": 15,
+      "image": "sp03.png" 
+    }
   ]
 }

@@ -12,8 +12,9 @@ export default class RouterURL extends Component {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/restaurants" element={<Restaurant restaurants={ Data.restaurants } />}>
-          <Route path=":restaurantId" element={ <RestaurantDetailView restaurants={ Data.restaurants } /> } />
+          {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
         </Route>
+        <Route path="/restaurants/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
       </Routes>
     )

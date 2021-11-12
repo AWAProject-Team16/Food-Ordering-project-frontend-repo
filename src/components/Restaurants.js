@@ -1,6 +1,6 @@
-import RestaurantSearchResult from './RestaurantSearchResult';
+import RestaurantSearchView from './RestaurantSearchView';
 import styles from '../css/Restaurants.module.css';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaSearch } from 'react-icons/fa'
 
@@ -35,19 +35,15 @@ export default class Restaurants extends Component {
           </div>
         </div>
         <Container>
-          <Row>
-            {
-              // this.state.items.map(item => <RestaurantSearchResult key={item.idRestaurant} {...item} />)
-
-              // <RestaurantSearchView
-              //   items={ this.state.items.filter(item => item.name.includes(this.state.searchString)) }
-              // />
-              
-              this.state.items.filter(item => 
-                item.name.toLowerCase().includes(this.state.searchString.toLowerCase())).map((item => 
-                  <RestaurantSearchResult key={item.idRestaurant} {...item} />))          
-            }
-          </Row>
+          {
+            // this.state.items.map(item => <RestaurantSearchResult key={item.idRestaurant} {...item} />)
+            <RestaurantSearchView
+              items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
+            />
+            // this.state.items.filter(item => 
+            //   item.name.toLowerCase().includes(this.state.searchString.toLowerCase())).map((item => 
+            //     <RestaurantSearchResult key={item.idRestaurant} {...item} />))          
+          }
         </Container>
       </div>
     )
