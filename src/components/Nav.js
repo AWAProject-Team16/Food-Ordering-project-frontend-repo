@@ -16,7 +16,7 @@ export default class Nav extends Component {
         <button className={styles.button2}>Register</button>
         <ul>
           <li>
-            <Link to="/restaurant">Restaurant</Link>
+            <Link to="/restaurants">Restaurants</Link>
           </li>
           <li>
             <Link to="/shoppingcart">ShoppingCart</Link>
