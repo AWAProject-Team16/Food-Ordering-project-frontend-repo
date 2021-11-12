@@ -18,7 +18,6 @@ export default function RestaurantSearchResult(props) {
             { props.name }
           </div>
 
-          {/* !!! description */}
           <div className={ styles.description}>
             { props.description }
           </div>
