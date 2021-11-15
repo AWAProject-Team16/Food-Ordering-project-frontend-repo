@@ -50,7 +50,7 @@
   }
 }
   .image {
-    width: fit-content;
+    /* width: fit-content; */
     height: auto;
   }
 /* --------- detail --------- */
