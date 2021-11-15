@@ -2,22 +2,9 @@ import React from 'react'
 import TotalCostBox from "./Totalcost";
 import ProductArea from "./ProductArea"
 import styles from './../css/ShoppingCart.module.css'
+import DeliveryLocation from './DeliveryLocation';
+import { Link } from "react-router-dom";
 
-// const ShoppingCart = props => {
-//     return <div className={styles.ShoppingCart}>
-//         <div className={styles.ShoppingCartTitle}>
-//             All products
-//         </div>
-//         {
-//             props.contents.map(i => <ShoppingCartProduct {...i} 
-//                                     IncreaseAmount={props.IncreaseAmount} 
-//                                     DecreaseAmount={props.DecreaseAmount}
-//                                     DeleteProduct={props.DeleteProduct}
-//                                     key={ i.id }
-//                                     />)
-//         }
-//     </div>
-// }
 
 class ShoppingCart extends React.Component {
     constructor(props)
@@ -31,7 +18,11 @@ class ShoppingCart extends React.Component {
           { id: 3, value: '0.5L Coca Cola', qty: 1, cost: 2.3},
           { id: 4, value: 'Cheese dip', qty: 3, cost: 0.5 }
         ],
-        TotalCost: 12.8
+        ProductCosts: 12.8,
+        TotalCost: 12.8,
+        DeliveryLocation: '',
+        DeliveryCost: 0,
+        isLocationSubmitted: false
       };
   
     }
@@ -40,10 +31,11 @@ class ShoppingCart extends React.Component {
       let NewShoppingCart = [...this.state.ShoppingCart];
       let indexnumber = this.Indexfinder(NewShoppingCart, id)
       NewShoppingCart[indexnumber].qty += 1;
-      let NewCost = this.state.TotalCost;
+      let NewCost = this.state.ProductCosts;
       NewCost = NewCost + cost;
       NewCost = parseFloat(NewCost.toFixed(2));
-      this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
+      let NewTotalCost = NewCost + this.state.DeliveryCost
+      this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost});
       // console.log(NewShoppingCart);
     }
   
@@ -52,10 +44,11 @@ class ShoppingCart extends React.Component {
       let indexnumber = this.Indexfinder(NewShoppingCart, id)
       if (NewShoppingCart[indexnumber].qty > 1) {
         NewShoppingCart[indexnumber].qty -= 1;
-        let NewCost = this.state.TotalCost;
+        let NewCost = this.state.ProductCosts;
         NewCost = NewCost - cost;
         NewCost = parseFloat(NewCost.toFixed(2));
-        this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
+        let NewTotalCost = NewCost + this.state.DeliveryCost
+        this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost});
         // console.log(NewCost);
       } else {
       // console.log(NewCost);
@@ -68,17 +61,31 @@ class ShoppingCart extends React.Component {
       let NewShoppingCart = [...this.state.ShoppingCart];
       let indexnumber = this.Indexfinder(NewShoppingCart, id)
       NewShoppingCart.splice(indexnumber, 1);
-      let NewCost = this.state.TotalCost;
+      let NewCost = this.state.ProductCosts;
       let LostCost = qty * cost;
       NewCost = NewCost - LostCost
       NewCost = parseFloat(NewCost.toFixed(2));
-      this.setState({ ShoppingCart: NewShoppingCart, TotalCost: NewCost});
+      let NewTotalCost = NewCost + this.state.DeliveryCost
+      this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost});
     }
 
     Indexfinder (ArraytoSearch, id) {
       return (
         ArraytoSearch.findIndex(Item => Item.id === id)
       )
+    }
+
+    UpdateLocation = (event) => {
+      this.setState({ DeliveryLocation: event.target.value });
+    }
+
+    LocationSubmitted = (event) => {
+      event.preventDefault();
+      console.log(this.state.isLocationSubmitted)
+      const DeliveryCost = 5;
+      let NewCost = this.state.TotalCost
+      NewCost = NewCost + DeliveryCost
+      this.setState({ isLocationSubmitted: true, DeliveryCost: DeliveryCost, TotalCost: NewCost })
     }
   
     
@@ -90,13 +97,33 @@ class ShoppingCart extends React.Component {
         </h1>
         <div className={styles.CheckoutContent}>
           <ProductArea 
-            contents={ this.state.ShoppingCart } 
-            IncreaseAmount={this.IncreaseAmount}
-            DecreaseAmount={this.DecreaseAmount}
-            DeleteProduct={this.DeleteProduct}
+            contents={ this.state.ShoppingCart }
+            ProductCosts={ this.state.ProductCosts } 
+            IncreaseAmount={ this.IncreaseAmount }
+            DecreaseAmount={ this.DecreaseAmount }
+            DeleteProduct={ this.DeleteProduct }
           />
-          <div className="CheckoutInfo">
-            < TotalCostBox Totalcost={ this.state.TotalCost } />
+          <div className={styles.CheckoutInfo}>
+            < DeliveryLocation 
+            DeliveryLocation={ this.state.DeliveryLocation }
+            DeliveryCost={ this.state.DeliveryCost }
+            UpdateLocation = { this.UpdateLocation } 
+            LocationSubmitted = { this.LocationSubmitted }
+            isLocationSubmitted = { this.state.isLocationSubmitted }
+            />
+            < TotalCostBox 
+            ProductCosts={ this.state.ProductCosts }
+            DeliveryCost={ this.state.DeliveryCost }
+            TotalCost={ this.state.TotalCost }
+            />
+            <div>
+              <Link to="/paymentpage" >
+                <button className={styles.PaymentButton} >
+                  <span className={styles.PaymentLink}>Proceed to payment</span>
+                {/* <Link to="/paymentpage" className={styles.PaymentLink}>Proceed to payment</Link> */}
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

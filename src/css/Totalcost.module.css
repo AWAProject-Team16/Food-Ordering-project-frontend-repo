@@ -7,9 +7,10 @@
 .CostTitle {
     font-size: 20px;
     text-align: center;
+    margin-bottom: 15px;
 }
 
-.TotalCost {
+.Cost {
     text-align: center;
-    padding-top: 15px;
+    padding-top: 10px;
   }

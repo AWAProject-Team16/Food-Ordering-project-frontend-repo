@@ -1,6 +1,6 @@
 import React from 'react'
 import ShoppingCartProduct from './ShoppingCartProduct'
-import styles from './../css/ShoppingCart.module.css'
+import styles from './../css/ProductArea.module.css'
 
 const ProductArea = props => {
     return <div className={styles.ShoppingCart}>
@@ -15,6 +15,9 @@ const ProductArea = props => {
                                     key={ i.id }
                                     />)
         }
+        <div className={styles.ProductTotal}>
+            Total cost of all products: {props.ProductCosts} €
+        </div>
     </div>
 }
 
