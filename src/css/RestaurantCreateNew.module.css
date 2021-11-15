@@ -248,3 +248,17 @@ button:hover:before {
 .show {
   display: inline-block;
 }
+
+textarea {
+  height: 70px !important;
+  padding-top: 10px !important;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+label[for="file_picker"] {
+  padding-top: 10px;
+  text-align: center;
+}

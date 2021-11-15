@@ -16,19 +16,19 @@ export default class Footer extends Component {
               </div>
               <ul className={ styles.footerCollumnaBottom }>
                 <li>
-                  <a href className>
+                  <a href="true" className="true">
                   <FaPhoneVolume/>
                   <span className={ styles.phone }>&nbsp;0909 123 456 <sub>(Free)</sub></span>
                   </a>
                 </li>
                 <li>
-                  <a href className>
+                  <a href="true" className="true">
                   <FaEnvelope/>
                   <span>&nbsp;team16@students.oamk.fi</span>
                   </a>
                 </li>
                 <li>
-                  <a href className>
+                  <a href="true" className="true">
                   {/* <i className={ styles.fas fa-home } /> */}
                   {/* <FaHome className={ styles.faHome } /> */}
                   <span className={ styles.homeAddress }>Yliopistokatu 9, 90570 OULU 90570 Oulu, Finland</span>
@@ -41,11 +41,11 @@ export default class Footer extends Component {
                 <h3>CUSTOMER CARE</h3>
               </div>
               <ul className={ styles.footerCollumnbBottom }>
-              <li><a href className>Warranty Policy</a></li>
-              <li><a href className>Shopping Guide</a></li>
-              <li><a href className>Transportation</a></li>
-              <li><a href className>Return &amp; Refund</a></li>
-              <li><a href className>About us</a></li>
+              <li><a href="true" className="true">Warranty Policy</a></li>
+              <li><a href="true" className="true">Shopping Guide</a></li>
+              <li><a href="true" className="true">Transportation</a></li>
+              <li><a href="true" className="true">Return &amp; Refund</a></li>
+              <li><a href="true" className="true">About us</a></li>
               </ul>
             </div>
             <div className={ styles.footerCollumnc }>
