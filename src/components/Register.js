@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from '../css/Register.module.css';
+import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
+import cx from 'classnames';
 
 function isEmailValid(email) {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -114,14 +115,14 @@ function renderRegistrationForm() {
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="registrationForm">
+          <form action="" name="registrationForm" className={styles.form}>
             <h3>Registration Form</h3>
             <div className={styles.formgroup}>
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Username
-                <span htmlFor="" className={`${styles.errormessage} username`}>
+                <span htmlFor="" className={cx(styles.errormessage, "username")}>
                   Username cannot be empty!
                 </span>
               </label>
@@ -130,7 +131,7 @@ function renderRegistrationForm() {
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Password
-                <span htmlFor="" className={`${styles.errormessage} password`}>
+                <span htmlFor="" className={cx(styles.errormessage, "password")}>
                   Password must have lowercase letters, uppercase letters, numbers, special characters, and at least 12 characters!
                 </span>
               </label>
@@ -139,7 +140,7 @@ function renderRegistrationForm() {
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Confirm Password
-                <span htmlFor="" className={`${styles.errormessage} confirm_password`}>Password does not match!</span>
+                <span htmlFor="" className={cx(styles.errormessage, "confirm_password")}>Password does not match!</span>
               </label>
               <input type="password" className={styles.formcontrol} name="confirm_password" onFocus={(event) => hideErrorMessage(event)} />
             </div>
@@ -150,9 +151,9 @@ function renderRegistrationForm() {
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Email
-                <span htmlFor="" className={`${styles.errormessage} email`}>Please enter a valid email!</span>
+                <span htmlFor="" className={cx(styles.errormessage, "email")}>Please enter a valid email!</span>
               </label>
-              <input type="email" className={styles.formcontrol} name="email" onFocus={(event) => hideErrorMessage(event)} />
+              <input type="text" className={styles.formcontrol} name="email" onFocus={(event) => hideErrorMessage(event)} />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Home Address</label>
@@ -160,7 +161,7 @@ function renderRegistrationForm() {
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Account Type</label>
-              <select className={styles.formcontrol}>
+              <select className={cx(styles.formcontrol, styles.select)}>
                 <option value="customer">Customer</option>
                 <option value="manager">Manger</option>
               </select>
@@ -175,7 +176,7 @@ function renderRegistrationForm() {
                 <span className={styles.checkmark}></span>
               </label>
             </div>
-            <button onClick={registerNow}>Register Now</button>
+            <button onClick={registerNow} className={styles.button}>Register Now</button>
           </form>
         </div>
       </div>

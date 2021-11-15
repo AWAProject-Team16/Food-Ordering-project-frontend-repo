@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
+import cx from 'classnames';
 
 function getFormDataAndCallAPI() {
   const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
@@ -43,14 +44,14 @@ function render() {
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="createRestaurant">
+          <form action="" name="createRestaurant" className={styles.form}>
             <h3>Create A New Restaurant</h3>
             <div className={styles.formgroup}>
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Restaurant Name
-                <span htmlFor="" className={`${styles.errormessage} name`}>
+                <span htmlFor="" className={cx(styles.errormessage, "name")}>
                   Restaurant Name cannot be empty!
                 </span>
               </label>
@@ -66,11 +67,11 @@ function render() {
               <label htmlFor="">
                 Operating Hours
               </label>
-              <textarea required rows="12" className={styles.formcontrol} name="operating_hours" />
+              <textarea required rows="12" className={cx(styles.formcontrol, styles.textarea)} name="operating_hours" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Type</label>
-              <select className={styles.formcontrol} name="restaurant_type">
+              <select className={cx(styles.formcontrol, styles.select)} name="restaurant_type">
                 <option value="Buffet">Buffet</option>
                 <option value="Fast food">Fast food</option>
                 <option value="Fast casual">Fast casual</option>
@@ -82,7 +83,7 @@ function render() {
               <label htmlFor="">
                 Price Level
               </label>
-              <select className={styles.formcontrol} name="restaurant_type">
+              <select className={cx(styles.formcontrol, styles.select)} name="restaurant_type">
                 <option value="1">&euro;</option>
                 <option value="2">&euro;&euro;</option>
                 <option value="3">&euro;&euro;&euro;</option>
@@ -93,18 +94,18 @@ function render() {
               <label htmlFor="">
                 Restaurant Description
               </label>
-              <textarea required rows="50" className={styles.formcontrol} name="restaurant_description" />
+              <textarea required rows="12" className={cx(styles.formcontrol, styles.textarea)} name="restaurant_description" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <input type="file" accept="image/*" className={styles.formcontrol} name="image" id="file_picker" onChange={showChosenFileName} />
+                <input type="file" accept="image/*" className={cx(styles.formcontrol, styles.input_file)} name="image" id="file_picker" onChange={showChosenFileName} />
                 <label className={styles.formcontrol} htmlFor="file_picker">Click to choose an image</label>
               </div>
             </div>
 
 
-            <button onClick={createRestaurant}>Create</button>
+            <button onClick={createRestaurant} className={styles.button}>Create</button>
           </form>
         </div>
       </div>
