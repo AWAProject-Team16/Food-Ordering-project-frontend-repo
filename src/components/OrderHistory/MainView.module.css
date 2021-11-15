@@ -1,0 +1,26 @@
+.searchArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.criterion {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.criterionTitle {
+
+}
+
+.criterionInput{
+  
+}
+
+.orderList {
+
+}
+
+.input_date {
+  width: 82%;
+}
