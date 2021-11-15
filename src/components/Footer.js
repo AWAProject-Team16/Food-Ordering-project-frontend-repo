@@ -1,6 +1,7 @@
 import styles from './../css/Footer.module.css'
 import React, { Component } from 'react'
 import { FaPhoneVolume, FaEnvelope } from 'react-icons/fa'
+import { Link } from "react-router-dom";
 
 export default class Footer extends Component {
   render() {
@@ -16,23 +17,23 @@ export default class Footer extends Component {
               </div>
               <ul className={ styles.footerCollumnaBottom }>
                 <li>
-                  <a href="true" className="true">
+                  <div>
                   <FaPhoneVolume/>
                   <span className={ styles.phone }>&nbsp;0909 123 456 <sub>(Free)</sub></span>
-                  </a>
+                  </div>
                 </li>
                 <li>
-                  <a href="true" className="true">
+                  <div>
                   <FaEnvelope/>
                   <span>&nbsp;team16@students.oamk.fi</span>
-                  </a>
+                  </div>
                 </li>
                 <li>
-                  <a href="true" className="true">
+                  <div>
                   {/* <i className={ styles.fas fa-home } /> */}
                   {/* <FaHome className={ styles.faHome } /> */}
                   <span className={ styles.homeAddress }>Yliopistokatu 9, 90570 OULU 90570 Oulu, Finland</span>
-                  </a>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -41,11 +42,14 @@ export default class Footer extends Component {
                 <h3>CUSTOMER CARE</h3>
               </div>
               <ul className={ styles.footerCollumnbBottom }>
-              <li><a href="true" className="true">Warranty Policy</a></li>
-              <li><a href="true" className="true">Shopping Guide</a></li>
+              <li><Link to="/">Guideline</Link></li>
+              <li><Link to="/">Transportation</Link></li>
+              <li><Link to="/">Return &amp; Refund</Link></li>
+              <li><Link to="/">About us</Link></li>
+              {/* <li><a href="true" className="true">Guideline</a></li>
               <li><a href="true" className="true">Transportation</a></li>
               <li><a href="true" className="true">Return &amp; Refund</a></li>
-              <li><a href="true" className="true">About us</a></li>
+              <li><a href="true" className="true">About us</a></li> */}
               </ul>
             </div>
             <div className={ styles.footerCollumnc }>

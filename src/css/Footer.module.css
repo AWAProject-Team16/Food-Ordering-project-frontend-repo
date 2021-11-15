@@ -29,9 +29,9 @@ div.footerCollumnaTop, .footerCollumnaBottom {
 ul.footerCollumnaBottom li {
   list-style-type: none;
 }
-ul.footerCollumnaBottom li a {
-  text-decoration: none;
-  display: block;
+ul.footerCollumnaBottom li div {
+  /* text-decoration: none; */
+  /* display: block; */
   margin-top: 10px;
   color: var(--back-color);
 }
@@ -58,6 +58,7 @@ ul.footerCollumnbBottom li {
 
 ul.footerCollumnbBottom li a:hover {
   color: blue;
+  font-weight: 500;
 }
 
 ul.footerCollumnbBottom li a {
