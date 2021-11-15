@@ -1,4 +1,4 @@
-import RestaurantSearchView from './RestaurantSearchView';
+import RestaurantsSearchView from './RestaurantsSearchView';
 import styles from '../css/Restaurants.module.css';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -37,7 +37,7 @@ export default class Restaurants extends Component {
         <Container>
           {
             // this.state.items.map(item => <RestaurantSearchResult key={item.idRestaurant} {...item} />)
-            <RestaurantSearchView
+            <RestaurantsSearchView
               items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
             />
             // this.state.items.filter(item => 
