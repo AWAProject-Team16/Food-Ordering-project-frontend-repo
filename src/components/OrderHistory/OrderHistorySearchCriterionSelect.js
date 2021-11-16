@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './OrderHistory.module.css';
+import styles from '../../css/OrderHistory.module.css';
 
-export default function OrderHistoryCriterionSelect(props) {
+export default function OrderHistorySearchCriterionSelect(props) {
   // Required props: title, stdData (array of {name, value})
   // Optional props: 
   return (

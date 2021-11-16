@@ -1,8 +1,6 @@
 import React from 'react';
-import styles from './OrderHistory.module.css';
-import OrderHistoryCriterionInput from './OrderHistoryCriterionInput';
-import OrderHistoryCriterionSelect from './OrderHistoryCriterionSelect';
-import OrderHistoryListItem from './OrderHistoryListItem';
+import styles from '../../css/OrderHistory.module.css';
+import OrderHistoryPerRestaurant from './OrderHistoryPerRestaurant';
 
 export default class OrderHistory extends React.Component {
   constructor(props) {
@@ -35,17 +33,17 @@ export default class OrderHistory extends React.Component {
           users_idusers: 22,  // customer id
           order_date: "Mon, Nov 15 2021 10:07:48 GMT",
           order_delivery_location: "Kirkokatu 123, Oulu",
-          order_status: "Received",
+          order_status: "Closed",
           order_status_extra_info: "",
           order_total_cost: 19.5
         },
         {
-          restaurants_idrestaurants: 122,
+          restaurants_idrestaurants: 99,
           idorders: 44,
           users_idusers: 21,  // customer id
           order_date: "Mon, 12 Nov 2021 11:07:48 GMT",
           order_delivery_location: "Tamontie 123, Oulu",
-          order_status: "Delivering",
+          order_status: "Ready for delivery",
           order_status_extra_info: "Mon, 12 Nov 2021 11:30:00 GMT",
           order_total_cost: 200
         }
@@ -94,19 +92,16 @@ export default class OrderHistory extends React.Component {
     return (
       <div>
         <h2>Order History</h2>
-        <div className={styles.searchArea}>
-          <OrderHistoryCriterionSelect title="Restaurant" stdData={this.getStdRestaurantData()} />
-          <OrderHistoryCriterionInput title="Order number" />
-          <OrderHistoryCriterionSelect title="Order Status" stdData={this.getStdOrderData()} />
-          <OrderHistoryCriterionInput title="Customer Name" />
-          <OrderHistoryCriterionInput title="From" type="date" />
-          <OrderHistoryCriterionInput title="To" type="date" />
-
-          <div className={styles.criterion}><button>Search</button></div>
-        </div>
-        <div className={styles.orderList}>
-          <OrderHistoryListItem />
-        </div>
+        {this.state.restaurantData.map((restaurant, index) => {
+          return <div className={styles.orderHistoryPerRestaurant} key={index}>
+            <OrderHistoryPerRestaurant
+              name={restaurant.name}
+              orderData={this.state.orderData.filter(order => {
+                return order.restaurants_idrestaurants === restaurant.idrestaurants;
+              })}
+              orderStatusData={this.state.orderStatusData} />
+          </div>
+        })}
       </div>
     )
   }
