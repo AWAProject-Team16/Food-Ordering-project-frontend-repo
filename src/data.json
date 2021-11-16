@@ -1,0 +1,219 @@
+{
+  "restaurants": [
+    {
+      "idRestaurant": "1",
+      "idUser": "1",
+      "name": "ASUS Strix G531GT HN553T",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp01.png",
+      "menu": "ASUS",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "2",
+      "idUser": "1",
+      "name": "Acer Swift 5 SF514 53T",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp02.png",
+      "menu": "ACER",
+      "type": "type of restaurant",
+      "description":"Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "3",
+      "idUser": "1",
+      "name": "MSI GF63 9SCSRi5 512GB SSD/NvidRestaurantia GTX1650Ti",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp03.png",
+      "menu": "MSI",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "4",
+      "idUser": "1",
+      "name": "MacBook Pro 16 2019 Touch Bar 2.3GHz Core i9 1TB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp04.png",
+      "menu": "MACBOOK",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "5",
+      "idUser": "1",
+      "name": "MacBook Pro 13 2020 Touch Bar 2.0GHz Core i5 512GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp12.png",
+      "menu": "MACBOOK",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "6",
+      "idUser": "1",
+      "name": "ASUS Expertbook B9450FA BM0616R i7 1TB SSD",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp06.png",
+      "menu": "ASUS",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "7",
+      "idUser": "1",
+      "name": "Dell XPS 15 9500 i7 10750H/16GB/512GB/GTX 1650 Ti 4GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp07.png",
+      "menu": "DELL",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "8",
+      "idUser": "1",
+      "name": "Acer Nitro 5 AN515 54 779S i7 9750H/8GB/512GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp10.png",
+      "menu": "ACER",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "9",
+      "idUser": "1",
+      "name": "Dell Vostro 5481/Core i5-8265U/V4I5227W",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp09.png",
+      "menu": "DELL",
+      "type": "type of restaurant",
+      "description":"Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "10",
+      "idUser": "1",
+      "name": "Dell Inspiron N7490 i5 512GB/NVidRestaurantIA MX250",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp08.png",
+      "menu": "DELL",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "11",
+      "idUser": "1",
+      "name": "MacBook Air 13 2020 1.1GHz Core i5 512GB",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp11.png",
+      "menu": "MACBOOK",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    },
+    {
+      "idRestaurant": "12",
+      "idUser": "1",
+      "name": "MacBook Pro 13 2019 Touch Bar 2.4GHz Core i5",
+      "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
+      "phone": 12345678,
+      "operating_hour": "8AM - 20PM",
+      "image": "sp05.png",
+      "menu": "MACBOOK",
+      "type": "type of restaurant",
+      "description": "Bugger and pizzza"
+    }
+  ],
+  
+  "categories": [
+    {
+      "idCategory": "1",
+      "idRestaurant": "1",
+      "name": "breakfast-1"
+    },
+    {
+      "idCategory": "2",
+      "idRestaurant": "1",
+      "name": "lunch-2"
+    },
+    {
+      "idCategory": "3",
+      "idRestaurant": "1",
+      "name": "dinner-3"
+    },
+    {
+      "idCategory": "4",
+      "idRestaurant": "2",
+      "name": "dinner-4"
+    }
+  ],
+  
+  "products": [
+    {
+      "idProduct": "1",
+      "idRestaurant": "1",
+      "idCategory": "1",
+      "name": "bread",
+      "price": 15,
+      "image": "sp01.png",
+      "description": "description of it"
+    },
+    {
+      "idProduct": "2",
+      "idRestaurant": "1",
+      "idCategory": "2",
+      "name": "mini buffet",
+      "price": 15,
+      "image": "sp02.png",
+      "description": "description of it"
+    },
+    {
+      "idProduct": "3",
+      "idRestaurant": "1",
+      "idCategory": "3",
+      "name": "suop, salat",
+      "price": 15,
+      "image": "sp03.png",
+      "description": "description of it"
+    },
+    {
+      "idProduct": "4",
+      "idRestaurant": "2",
+      "idCategory": "3",
+      "name": "suop, salat",
+      "price": 15,
+      "image": "sp04.png",
+      "description": "description of it"
+    },
+    {
+      "idProduct": "5",
+      "idRestaurant": "1",
+      "idCategory": "1",
+      "name": "noodle",
+      "price": 15,
+      "image": "sp05.png",
+      "description": "description of it"
+    }
+  ]
+}
