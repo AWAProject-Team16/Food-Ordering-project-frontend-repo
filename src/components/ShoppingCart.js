@@ -20,6 +20,7 @@ class ShoppingCart extends React.Component {
         ],
         ProductCosts: 12.8,
         TotalCost: 12.8,
+        DeliveryForm: '',
         DeliveryLocation: '',
         DeliveryCost: 0,
         isLocationSubmitted: false
@@ -76,7 +77,7 @@ class ShoppingCart extends React.Component {
     }
 
     UpdateLocation = (event) => {
-      this.setState({ DeliveryLocation: event.target.value });
+      this.setState({ DeliveryForm: event.target.value });
     }
 
     LocationSubmitted = (event) => {
@@ -85,7 +86,8 @@ class ShoppingCart extends React.Component {
       const DeliveryCost = 5;
       let NewCost = this.state.TotalCost
       NewCost = NewCost + DeliveryCost
-      this.setState({ isLocationSubmitted: true, DeliveryCost: DeliveryCost, TotalCost: NewCost })
+      let DeliveryLocation = this.state.DeliveryForm
+      this.setState({ isLocationSubmitted: true, DeliveryCost: DeliveryCost, TotalCost: NewCost, DeliveryLocation: DeliveryLocation })
     }
   
     
@@ -105,6 +107,7 @@ class ShoppingCart extends React.Component {
           />
           <div className={styles.CheckoutInfo}>
             < DeliveryLocation 
+            DeliveryForm={ this.state.DeliveryForm }
             DeliveryLocation={ this.state.DeliveryLocation }
             DeliveryCost={ this.state.DeliveryCost }
             UpdateLocation = { this.UpdateLocation } 

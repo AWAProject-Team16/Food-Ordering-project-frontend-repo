@@ -7,13 +7,13 @@ const ShoppingCartProduct = props => {
     let CombinedCost = cost * qty;
     CombinedCost = parseFloat(CombinedCost.toFixed(2));
     return <div className = {styles.ShoppingCartProduct}>
-        <button className={styles.Productqty} onClick={ () => props.IncreaseAmount(props.id, props.cost)}>
+        <button className={styles.PlusButton} onClick={ () => props.IncreaseAmount(props.id, props.cost)}>
             +
         </button>
         <div className={styles.Productqty}>
             { props.qty }x
         </div>
-        <button className={styles.Qtybutton} onClick={ () => props.DecreaseAmount(props.id, props.cost)}>
+        <button className={styles.MinusButton} onClick={ () => props.DecreaseAmount(props.id, props.cost)}>
             -
         </button>
         <div className= {styles.ProductName}>

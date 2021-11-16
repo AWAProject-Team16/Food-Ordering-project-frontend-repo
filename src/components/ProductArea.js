@@ -3,8 +3,8 @@ import ShoppingCartProduct from './ShoppingCartProduct'
 import styles from './../css/ProductArea.module.css'
 
 const ProductArea = props => {
-    return <div className={styles.ShoppingCart}>
-        <div className={styles.ShoppingCartTitle}>
+    return <div className={styles.ProductArea}>
+        <div className={styles.ProductAreaTitle}>
             All products
         </div>
         {
