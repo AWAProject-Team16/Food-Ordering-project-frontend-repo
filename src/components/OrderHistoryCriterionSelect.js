@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './OrderHistory.module.css';
 
 export default function OrderHistoryCriterionSelect(props) {
-  // Required props: title, data
+  // Required props: title, stdData (array of {name, value})
   // Optional props: 
   return (
     <div>
@@ -10,8 +10,8 @@ export default function OrderHistoryCriterionSelect(props) {
         <div className={styles.criterionTitle}>{props.title}</div>
         <div className={styles.criterionInput}>
           <select>
-            <option value="-1">All</option>
-            {props.data.map((item, index) => <option key={index} value={item.idrestaurants}>{item.name}</option>)}
+            <option value="-1">(All)</option>
+            {props.stdData.map((item, index) => <option key={index} value={item.value}>{item.name}</option>)}
           </select>
         </div>
       </div>

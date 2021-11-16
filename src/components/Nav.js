@@ -37,7 +37,7 @@ export default class Nav extends Component {
        </li>
        </ul>
         <input className={styles.searchbar}type="text" placeholder="Search.."></input>
-        <button className={styles.button} onCLick={this.onOpenLogin}>Log in</button>
+        <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>
         <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
         <Modal isOpen={sign}>
           <h3>THis is modal</h3>

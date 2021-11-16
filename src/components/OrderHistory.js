@@ -1,5 +1,8 @@
 import React from 'react';
 import styles from './OrderHistory.module.css';
+import OrderHistoryCriterionInput from './OrderHistoryCriterionInput';
+import OrderHistoryCriterionSelect from './OrderHistoryCriterionSelect';
+import OrderHistoryListItem from './OrderHistoryListItem';
 
 export default class OrderHistory extends React.Component {
   constructor(props) {
@@ -68,9 +71,23 @@ export default class OrderHistory extends React.Component {
 
       ],
 
-      orderStatusData: ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivred", "Closed"],  // ko xóa khi có BE
+      orderStatusData: ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"],  // ko xóa khi có BE
 
     }
+  }
+
+  getStdRestaurantData() {
+    const stdData = this.state.restaurantData.map(item => {
+      return {name: item.name, value: item.idrestaurants}
+    });
+    return stdData;
+  }
+
+  getStdOrderData() {
+    const stdData = this.state.orderStatusData.map((item, index) => {
+      return {name: item, value: index}
+    });
+    return stdData;
   }
 
   render() {
@@ -78,57 +95,17 @@ export default class OrderHistory extends React.Component {
       <div>
         <h2>Order History</h2>
         <div className={styles.searchArea}>
-          <div className={styles.criterion}>
-            <div className={styles.criterionTitle}>Restaurant</div>
-            <div className={styles.criterionInput}>
-              <select>
-                <option value="-1">All</option>
-                {this.state.restaurantData.map((item, index) => <option key={index} value={item.idrestaurants}>{item.name}</option>)}
-              </select>
-            </div>
-          </div>
+          <OrderHistoryCriterionSelect title="Restaurant" stdData={this.getStdRestaurantData()} />
+          <OrderHistoryCriterionInput title="Order number" />
+          <OrderHistoryCriterionSelect title="Order Status" stdData={this.getStdOrderData()} />
+          <OrderHistoryCriterionInput title="Customer Name" />
+          <OrderHistoryCriterionInput title="From" type="date" />
+          <OrderHistoryCriterionInput title="To" type="date" />
 
-          <div className={styles.criterion}>
-            <div className={styles.criterionTitle}>Order number</div>
-            <div className={styles.criterionInput}>
-              <input type="text"></input>
-            </div>
-          </div>
-
-          <div className={styles.criterion}>
-            <div className={styles.criterionTitle}>Status</div>
-            <div className={styles.criterionInput}>
-              <select>
-                <option value="-1">All</option>
-                {this.state.orderStatusData.map((item, index) => <option key={index} value={item}>{item}</option>)}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.criterion}>
-            <div className={styles.criterionTitle}>Customer Name</div>
-            <div className={styles.criterionInput}>
-              <input type="text"></input>
-            </div>
-          </div>
-
-          <div className={styles.criterion}>
-            <div className={styles.criterionTitle}>From</div>
-            <div className={styles.criterionInput}>
-              <input type="date" className={styles.input_date}></input>
-            </div>
-          </div>
-
-          <div className={styles.criterion}>
-            <div className={styles.criterionTitle}>To</div>
-            <div className={styles.criterionInput}>
-              <input type="date" className={styles.input_date}></input>
-            </div>
-          </div>
           <div className={styles.criterion}><button>Search</button></div>
         </div>
         <div className={styles.orderList}>
-
+          <OrderHistoryListItem />
         </div>
       </div>
     )
