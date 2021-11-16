@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './MainView.module.css';
+import styles from './OrderHistory.module.css';
 
-export default class MainView extends React.Component {
+export default class OrderHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
