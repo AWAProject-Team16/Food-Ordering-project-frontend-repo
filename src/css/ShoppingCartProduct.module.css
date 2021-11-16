@@ -30,12 +30,20 @@
   font-weight: bold;
 }
 
+.PlusButton:hover {
+  background-color: lightgrey;
+}
+
 .MinusButton {
   color: red;
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 8px;
   font-weight: bold;
+}
+
+.MinusButton:hover {
+  background-color: lightgrey;
 }
 
 .Removebutton {

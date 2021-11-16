@@ -6,6 +6,8 @@
   padding-bottom: 40px;
   padding-top: 20px;
   min-width: 500px;
+  flex-grow: 1;
+  margin-right: 50px;
 }
   
 .ProductAreaTitle {
