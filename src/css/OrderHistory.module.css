@@ -1,0 +1,352 @@
+.orderHistoryPerRestaurant {
+  margin-bottom: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.order_status_color_0 {
+  background-color: lightyellow !important;
+}
+
+.order_status_color_1 {
+  background-color: yellow !important;
+}
+
+.order_status_color_2 {
+  background-color: lightblue !important;
+}
+
+.order_status_color_3 {
+  background-color: blue !important;
+}
+
+.order_status_color_4 {
+  colbackground-coloror: lightgreen !important;
+}
+
+.order_status_color_5 {
+  background-color: darkgreen !important;
+}
+
+.searchArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.criterion {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.criterionTitle {}
+
+.criterionInput {}
+
+.orderList {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.input_date {
+  width: 82%;
+}
+
+.flex {
+  display: flex;
+}
+
+.column1 {
+  width: 100px;
+}
+
+.column2 {
+  width: 150px;
+}
+
+.column3 {
+  width: 75px;
+}
+
+.column4 {
+  width: 110px;
+}
+
+.column5 {
+  width: 130px;
+}
+
+.title {
+  font-weight: 600;
+  padding: 5px;
+  border-bottom: 1px solid #888;
+}
+
+.OrderHistoryListItem {}
+
+.OrderHistoryListItem>div {
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.viewDetails {}
+
+.viewDetails:hover {
+  filter: brightness(.8);
+}
+
+.close {
+  position: absolute;
+  right: 22px;
+  top: 12px;
+  width: 22px;
+  height: 22px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.wrapper {
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.inner {
+  min-width: 850px;
+  margin: auto;
+  padding-top: 68px;
+  padding-bottom: 48px;
+  background-image: url('./registration-form-background.jpg');
+}
+
+.inner h3 {
+  text-transform: uppercase;
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 32px;
+  color: #333;
+  letter-spacing: 2px;
+}
+
+.form {
+  width: 50%;
+  padding-left: 45px;
+}
+
+.formgroup {
+  display: flex;
+}
+
+.formgroup .formwrapper {
+  width: 50%;
+}
+
+.formgroup .formwrapper:first-child {
+  margin-right: 20px;
+}
+
+.formwrapper {
+  margin-bottom: 17px;
+}
+
+.formwrapper label {
+  margin-bottom: 9px;
+  display: block;
+}
+
+.formcontrol {
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 20px;
+  background: none;
+}
+
+.formcontrol:focus {
+  border: 1px solid #ae3c33;
+  outline: none;
+}
+
+.select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-left: 20px;
+  background: url("./dropdown-arrow-20x20.png") no-repeat !important;
+  background-position: right 20px center !important;
+  background-size: 10px !important;
+}
+
+.button {
+  border: none;
+  width: 152px;
+  height: 40px;
+  margin: auto;
+  margin-top: 29px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #ae3c33;
+  font-size: 13px;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 20px;
+  overflow: hidden;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+.button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f11a09;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.button:hover:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+
+.checkbox {
+  position: relative;
+}
+
+.checkbox label {
+  padding-left: 22px;
+  cursor: pointer;
+}
+
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox input:checked~.checkmark:after {
+  display: block;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 12px;
+  width: 13px;
+  border-radius: 2px;
+  background-color: #ebebeb;
+  border: 1px solid #ccc;
+  color: #000;
+  font-size: 10px;
+  font-weight: bolder;
+}
+
+.checkmark:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  content: '\2713';
+}
+
+@media (max-width: 991px) {
+  .inner {
+    min-width: 768px;
+  }
+}
+
+@media (max-width: 767px) {
+  .inner {
+    min-width: auto;
+    background: none;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  form {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.errormessage, .checkboxerrormessage {
+  color: red;
+  font-size: 0.8em;
+  margin-left: 10px;
+  display: none;
+}
+
+.checkboxerrormessage {
+  margin-left: 22px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inline-block;
+}
+
+.textarea {
+  height: 70px !important;
+  width: 100% !important;
+  padding-top: 10px !important;
+}
+
+.input_file {
+  display: none;
+}
+
+label[for="file_picker"] {
+  padding-top: 10px;
+  text-align: center;
+}
