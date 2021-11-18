@@ -5,8 +5,8 @@ import Restaurants from '../components/Restaurants';
 import Restaurant from '../components/Restaurant';
 import ShoppingCart from '../components/ShoppingCart';
 import Data from '../data.json';
-import RestaurantCreateNew from '../components/RestaurantCreateNew';
-import Register from '../components/Register';
+import DevThucTestingArea from '../components/DevThucTestingArea';
+import OrderHistoryDetailView from '../components/OrderHistory/OrderHistoryDetailView';
 
 export default class RouterURL extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class RouterURL extends Component {
         </Route>
         <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
-        <Route path="/devthuc" element={<RestaurantCreateNew />} />
+        <Route path="/devthuc" element={<DevThucTestingArea />} />
       </Routes>
     )
   }
