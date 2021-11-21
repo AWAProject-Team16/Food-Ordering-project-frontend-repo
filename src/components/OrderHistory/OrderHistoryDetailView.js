@@ -13,7 +13,7 @@ export default function OrderHistoryDetailView(props) {
   ];
 
   const [orderStatus, setOrderStatus] = useState(props.orderData.order_status);
-  const [orderStatusExtraInfo, setOrderStatusExtraInfo] = useState("");
+  const [orderStatusExtraInfo, setOrderStatusExtraInfo] = useState(props.orderData.order_status_extra_info);
 
   const toggleShowHide = (element) => {
     //Toggle the 'show' and 'hide' className of an element
@@ -59,6 +59,7 @@ export default function OrderHistoryDetailView(props) {
     //  Disable this button for 1 second before enabling it again
     if (Array.from(FaCheck.classList).includes(styles.hide)) { // After clicked, FaCheck change to hide
       //Update parent on client side first, for better UX
+      console.log(orderStatusExtraInfo)
       const newOrder = {...props.orderData, order_status: orderStatus, order_status_extra_info: orderStatusExtraInfo};
       props.updateAnOrder(newOrder);
       //Call api to save new status
@@ -128,7 +129,7 @@ export default function OrderHistoryDetailView(props) {
                   type="text"
                   className={cx(styles.formcontrol, styles.ETC)}
                   value={orderStatusExtraInfo}
-                  onChange={e => setOrderStatusExtraInfo(e.target.value)}
+                  onChange={event => setOrderStatusExtraInfo(event.target.value)}
                 />
               </div>
 
