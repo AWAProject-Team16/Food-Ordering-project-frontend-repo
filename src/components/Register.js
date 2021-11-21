@@ -2,7 +2,6 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
-import FormControlInput from './FormControlInput';
 
 function isEmailValid(email) {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
