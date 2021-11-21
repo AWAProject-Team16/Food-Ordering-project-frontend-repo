@@ -13,6 +13,7 @@ export default class OrderHistory extends React.Component {
   }
 
   updateAnOrder = (newOrder) => {
+    console.log(newOrder)
     let orderData = [...this.state.orderData];
     const matchedOrderIndex = this.state.orderData.findIndex(order => order.idorders === newOrder.idorders);
     if (matchedOrderIndex > -1) {
