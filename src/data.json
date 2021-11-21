@@ -3,25 +3,27 @@
     {
       "idRestaurant": "1",
       "idUser": "1",
+      "idCategory": "1",
       "name": "ASUS Strix G531GT HN553T",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
       "phone": 12345678,
       "operating_hour": "8AM - 20PM",
       "image": "sp01.png",
       "menu": "ASUS",
-      "type": "type of restaurant",
+      "type": "Buffet",
       "description": "Bugger and pizzza"
     },
     {
       "idRestaurant": "2",
       "idUser": "1",
+      "idCategory":"2",
       "name": "Acer Swift 5 SF514 53T",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
       "phone": 12345678,
       "operating_hour": "8AM - 20PM",
       "image": "sp02.png",
       "menu": "ACER",
-      "type": "type of restaurant",
+      "type": "Fast food",
       "description":"Bugger and pizzza"
     },
     {
@@ -150,23 +152,34 @@
     {
       "idCategory": "1",
       "idRestaurant": "1",
-      "name": "breakfast-1"
+      "name": "Buffet",
+      "image": "category-pizza.jpg"
     },
     {
       "idCategory": "2",
-      "idRestaurant": "1",
-      "name": "lunch-2"
+      "idRestaurant": "2",
+      "name": "Fast Food",
+      "image":"category-hamburger.jpg"
     },
     {
       "idCategory": "3",
       "idRestaurant": "1",
-      "name": "dinner-3"
+      "name": "Fast casual",
+      "image": "category-kebab.jpg"
     },
     {
       "idCategory": "4",
       "idRestaurant": "2",
-      "name": "dinner-4"
+      "name": "Casual dining",
+      "image": "category-mexican.jpg"
+    },
+    {
+      "idCategory":"5",
+      "idRestaurant":"2",
+      "name": "Fine dining",
+      "image": "category-sushi.jpg"
     }
+
   ],
   
   "products": [

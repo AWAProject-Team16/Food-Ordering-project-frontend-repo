@@ -13,7 +13,7 @@ function getLoginData(){
         username: username,
         password: password,
     }).then((response) => {
-        if (username == response.data.username && password == response.data.password) {
+        if (username === response.data.username && password === response.data.password) {
            console.log("Logged in")
         }
         else {

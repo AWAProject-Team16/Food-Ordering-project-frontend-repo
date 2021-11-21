@@ -2,7 +2,7 @@ import styles from './../css/Home.module.css'
 import React from 'react'
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import axios from 'axios';
-
+import categoryData from '../data.json'
 
 class Home extends React.Component {
   constructor(props)
@@ -26,20 +26,25 @@ class Home extends React.Component {
     <div>
       <h3 className={styles.header}>Categories</h3>
     <div className={styles.categoryGrid}>
-    <div className={styles.box}>
-    <Link to="/category-hamburger"><img className={styles.image} src="images/category-hamburger.jpg"/>Hamburgers</Link>
+      {this.props.categories.map(category =>
+        <div className={styles.box}>
+        <Link to= {category.idCategory}>{category.idCategory} {category.name} <img src={`/images/${category.image}`}/></Link>
+        </div>
+        )}
+        
+    <div className={styles.box}>   
     </div>
     <div className={styles.box}>
-    <Link to="/category-pizza" ><img className={styles.image} src="images/category-pizza.jpg"/> Pizza</Link>
+    <Link to="/category" ><img className={styles.image} src="images/category-pizza.jpg"/> Pizza</Link>
     </div>
     <div className={styles.box}>
-    <Link to="/category-kebab" ><img className={styles.image} src="images/category-kebab.jpg"/>Kebab</Link>
+    <Link to="/category-fastCasual" ><img className={styles.image} src="images/category-kebab.jpg"/>Kebab</Link>
     </div>
     <div className={styles.box}>
-    <Link to="/category-chinese" ><img className={styles.image} src="images/category-chinese.png"/>Chinese</Link>
+    <Link to="/category-casualDining" ><img className={styles.image} src="images/category-chinese.png"/>Chinese</Link>
     </div>
     <div className={styles.box}>
-    <Link to="/category-mexican" ><img className={styles.image} src="images/category-mexican.jpg"/>Mexican</Link>
+    <Link to="/category-fineDining" ><img className={styles.image} src="images/category-mexican.jpg"/>Mexican</Link>
     </div>
     <div className={styles.box}>
     <Link to="/category-sushi" ><img className={styles.image} src="images/category-sushi.jpg"/>Sushi</Link>
