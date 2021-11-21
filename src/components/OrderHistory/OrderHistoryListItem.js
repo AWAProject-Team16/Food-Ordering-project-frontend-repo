@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../../css/OrderHistory.module.css';
-import {Link} from 'react-router-dom';
 import cx from 'classnames';
 import Modal from 'react-modal';
 import OrderHistoryDetailView from './OrderHistoryDetailView';
@@ -37,11 +36,12 @@ export default class OrderHistoryListItem extends React.Component {
           <div className={cx(styles.column2, statusColor)}>{this.props.orderData.order_status}</div>
           <div className={styles.column3}>&euro;{this.props.orderData.order_total_cost}</div>
           <div className={styles.column4}>{new Date(this.props.orderData.order_date).toLocaleDateString()}</div>
-          <button className={cx(styles.column5, styles.viewDetails)} onClick={this.openModal}>View Details</button>
-          {console.log(this.props.orderData)}
+          <button onClick={this.openModal} className={cx(styles.column5, styles.viewDetails)}>View Details</button>
+
           <Modal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal}>
-            <a className={styles.close} onClick={this.closeModal}></a>
-            <OrderHistoryDetailView orderData={this.props.orderData}/>
+            <span className={styles.close} onClick={this.closeModal}></span>
+            <OrderHistoryDetailView
+              {...this.props} />
           </Modal>
         </div>
     }

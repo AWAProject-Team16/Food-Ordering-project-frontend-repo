@@ -6,7 +6,6 @@ import Restaurant from '../components/Restaurant';
 import ShoppingCart from '../components/ShoppingCart';
 import Data from '../data.json';
 import DevThucTestingArea from '../components/DevThucTestingArea';
-import OrderHistoryDetailView from '../components/OrderHistory/OrderHistoryDetailView';
 
 export default class RouterURL extends Component {
   render() {
