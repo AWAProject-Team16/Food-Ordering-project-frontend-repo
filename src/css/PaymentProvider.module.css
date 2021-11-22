@@ -1,0 +1,9 @@
+.ProviderBox {
+    margin-right: 20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    border: 2px black solid;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+}
