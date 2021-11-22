@@ -99,12 +99,20 @@ class ShoppingCart extends React.Component {
     }
 
     AddProduct = (id, value, qty, cost) => {
-      let StorageCart = [];
-      StorageCart = localStorage.getItem("ShoppingCart");
+      let StorageCart = localStorage.getItem("ShoppingCart");
       StorageCart = JSON.parse(StorageCart)
-      StorageCart.push({id: id, value: value, qty: qty, cost: cost})
+      if(Array.isArray(StorageCart)) {
+        StorageCart.push({id: id, value: value, qty: qty, cost: cost})
+        localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      } else {
+        let StorageCart = [];
+        StorageCart.push({id: id, value: value, qty: qty, cost: cost})
+        console.log(StorageCart)
+        localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      }
+      // StorageCart.push({id: id, value: value, qty: qty, cost: cost})
       console.log(StorageCart)
-      localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      // localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
     }
 
     Indexfinder (ArraytoSearch, id) {
