@@ -8,7 +8,7 @@ const ProductArea = props => {
             All products
         </div>
         {
-            props.contents.map(i => <ShoppingCartProduct {...i} 
+            props.Products.map(i => <ShoppingCartProduct {...i} 
                                     IncreaseAmount={props.IncreaseAmount} 
                                     DecreaseAmount={props.DecreaseAmount}
                                     DeleteProduct={props.DeleteProduct}
