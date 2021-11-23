@@ -18,18 +18,3 @@ export default class App extends Component {
     )
   }
 }
-
-// import './App.css';
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <div className="App">
-//         <Nav />
-//         <RouterURL />
-//         <Footer />
-//       </div>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
