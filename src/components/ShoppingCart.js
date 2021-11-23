@@ -102,7 +102,12 @@ class ShoppingCart extends React.Component {
       let StorageCart = localStorage.getItem("ShoppingCart");
       StorageCart = JSON.parse(StorageCart)
       if(Array.isArray(StorageCart)) {
-        StorageCart.push({id: id, value: value, qty: qty, cost: cost})
+        let indexnumber = StorageCart.findIndex(Product => Product.id === id);
+        if(indexnumber === -1) {
+          StorageCart.push({id: id, value: value, qty: qty, cost: cost});
+        } else {
+          StorageCart[indexnumber].qty += qty;
+        }
         localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
       } else {
         let StorageCart = [];
@@ -171,7 +176,8 @@ class ShoppingCart extends React.Component {
                 </button>
               </Link>
             </div>
-            <button onClick={ () => this.AddProduct(6, "carrot", 5, 12)}>carrot</button>
+            <button onClick={ () => this.AddProduct(6, "carrot", 5, 12)}>add carrot</button>
+            <button onClick={ () => this.AddProduct(5, "salad", 2, 8)}>add salad</button>
           </div>
         </div>
       </div>
