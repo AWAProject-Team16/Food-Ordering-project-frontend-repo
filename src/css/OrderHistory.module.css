@@ -20,7 +20,7 @@
 }
 
 .order_status_color_4 {
-  colbackground-coloror: lightgreen !important;
+  background-color: lightgreen !important;
 }
 
 .order_status_color_5 {
@@ -53,6 +53,7 @@
 
 .flex {
   display: flex;
+  align-items: center;
 }
 
 .column1 {
@@ -197,6 +198,7 @@
   background: url("./dropdown-arrow-20x20.png") no-repeat !important;
   background-position: right 20px center !important;
   background-size: 10px !important;
+  margin-right: 5px;
 }
 
 .button {
@@ -350,3 +352,13 @@ label[for="file_picker"] {
   padding-top: 10px;
   text-align: center;
 }
+
+.editButton * {
+  cursor: pointer;
+}
+
+.editButton *:hover {
+  color: red;
+}
+
+.ETC{}

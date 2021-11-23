@@ -6,6 +6,59 @@ export default class OrderHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      orderData: [],
+      restaurantData: [],
+      orderStatusData: []
+    }
+  }
+
+  updateAnOrder = (newOrder) => {
+    console.log(newOrder)
+    let orderData = [...this.state.orderData];
+    const matchedOrderIndex = this.state.orderData.findIndex(order => order.idorders === newOrder.idorders);
+    if (matchedOrderIndex > -1) {
+      orderData[matchedOrderIndex] = newOrder;
+      this.setState({orderData});
+    }
+  }
+
+  getStdRestaurantData() {
+    const stdData = this.state.restaurantData.map(item => {
+      return {name: item.name, value: item.idrestaurants}
+    });
+    return stdData;
+  }
+
+  getStdOrderData() {
+    const stdData = this.state.orderStatusData.map((item, index) => {
+      return {name: item, value: index}
+    });
+    return stdData;
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>Order History</h2>
+        {this.state.restaurantData.map((restaurant, index) => {
+          return <div className={styles.orderHistoryPerRestaurant} key={index}>
+            <OrderHistoryPerRestaurant
+              {...this.state}
+              updateAnOrder={this.updateAnOrder}
+              name={restaurant.name}
+              orderData={this.state.orderData.filter(order => {
+                return order.restaurants_idrestaurants === restaurant.idrestaurants;
+              })}
+            />
+          </div>
+        })}
+      </div>
+    )
+  }
+
+  componentDidMount() {
+    //Fetch data from api
+    this.setState({
       orderData: [
         {
           restaurants_idrestaurants: 99,
@@ -30,7 +83,7 @@ export default class OrderHistory extends React.Component {
         {
           restaurants_idrestaurants: 111,
           idorders: 5,
-          users_idusers: 22,  // customer id
+          users_idusers: 5,  // customer id
           order_date: "Mon, Nov 15 2021 10:07:48 GMT",
           order_delivery_location: "Kirkokatu 123, Oulu",
           order_status: "Closed",
@@ -40,7 +93,7 @@ export default class OrderHistory extends React.Component {
         {
           restaurants_idrestaurants: 99,
           idorders: 44,
-          users_idusers: 21,  // customer id
+          users_idusers: 4,  // customer id
           order_date: "Mon, 12 Nov 2021 11:07:48 GMT",
           order_delivery_location: "Tamontie 123, Oulu",
           order_status: "Ready for delivery",
@@ -71,38 +124,6 @@ export default class OrderHistory extends React.Component {
 
       orderStatusData: ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"],  // ko xóa khi có BE
 
-    }
-  }
-
-  getStdRestaurantData() {
-    const stdData = this.state.restaurantData.map(item => {
-      return {name: item.name, value: item.idrestaurants}
     });
-    return stdData;
-  }
-
-  getStdOrderData() {
-    const stdData = this.state.orderStatusData.map((item, index) => {
-      return {name: item, value: index}
-    });
-    return stdData;
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>Order History</h2>
-        {this.state.restaurantData.map((restaurant, index) => {
-          return <div className={styles.orderHistoryPerRestaurant} key={index}>
-            <OrderHistoryPerRestaurant
-              name={restaurant.name}
-              orderData={this.state.orderData.filter(order => {
-                return order.restaurants_idrestaurants === restaurant.idrestaurants;
-              })}
-              orderStatusData={this.state.orderStatusData} />
-          </div>
-        })}
-      </div>
-    )
   }
 }
