@@ -14,6 +14,30 @@ export default function ModalClickBuy(props) {
     let newQuantity =  quantity + 1
     setQuantity(newQuantity)
   }
+  // ----------------------------------------------------------
+  // addNewItem = (e) => {
+  function addNewItem(e) {
+    // const formAddNewItem = document.querySelector('form')
+    // const formData = new FormData(formAddNewItem)
+    // let obj = {}
+    // formData.forEach( (value, key) => obj[key] = value)
+    // // const formDataJson = JSON.stringify(obj)
+
+    // axios({
+    //   method: 'post',
+    //   url: 'http://localhost:5000/orders',  // !!!
+    //   data: obj,
+    // })
+    // .then(res => {
+    //   alert("Posted");
+    //   // if (res.status===200) this.setState({ items: res.data })
+    //   this.componentDidMount()  // chuyển qua context !!!
+    // })
+    // .catch(err => console.log(err))
+    e.preventDefault()
+    props.handleModalOpen(false)
+  }
+
   return (
     <div>
       <div>
@@ -50,10 +74,13 @@ export default function ModalClickBuy(props) {
       <form onSubmit={() => console.log('form')}>
         <div style={{ display: 'none' }}>
         {/* <div> */}
-          <input type="text" name="idproduct" value={ props.item.idproducts } />
-          <input type="text" name="product_amount" value={ quantity } />
+          {/* <input type="text" name="idproducts" value={ props.item.idproducts } /> */}
+          <input type="text" name="idproducts" defaultValue={ props.item.idproducts } />
+          {/* <input type="text" name="product_amount" value={ quantity } /> */}
+          <input type="text" name="product_amount" defaultValue={ quantity } />
         </div>
-        <button onClick={() => console.log('clicked') } className={styles.button}>Add to cart</button>
+        {/* <button onClick={ addNewItem } className={styles.button}>Add to cart</button> */}
+        <button onClick={ addNewItem } className={styles.button}>Add to cart</button>
       </form>
     </div>
   )

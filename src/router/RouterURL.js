@@ -13,9 +13,10 @@ export default class RouterURL extends Component {
     return (
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
-          {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
-        </Route>
+        {/* <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
+          <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } />
+        </Route> */}
+        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />} />
         <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
         <Route path="/devthuc" element={<DevThucTestingArea />} />

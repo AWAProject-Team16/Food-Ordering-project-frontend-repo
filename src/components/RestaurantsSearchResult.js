@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function RestaurantsSearchResult(props) {
   return (
     <Col lg={4}>
-      <Link to={ props.idrestaurants }>
+      <Link to={ props.idrestaurants.toString() }>
         <div className={ styles.restaurant }>
           <div>
             <img alt="true" src={`/images/${props.image}`} />

@@ -7,7 +7,7 @@ import RestaurantDetail from './RestaurantDetail';
 export default function Restaurant(props) {
   // const result = window.location.pathname.split('/')[2]
   const result = useParams()
-  const obj = props.restaurants.find(item => item.idrestaurants === result.idOfRestaurant);
+  const obj = props.restaurants.find(item => item.idrestaurants === parseInt(result.idOfRestaurant));
   if(obj == null) {
     return <div>No matching restaurant</div>
   }
@@ -45,7 +45,7 @@ export default function Restaurant(props) {
             objCategories.map(item =>
               <RestaurantDetail
                 key={ item.idcategories }
-                idrestaurants={ result.idOfRestaurant }
+                idrestaurants={ parseInt(result.idOfRestaurant) }
                 categories ={ objCategories }
                 category={ item }
                 products={ objProducts }/>)
