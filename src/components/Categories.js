@@ -7,12 +7,10 @@ import { useParams } from 'react-router-dom';
 
 export default function Categories(props) {
   const result = useParams()
-  const obj = props.restaurants.find(item => item.idCategory === result.idCategory);
+  const obj = props.restaurants.find(item => item.type === result.type);
   if(obj == null) {
     return <div>No matching restaurant</div>
   }
-  
-  
     return(
           <div>
             

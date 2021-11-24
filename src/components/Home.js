@@ -1,21 +1,20 @@
 import styles from './../css/Home.module.css'
 import React from 'react'
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from 'axios';
-import categoryData from '../data.json'
 
 class Home extends React.Component {
   constructor(props)
   {
     super(props);
     this.state = {
-      categories:[],
+      restaurants:[],
     }
   }
   componentDidMount(){
-    axios.get('http://localhost:3000/categories')
+    axios.get('http://localhost:3000/food_types')
     .then((response)=> {
-      this.setState({categories: response.data.categories});
+      this.setState({foodTypes: response.data.food_types});
     })
     .catch(err=> console.log(err))
   }
@@ -24,31 +23,16 @@ class Home extends React.Component {
   {
   return (
     <div>
-      <h3 className={styles.header}>Categories</h3>
+      <h3 className={styles.header}>Food types</h3>
     <div className={styles.categoryGrid}>
-      {this.props.categories.map(category =>
+      {this.props.foodTypes.map(types =>
         <div className={styles.box}>
-        <Link to= {category.idCategory}>{category.idCategory} {category.name} <img src={`/images/${category.image}`}/></Link>
+        <Link to= {types.type}>
+          {types.type}
+         <img src={`/images/${types.image}`}/></Link>
         </div>
         )}
         
-    <div className={styles.box}>   
-    </div>
-    <div className={styles.box}>
-    <Link to="/category" ><img className={styles.image} src="images/category-pizza.jpg"/> Pizza</Link>
-    </div>
-    <div className={styles.box}>
-    <Link to="/category-fastCasual" ><img className={styles.image} src="images/category-kebab.jpg"/>Kebab</Link>
-    </div>
-    <div className={styles.box}>
-    <Link to="/category-casualDining" ><img className={styles.image} src="images/category-chinese.png"/>Chinese</Link>
-    </div>
-    <div className={styles.box}>
-    <Link to="/category-fineDining" ><img className={styles.image} src="images/category-mexican.jpg"/>Mexican</Link>
-    </div>
-    <div className={styles.box}>
-    <Link to="/category-sushi" ><img className={styles.image} src="images/category-sushi.jpg"/>Sushi</Link>
-    </div>
     </div>
     </div>
     

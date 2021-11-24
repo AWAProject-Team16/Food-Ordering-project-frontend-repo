@@ -1,9 +1,30 @@
 {
+  "food_types": [
+    {
+      "type": "Buffet",
+      "image": "category-pizza.jpg"
+    },
+    {
+      "type": "Fast-food",
+      "image": "category-hamburger.jpg"
+    },
+    {
+      "type": "Fast-casual",
+      "image": "category-kebab.jpg"
+    },
+    {
+      "type": "Casual-dining",
+      "image": "category-mexican.jpg"
+    },
+    {
+      "type": "Fine-dining",
+      "image": "category-sushi.jpg"
+    }
+  ],
   "restaurants": [
     {
       "idRestaurant": "1",
       "idUser": "1",
-      "idCategory": "1",
       "name": "ASUS Strix G531GT HN553T",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
       "phone": 12345678,
@@ -11,19 +32,20 @@
       "image": "sp01.png",
       "menu": "ASUS",
       "type": "Buffet",
+      "type_image":"category-pizza.jpg",
       "description": "Bugger and pizzza"
     },
     {
       "idRestaurant": "2",
       "idUser": "1",
-      "idCategory":"2",
       "name": "Acer Swift 5 SF514 53T",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
       "phone": 12345678,
       "operating_hour": "8AM - 20PM",
       "image": "sp02.png",
       "menu": "ACER",
-      "type": "Fast food",
+      "type": "Fast-food",
+      "type_image":"category-hamburger.jpg",
       "description":"Bugger and pizzza"
     },
     {
@@ -35,7 +57,8 @@
       "operating_hour": "8AM - 20PM",
       "image": "sp03.png",
       "menu": "MSI",
-      "type": "type of restaurant",
+      "type": "Fast-casual",
+      "type_image":"category-kebab.jpg",
       "description": "Bugger and pizzza"
     },
     {
@@ -47,7 +70,8 @@
       "operating_hour": "8AM - 20PM",
       "image": "sp04.png",
       "menu": "MACBOOK",
-      "type": "type of restaurant",
+      "type": "Casual-dining",
+      "type_image":"category-mexican.jpg",
       "description": "Bugger and pizzza"
     },
     {
@@ -59,7 +83,8 @@
       "operating_hour": "8AM - 20PM",
       "image": "sp12.png",
       "menu": "MACBOOK",
-      "type": "type of restaurant",
+      "type": "Fine-dining",
+      "type_image":"category-sushi.jpg",
       "description": "Bugger and pizzza"
     },
     {
@@ -148,39 +173,6 @@
     }
   ],
   
-  "categories": [
-    {
-      "idCategory": "1",
-      "idRestaurant": "1",
-      "name": "Buffet",
-      "image": "category-pizza.jpg"
-    },
-    {
-      "idCategory": "2",
-      "idRestaurant": "2",
-      "name": "Fast Food",
-      "image":"category-hamburger.jpg"
-    },
-    {
-      "idCategory": "3",
-      "idRestaurant": "1",
-      "name": "Fast casual",
-      "image": "category-kebab.jpg"
-    },
-    {
-      "idCategory": "4",
-      "idRestaurant": "2",
-      "name": "Casual dining",
-      "image": "category-mexican.jpg"
-    },
-    {
-      "idCategory":"5",
-      "idRestaurant":"2",
-      "name": "Fine dining",
-      "image": "category-sushi.jpg"
-    }
-
-  ],
   
   "products": [
     {
