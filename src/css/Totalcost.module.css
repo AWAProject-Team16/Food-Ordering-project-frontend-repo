@@ -1,0 +1,16 @@
+.TotalCostBox {
+    background-color: lightgray;
+    padding: 50px 50px 50px 50px;
+    min-width: 350px;
+}
+
+.CostTitle {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.Cost {
+    text-align: center;
+    padding-top: 10px;
+  }

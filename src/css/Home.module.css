@@ -1,0 +1,29 @@
+.categoryGrid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(384px, 1fr));
+    gap: 50px;
+    
+       
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    size: 100px;
+    border-radius: 5%;
+    align-items: flex-start;
+    padding: 30px;
+}
+.box:hover{
+    transform: scale(1.1);
+    transition-duration: 0.5s;
+}
+
+.image{
+    height: 200px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.header{
+    padding: 25px;
+    font-size:24px;
+}

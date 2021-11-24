@@ -1,0 +1,11 @@
+.LocationBox {
+    background-color: lightgray;
+    padding: 30px 30px 30px 30px;
+    min-width: 350px;
+    margin-bottom: 20px;
+}
+
+.DeliveryInfo {
+    margin-top: 10px
+    
+}

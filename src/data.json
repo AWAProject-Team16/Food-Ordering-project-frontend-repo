@@ -1,4 +1,26 @@
 {
+  "food_types": [
+    {
+      "type": "Buffet",
+      "image": "category-pizza.jpg"
+    },
+    {
+      "type": "Fast-food",
+      "image": "category-hamburger.jpg"
+    },
+    {
+      "type": "Fast-casual",
+      "image": "category-kebab.jpg"
+    },
+    {
+      "type": "Casual-dining",
+      "image": "category-mexican.jpg"
+    },
+    {
+      "type": "Fine-dining",
+      "image": "category-sushi.jpg"
+    }
+  ],
   "restaurants": [
     {
       "idrestaurants": 1,
