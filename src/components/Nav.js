@@ -8,37 +8,37 @@ export default class Nav extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { sign:false, login: false}
-    
+    this.state = { sign: false, login: false, CartItems: 0 }
+
   }
   onOpenRegister = () => {
-    this.setState({sign: true});
+    this.setState({ sign: true });
   };
 
   onOpenLogin = () => {
-    this.setState({login:true})
+    this.setState({ login: true })
   }
 
   onCloseRegister = () => {
-    this.setState({sign:false})
+    this.setState({ sign: false })
   }
 
   onCloseLogin = () => {
-    this.setState({login:false})
+    this.setState({ login: false })
   }
 
   render() {
     const { login, sign } = this.state;
     return (
-      <div className={ styles.nav }>
+      <div className={styles.nav}>
         <ul>
-        <li>
+          <li>
             <Link to="/" className={styles.logo}>Slurps</Link>
-       </li>
-       </ul>
-        <input className={styles.searchbar}type="text" placeholder="Search.."></input>
+          </li>
+        </ul>
+        <input className={styles.searchbar} type="text" placeholder="Search.."></input>
         <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>
-        <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
+        <button className={styles.button2} onClick={this.onOpenRegister}>Register</button>
         <Modal isOpen={sign}>
           <h3>THis is modal</h3>
         </Modal>
@@ -47,13 +47,13 @@ export default class Nav extends Component {
             <Link to="/restaurants">Restaurants</Link>
           </li>
           <li>
-            <Link to="/shoppingcart">ShoppingCart</Link>
+            <Link to="/shoppingcart">ShoppingCart [{this.props.CartQty}]</Link>
             {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
           </li>
         </ul>
       </div>
     )
-  
+
   }
 }
 
@@ -62,7 +62,7 @@ export default class Nav extends Component {
 // export default function Nav() {
 //     return (
 //         <div>
-            
+
 //         </div>
 //     )
 // }
