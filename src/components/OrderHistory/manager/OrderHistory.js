@@ -1,6 +1,8 @@
 import React from 'react';
-import styles from '../../css/OrderHistory.module.css';
+import styles from '../../../css/OrderHistory.module.css';
 import OrderHistoryPerRestaurant from './OrderHistoryPerRestaurant';
+import axios from 'axios';
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default class OrderHistory extends React.Component {
   constructor(props) {
@@ -8,7 +10,8 @@ export default class OrderHistory extends React.Component {
     this.state = {
       orderData: [],
       restaurantData: [],
-      orderStatusData: []
+      orderStatusData: [],
+      isManagerView: true,
     }
   }
 
@@ -125,5 +128,21 @@ export default class OrderHistory extends React.Component {
       orderStatusData: ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"],  // ko xóa khi có BE
 
     });
+
+    const orderData = axios.get(API_URL, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip, deflate, br'
+      },
+      data: {userId: 1}
+    })
+      .then(res => console.log('aaa', res))
+    // const orderData = fetch('http://localhost:4000/orders/managers/all', {
+    //   method: 'GET',
+    //   body: JSON.stringify({userId: 1})
+    // })
+    //   .then(res => res.json())
+    //   .then(data => console.log('aaa', data))
   }
 }

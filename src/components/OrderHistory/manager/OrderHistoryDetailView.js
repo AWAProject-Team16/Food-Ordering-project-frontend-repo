@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import styles from '../../css/OrderHistory.module.css';
+import React, {useState, useEffect} from 'react';
+import styles from '../../../css/OrderHistory.module.css';
 import cx from 'classnames';
 import {FaEdit, FaCheck} from 'react-icons/fa';
 
@@ -86,14 +86,54 @@ export default function OrderHistoryDetailView(props) {
     else return undefined;
   }
 
+  // function getOffset(el) {
+  //   var rect = el.getBoundingClientRect();
+  //   return {
+  //     left: rect.left + window.pageXOffset,
+  //     top: rect.top + window.pageYOffset,
+  //     width: rect.width || el.offsetWidth,
+  //     height: rect.height || el.offsetHeight
+  //   };
+  // }
+
+  // function connect(div1, div2, color, thickness) { // draw a line connecting elements
+  //   var off1 = getOffset(div1);
+  //   var off2 = getOffset(div2);
+  //   // bottom right
+  //   var x1 = off1.left + off1.width;
+  //   var y1 = off1.top + off1.height;
+  //   // top right
+  //   var x2 = off2.left + off2.width;
+  //   var y2 = off2.top;
+  //   // distance
+  //   var length = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+  //   // center
+  //   var cx = ((x1 + x2) / 2) - (length / 2);
+  //   var cy = ((y1 + y2) / 2) - (thickness / 2);
+  //   console.log(div1, div1.offsetTop, div1.offsetHeight, div1.offsetLeft, div1.offsetWidth)
+  //   cy = div1.offsetTop + div1.offsetHeight / 2;
+  //   cx = div1.offsetLeft + div1.offsetWidth / 2;
+  //   // angle
+  //   var angle = Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI); angle = 90;
+  //   // make hr
+  //   const line = document.querySelector('#line');
+  //   line.style = `padding:0px; margin:0px; height:${thickness}; background-color:${color}; line-height:1px; position:absolute; left:${cx}px; top:${cy}px; width:${length}px; -moz-transform:rotate(${angle}deg); -webkit-transform:rotate(${angle}deg); -o-transform:rotate(${angle}deg); -ms-transform:rotate(${angle}deg); transform:rotate(${angle}deg);`;
+  // }
+
+  // useEffect(() => {
+  //   const firstStatusImage = document.querySelector('#firstStatusImage')
+  //   const lastStatusImage = document.querySelector('#lastStatusImage')
+  //   connect(firstStatusImage, lastStatusImage, "#000", "1px");
+  // });
+
   return (
     <div>
       <div>
         <div className={styles.wrapper}>
-          <div className={styles.inner}>
-            <form action="" name="registrationForm" className={styles.form}>
+          <div className={cx(styles.inner, styles.flex)}>
+            <form action="" className={styles.form}>
               <h3>Order Details</h3>
-              <div className={styles.formwrapper}>
+              {props.isManagerView && <div className={styles.formwrapper}>
                 <label htmlFor="order_status">
                   Order Status
                   <span htmlFor="" className={cx(styles.errormessage, "order_status")} >
@@ -115,9 +155,9 @@ export default function OrderHistoryDetailView(props) {
                     <FaCheck size="2em" className={cx(styles.hide)} id="FaCheck" />
                   </div>
                 </div>
-              </div>
+              </div>}
 
-              <div className={styles.formwrapper}>
+              {props.isManagerView && <div className={styles.formwrapper}>
                 <label htmlFor="">
                   Estimated Time of Completion
                   <span htmlFor="" className={cx(styles.errormessage, "ETC")} >
@@ -131,7 +171,7 @@ export default function OrderHistoryDetailView(props) {
                   value={orderStatusExtraInfo}
                   onChange={event => setOrderStatusExtraInfo(event.target.value)}
                 />
-              </div>
+              </div>}
 
               <div className={styles.formwrapper}>
                 <label htmlFor="">Restaurant</label>
@@ -168,7 +208,7 @@ export default function OrderHistoryDetailView(props) {
                   disabled
                   type="text"
                   className={styles.formcontrol}
-                  value={new Date(props.orderData.order_date).toLocaleDateString()}
+                  value={new Date(props.orderData.order_date).toLocaleString()}
                 />
               </div>
 
@@ -192,6 +232,55 @@ export default function OrderHistoryDetailView(props) {
                 />
               </div>
             </form>
+
+            {!props.isManagerView && <div className={styles.orderTracking}>
+              <h3>Order Tracking</h3>
+              <div className={styles.relative}>
+                <div className={styles.line}></div>
+                <div className={styles.flex}>
+                  <div id="firstStatusImage" className={cx(styles.orderStatusPlaceholderImage, styles.prevStatus)}></div>
+                  <div className={styles.orderStatusText}>
+                    <b>Received</b>
+                    <div></div>
+                  </div>
+                </div>
+                <div className={styles.flex}>
+                  <div className={cx(styles.orderStatusPlaceholderImage, styles.prevStatus)}></div>
+                  <div className={styles.orderStatusText}>
+                    <b>Preparing</b>
+                    <div>(in 30 minutes)</div>
+                  </div>
+                </div>
+                <div className={styles.flex}>
+                  <div className={cx(styles.orderStatusPlaceholderImage, styles.prevStatus)}></div>
+                  <div className={styles.orderStatusText}>
+                    <b>Ready for delivery</b>
+                    <div>(in 30 minutes)</div>
+                  </div>
+                </div>
+                <div className={styles.flex}>
+                  <div className={cx(styles.orderStatusPlaceholderImage, styles.prevStatus)}></div>
+                  <div className={styles.orderStatusText}>
+                    <b>Delivering</b>
+                    <div>(in 30 minutes)</div>
+                  </div>
+                </div>
+                <div className={styles.flex}>
+                  <div id="div5" className={cx(styles.orderStatusPlaceholderImage, styles.currentStatus)}>5</div>
+                  <div className={styles.orderStatusText}>
+                    <b>Delivered</b>
+                    <div></div>
+                  </div>
+                </div>
+                <div className={styles.flex}>
+                  <div id="lastStatusImage" className={styles.orderStatusPlaceholderImage}>6</div>
+                  <div className={styles.orderStatusText}>
+                    <b>Closed</b>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>}
           </div>
         </div>
       </div>
