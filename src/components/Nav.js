@@ -1,13 +1,11 @@
 import styles from './../css/Nav.module.css'
 import React, { Component, useState } from 'react'
 import { Link, NavLink } from "react-router-dom";
+import Register from './Register'
 import Modal from 'react-modal'
-import Register from './Register';
-import Login from './Login';
 
 export default class Nav extends Component {
-  
- constructor(props) {
+  constructor(props) {
     super(props);
 
     this.state = { sign:false, login: false}
@@ -28,9 +26,8 @@ export default class Nav extends Component {
   onCloseLogin = () => {
     this.setState({login:false})
   }
- 
 
-  render() {  
+  render() {
     const { login, sign } = this.state;
     return (
       <div className={ styles.nav }>
@@ -40,18 +37,10 @@ export default class Nav extends Component {
        </li>
        </ul>
         <input className={styles.searchbar}type="text" placeholder="Search.."></input>
-        
-        <button className={styles.button} onClick={ this.onOpenLogin}>Log in</button>
-        
-        <button className={styles.button2} onClick={ this.onOpenRegister}>Register</button>
-        
-        <Modal isOpen={sign} >
-          <button onClick={this.onCloseRegister}>Close</button>
-          <Register />
-        </Modal>
-        <Modal isOpen={login}>
-        <button onClick={this.onCloseLogin}>Close</button>
-        <Login/>
+        <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>
+        <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
+        <Modal isOpen={sign}>
+          <h3>THis is modal</h3>
         </Modal>
         <ul>
           <li>
@@ -64,6 +53,7 @@ export default class Nav extends Component {
         </ul>
       </div>
     )
+  
   }
 }
 

@@ -12,20 +12,45 @@ class ShoppingCart extends React.Component {
       super(props);
   
       this.state = {
-        ShoppingCart: [
-          { id: 1, value: 'Big Mac', qty: 1, cost: 5 },
-          { id: 2, value: 'French fries', qty: 2, cost: 2},
-          { id: 3, value: '0.5L Coca Cola', qty: 1, cost: 2.3},
-          { id: 4, value: 'Cheese dip', qty: 3, cost: 0.5 }
-        ],
-        ProductCosts: 12.8,
-        TotalCost: 12.8,
+        ShoppingCart: [],
+        //   { id: 1, value: 'Big Mac', qty: 1, cost: 5 },
+        //   { id: 2, value: 'French fries', qty: 2, cost: 2},
+        //   { id: 3, value: '0.5L Coca Cola', qty: 1, cost: 2.3},
+        //   { id: 4, value: 'Cheese dip', qty: 3, cost: 0.5 }
+        // ],
+        ProductCosts: 0,
+        TotalCost: 0,
         DeliveryForm: '',
         DeliveryLocation: '',
         DeliveryCost: 0,
         isLocationSubmitted: false
       };
   
+    }
+
+    componentDidMount() {
+      let ShoppingCartToStore = [
+        { id: 1, value: 'Big Mac', qty: 1, cost: 5 },
+        { id: 2, value: 'French fries', qty: 2, cost: 2},
+        { id: 3, value: '0.5L Coca Cola', qty: 1, cost: 2.3},
+        { id: 4, value: 'Cheese dip', qty: 3, cost: 0.5 }
+      ];
+      // localStorage.setItem('ShoppingCart', JSON.stringify(ShoppingCartToStore));
+      let StorageCart = [];
+      StorageCart = localStorage.getItem("ShoppingCart");
+      StorageCart = JSON.parse(StorageCart);
+      this.setState({ ShoppingCart: StorageCart })
+      const ProductCostCalc = function(arr) {
+        return arr.reduce((total, i) => {
+          return total + (i.cost * i.qty)
+        }, 0);
+      };
+      console.log(ProductCostCalc(ShoppingCartToStore));
+      let ProductCosts = 0
+      if (StorageCart) {
+        ProductCosts = ProductCostCalc(StorageCart);
+      }
+      this.setState({ ProductCosts: ProductCosts, TotalCost: ProductCosts });
     }
   
     IncreaseAmount = (id, cost) => {
@@ -37,6 +62,7 @@ class ShoppingCart extends React.Component {
       NewCost = parseFloat(NewCost.toFixed(2));
       let NewTotalCost = NewCost + this.state.DeliveryCost
       this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost});
+      localStorage.setItem('ShoppingCart', JSON.stringify(this.state.ShoppingCart));
       // console.log(NewShoppingCart);
     }
   
@@ -50,6 +76,7 @@ class ShoppingCart extends React.Component {
         NewCost = parseFloat(NewCost.toFixed(2));
         let NewTotalCost = NewCost + this.state.DeliveryCost
         this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost});
+        localStorage.setItem('ShoppingCart', JSON.stringify(this.state.ShoppingCart));
         // console.log(NewCost);
       } else {
       // console.log(NewCost);
@@ -68,6 +95,29 @@ class ShoppingCart extends React.Component {
       NewCost = parseFloat(NewCost.toFixed(2));
       let NewTotalCost = NewCost + this.state.DeliveryCost
       this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost});
+      localStorage.setItem('ShoppingCart', JSON.stringify(NewShoppingCart));
+    }
+
+    AddProduct = (id, value, qty, cost) => {
+      let StorageCart = localStorage.getItem("ShoppingCart");
+      StorageCart = JSON.parse(StorageCart)
+      if(Array.isArray(StorageCart)) {
+        let indexnumber = StorageCart.findIndex(Product => Product.id === id);
+        if(indexnumber === -1) {
+          StorageCart.push({id: id, value: value, qty: qty, cost: cost});
+        } else {
+          StorageCart[indexnumber].qty += qty;
+        }
+        localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      } else {
+        let StorageCart = [];
+        StorageCart.push({id: id, value: value, qty: qty, cost: cost})
+        console.log(StorageCart)
+        localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      }
+      // StorageCart.push({id: id, value: value, qty: qty, cost: cost})
+      console.log(StorageCart)
+      // localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
     }
 
     Indexfinder (ArraytoSearch, id) {
@@ -99,7 +149,7 @@ class ShoppingCart extends React.Component {
         </h1>
         <div className={styles.CheckoutContent}>
           <ProductArea 
-            contents={ this.state.ShoppingCart }
+            Products={ this.state.ShoppingCart }
             ProductCosts={ this.state.ProductCosts } 
             IncreaseAmount={ this.IncreaseAmount }
             DecreaseAmount={ this.DecreaseAmount }
@@ -123,10 +173,11 @@ class ShoppingCart extends React.Component {
               <Link to="/paymentpage" >
                 <button className={styles.PaymentButton} >
                   <span className={styles.PaymentLink}>Proceed to payment</span>
-                {/* <Link to="/paymentpage" className={styles.PaymentLink}>Proceed to payment</Link> */}
                 </button>
               </Link>
             </div>
+            <button onClick={ () => this.AddProduct(6, "carrot", 5, 12)}>add carrot</button>
+            <button onClick={ () => this.AddProduct(5, "salad", 2, 8)}>add salad</button>
           </div>
         </div>
       </div>

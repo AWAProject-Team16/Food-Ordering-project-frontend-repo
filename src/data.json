@@ -203,7 +203,7 @@
       "idRestaurant": "1",
       "idCategory": "1",
       "name": "bread",
-      "price": 15,
+      "price": 1,
       "image": "sp01.png",
       "description": "description of it"
     },
@@ -212,7 +212,7 @@
       "idRestaurant": "1",
       "idCategory": "2",
       "name": "mini buffet",
-      "price": 15,
+      "price": 2,
       "image": "sp02.png",
       "description": "description of it"
     },
@@ -221,7 +221,7 @@
       "idRestaurant": "1",
       "idCategory": "3",
       "name": "suop, salat",
-      "price": 15,
+      "price": 3,
       "image": "sp03.png",
       "description": "description of it"
     },
@@ -230,7 +230,7 @@
       "idRestaurant": "2",
       "idCategory": "3",
       "name": "suop, salat",
-      "price": 15,
+      "price": 4,
       "image": "sp04.png",
       "description": "description of it"
     },
@@ -239,7 +239,7 @@
       "idRestaurant": "1",
       "idCategory": "1",
       "name": "noodle",
-      "price": 15,
+      "price": 5,
       "image": "sp05.png",
       "description": "description of it"
     }
