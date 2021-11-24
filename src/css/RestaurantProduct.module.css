@@ -36,6 +36,7 @@ h3 {
 .imageM {
   height: auto;
   max-height: 150px;
+  margin-bottom: 0;
 }
 
 .product:hover {

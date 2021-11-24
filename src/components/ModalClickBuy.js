@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import styles from '../css/ModalClickBuy.module.css';
 import cx from 'classnames';
-import axios from 'axios';
+// import axios from 'axios';
 
 export default function ModalClickBuy(props) {
   const [quantity, setQuantity] = useState(1)
   function onDown() {
-    let newQuantity =  quantity >=1 ? quantity - 1 : quantity
+    let newQuantity = quantity >=1 ? quantity - 1 : quantity
     setQuantity(newQuantity)
   }
   function onUp() {
-    let newQuantity =  quantity + 1
+    let newQuantity = quantity + 1
     setQuantity(newQuantity)
   }
   // ----------------------------------------------------------
@@ -25,16 +25,32 @@ export default function ModalClickBuy(props) {
 
     // axios({
     //   method: 'post',
-    //   url: 'http://localhost:5000/orders',  // !!!
+    //   url: 'http://localhost:5000/mycart',  // !!!
     //   data: obj,
     // })
     // .then(res => {
-    //   alert("Posted");
+    //   alert("Posted")
     //   // if (res.status===200) this.setState({ items: res.data })
-    //   this.componentDidMount()  // chuyển qua context !!!
+    //   this.componentDidMount()  // chuyển qua context, useeffect !!!
     // })
     // .catch(err => console.log(err))
-    e.preventDefault()
+    let StorageCart = localStorage.getItem("ShoppingCart")
+    StorageCart = JSON.parse(StorageCart)
+    if (Array.isArray(StorageCart)) {
+      let indexnumber = StorageCart.findIndex(Product => Product.id === props.item.idproducts);
+      if (indexnumber === -1) {
+        StorageCart.push({ id: props.item.idproducts, value: props.item.product_name, qty: quantity, cost: props.item.product_cost })
+      } else {
+        StorageCart[indexnumber].qty += quantity
+      }
+      localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+    } else {
+      let StorageCart = []
+      StorageCart.push({ id: props.item.idproducts, value: props.item.product_name, qty: quantity, cost: props.item.product_cost })
+      console.log(StorageCart)
+      localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+    }
+    // e.preventDefault()
     props.handleModalOpen(false)
   }
 
@@ -71,17 +87,14 @@ export default function ModalClickBuy(props) {
           <div><span>€</span><span>{ quantity*props.item.product_cost }</span></div>
         </div>
       </div>
-      <form onSubmit={() => console.log('form')}>
+      {/* <form onSubmit={() => console.log('form')}>
         <div style={{ display: 'none' }}>
-        {/* <div> */}
-          {/* <input type="text" name="idproducts" value={ props.item.idproducts } /> */}
           <input type="text" name="idproducts" defaultValue={ props.item.idproducts } />
-          {/* <input type="text" name="product_amount" value={ quantity } /> */}
           <input type="text" name="product_amount" defaultValue={ quantity } />
         </div>
-        {/* <button onClick={ addNewItem } className={styles.button}>Add to cart</button> */}
         <button onClick={ addNewItem } className={styles.button}>Add to cart</button>
-      </form>
+      </form> */}
+        <button onClick={ addNewItem } className={styles.button}>Add to cart</button>
     </div>
   )
 }

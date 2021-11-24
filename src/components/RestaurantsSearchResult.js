@@ -19,7 +19,6 @@ export default function RestaurantsSearchResult(props) {
 
           <div className={ styles.description}>
             { props.restaurant_description }
-            description
           </div>
 
           <hr />

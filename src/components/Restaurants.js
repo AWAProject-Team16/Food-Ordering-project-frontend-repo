@@ -3,7 +3,7 @@ import styles from '../css/Restaurants.module.css';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaSearch } from 'react-icons/fa';
-import axios from 'axios';
+// import axios from 'axios';  // waiting everybody change to use SQL insteads of data.json
 
 import React, { Component } from 'react';
 export default class Restaurants extends Component {
@@ -11,21 +11,21 @@ export default class Restaurants extends Component {
   {
     super(props);
     this.state = {
-      // items: props.restaurants,  // Xóa props ở routerURL sau !!!
-      items: [],
+      items: props.restaurants,  // Xóa props ở routerURL sau !!!
+      // items: [],
       searchString: "",
     }
   }
 
-  componentDidMount() {
-    console.log("DidMount")
-    axios.get('http://localhost:5000/restaurants')
-    .then((res) => {
-      // console.log(res.data.Restaurants)
-      this.setState({ items: res.data.Restaurants})
-    })
-    .catch(err => console.log(err))
-  }
+  // componentDidMount() {
+  //   console.log("DidMount")
+  //   axios.get('http://localhost:5000/restaurants')
+  //   .then((res) => {
+  //     // console.log(res.data.Restaurants)
+  //     this.setState({ items: res.data.Restaurants})
+  //   })
+  //   .catch(err => console.log(err))
+  // }
 
   onSearchFieldChange = (event) => {
     console.log('Keyboard event');
