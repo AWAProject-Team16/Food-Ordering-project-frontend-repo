@@ -1,9 +1,10 @@
 import React from 'react';
 import OrderHistoryListItem from './OrderHistoryListItem';
-import styles from '../../css/OrderHistory.module.css';
+import styles from '../../../css/OrderHistory.module.css';
 import cx from 'classnames';
 
 export default function OrderHistoryPerRestaurant(props) {
+  // Requried props: orderData: array, restaurantData: array, orderStatusData: array, [isManagerView: boolean]
   return (
     <div>
       <h3>{props.name}</h3>
