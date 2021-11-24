@@ -1,4 +1,27 @@
 {
+  "categories": [
+    {
+      "idCategory": "1",
+      "idRestaurant": "1",
+      "name": "breakfast-1"
+    },
+    {
+      "idCategory": "2",
+      "idRestaurant": "1",
+      "name": "lunch-2"
+    },
+    {
+      "idCategory": "3",
+      "idRestaurant": "1",
+      "name": "dinner-3"
+    },
+    {
+      "idCategory": "4",
+      "idRestaurant": "2",
+      "name": "dinner-4"
+    }
+  ],
+ 
   "food_types": [
     {
       "type": "Buffet",
