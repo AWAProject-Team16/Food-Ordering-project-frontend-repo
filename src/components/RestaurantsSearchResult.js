@@ -18,7 +18,8 @@ export default function RestaurantsSearchResult(props) {
           </div>
 
           <div className={ styles.description}>
-            { props.description }
+            { props.restaurant_description }
+            description
           </div>
 
           <hr />

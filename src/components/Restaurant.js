@@ -28,10 +28,10 @@ export default function Restaurant(props) {
   
   // console.log(props.categories)
   // const objCategories = props.categories.find(item => item.idrestaurants === obj.idrestaurants);
-  const objCategories = props.categories.filter(item => item.idrestaurants === obj.idrestaurants - 13)  // !!! tạm thời lấy jon nên có -13
+  const objCategories = props.categories.filter(item => item.idrestaurants === obj.idrestaurants - 32)  // !!! tạm thời lấy jon nên có -13
   // console.log(objCategories)
   
-  const objProducts = props.products.filter(item => item.idrestaurants === obj.idrestaurants - 13)
+  const objProducts = props.products.filter(item => item.idrestaurants === obj.idrestaurants - 32)
   
   return (
     <div>
