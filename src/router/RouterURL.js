@@ -12,7 +12,9 @@ export default class RouterURL extends Component {
   render() {
     return (
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home foodTypes={Data.food_types}/>} />
+        <Route path="/:type" element={<Categories restaurants={Data.restaurants} />} />
+        <Route path="/:type/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
           {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
         </Route>
