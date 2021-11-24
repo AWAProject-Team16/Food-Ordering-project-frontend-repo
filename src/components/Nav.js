@@ -1,5 +1,5 @@
 import styles from './../css/Nav.module.css'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Link, NavLink } from "react-router-dom";
 import Register from './Register'
 import Modal from 'react-modal'
@@ -56,14 +56,4 @@ export default class Nav extends Component {
   
   }
 }
-
-// import React from 'react'
-
-// export default function Nav() {
-//     return (
-//         <div>
-            
-//         </div>
-//     )
-// }
 
