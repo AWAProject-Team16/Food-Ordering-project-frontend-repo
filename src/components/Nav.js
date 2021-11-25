@@ -3,6 +3,7 @@ import React, { Component, useState } from 'react'
 import { Link, NavLink } from "react-router-dom";
 import Register from './Register'
 import Modal from 'react-modal'
+import Login from './Login'
 
 export default class Nav extends Component {
   constructor(props) {
@@ -39,8 +40,14 @@ export default class Nav extends Component {
         <input className={styles.searchbar}type="text" placeholder="Search.."></input>
         <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>
         <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
-        <Modal isOpen={sign}>
-          <h3>THis is modal</h3>
+        <Modal isOpen={sign} >
+          <button onClick={this.onCloseRegister}>Close</button>
+          <Register />
+        </Modal>
+        <Modal isOpen={login}>
+        <button onClick={this.onCloseLogin}>Close</button>
+        <Login/>
+
         </Modal>
         <ul>
           <li>
