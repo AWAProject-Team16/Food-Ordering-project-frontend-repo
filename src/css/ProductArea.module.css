@@ -1,0 +1,39 @@
+.ProductArea {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  background-color: lightgray;
+  padding-bottom: 40px;
+  padding-top: 20px;
+  min-width: 500px;
+  flex-grow: 1;
+  margin-right: 50px;
+}
+  
+.ProductAreaTitle {
+  align-self: center;
+  font-size: 20px;
+  margin-bottom: 25px;
+  background-color: whitesmoke;
+  padding: 10px;
+  padding-left: auto;
+  padding-right: auto;
+}
+
+.ProductTotal {
+  margin-top: 10px;
+  text-align: end;
+  margin-right: 80px;
+  background-color: whitesmoke;
+  margin-left: auto;
+  padding: 10px;
+}
+
+.EmptyMessage {
+  margin-top: 50px;
+  text-align: center;
+  background-color: whitesmoke;
+  padding: 20px;
+  margin-right: 30%;
+  margin-left: 30%
+}

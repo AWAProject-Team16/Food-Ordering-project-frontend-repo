@@ -43,3 +43,15 @@ h3 {
   border-style: groove;
   cursor: pointer;
 }
+
+.modal {
+  /* width: 400px; */
+  /* margin: auto; */
+  /* background-color: aqua; */
+  background-image: url(registration-form-background.jpg);
+  position: absolute;
+  left: 25%;
+  top: 35%;
+  border-radius: 8px;
+  border: none;
+}

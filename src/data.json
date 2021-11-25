@@ -1,219 +1,241 @@
 {
+  "food_types": [
+    {
+      "type": "Buffet",
+      "image": "category-pizza.jpg"
+    },
+    {
+      "type": "Fast-food",
+      "image": "category-hamburger.jpg"
+    },
+    {
+      "type": "Fast-casual",
+      "image": "category-kebab.jpg"
+    },
+    {
+      "type": "Casual-dining",
+      "image": "category-mexican.jpg"
+    },
+    {
+      "type": "Fine-dining",
+      "image": "category-sushi.jpg"
+    }
+  ],
   "restaurants": [
     {
-      "idRestaurant": "1",
-      "idUser": "1",
-      "name": "ASUS Strix G531GT HN553T",
+      "idrestaurants": 1,
+      "idusers": 1,
+      "name": "Mac DN BG",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp01.png",
-      "menu": "ASUS",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "Burger",
+      "price_level": 5,
+      "restaurant_description": "Better place for burger and fastfood",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "2",
-      "idUser": "1",
-      "name": "Acer Swift 5 SF514 53T",
+      "idrestaurants": 2,
+      "idusers": 1,
+      "name": "King BG",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp02.png",
-      "menu": "ACER",
-      "type": "type of restaurant",
-      "description":"Bugger and pizzza"
+      "restaurant_type": "Burger",
+      "price_level": 5,
+      "restaurant_description":"Better place for burger and fastfood",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "3",
-      "idUser": "1",
-      "name": "MSI GF63 9SCSRi5 512GB SSD/NvidRestaurantia GTX1650Ti",
+      "idrestaurants": 3,
+      "idusers": 1,
+      "name": "Itsu DM",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp03.png",
-      "menu": "MSI",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "Sushi",
+      "price_level": 5,
+      "restaurant_description": "Better place for sushi",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "4",
-      "idUser": "1",
-      "name": "MacBook Pro 16 2019 Touch Bar 2.3GHz Core i9 1TB",
+      "idrestaurants": 4,
+      "idusers": 1,
+      "name": "Hai LO",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp04.png",
-      "menu": "MACBOOK",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "Sushi",
+      "price_level": 5,
+      "restaurant_description": "Better place for sushi",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "5",
-      "idUser": "1",
-      "name": "MacBook Pro 13 2020 Touch Bar 2.0GHz Core i5 512GB",
+      "idrestaurants": 5,
+      "idusers": 1,
+      "name": "Royal GA",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
-      "image": "sp12.png",
-      "menu": "MACBOOK",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "operating_hours": "8AM - 20PM",
+      "image": "sp05.png",
+      "restaurant_type": "Chinese",
+      "price_level": 5,
+      "restaurant_description": "Better place for sushi Chinese food",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "6",
-      "idUser": "1",
-      "name": "ASUS Expertbook B9450FA BM0616R i7 1TB SSD",
+      "idrestaurants": 6,
+      "idusers": 1,
+      "name": "Taco BO",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp06.png",
-      "menu": "ASUS",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "Mexican",
+      "price_level": 5,
+      "restaurant_description": "Better place for sushi Mexican food",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "7",
-      "idUser": "1",
-      "name": "Dell XPS 15 9500 i7 10750H/16GB/512GB/GTX 1650 Ti 4GB",
+      "idrestaurants": 7,
+      "idusers": 1,
+      "name": "Pizzeria La",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp07.png",
-      "menu": "DELL",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "Pizza",
+      "price_level": 5,
+      "restaurant_description": "Better place for pizza",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "8",
-      "idUser": "1",
+      "idrestaurants": 8,
+      "idusers": 1,
       "name": "Acer Nitro 5 AN515 54 779S i7 9750H/8GB/512GB",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
-      "image": "sp10.png",
-      "menu": "ACER",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "operating_hours": "8AM - 20PM",
+      "image": "sp08.png",
+      "restaurant_type": "type of restaurant",
+      "price_level": 5,
+      "restaurant_description": "Bugger and pizzza",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "9",
-      "idUser": "1",
+      "idrestaurants": 9,
+      "idusers": 1,
       "name": "Dell Vostro 5481/Core i5-8265U/V4I5227W",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp09.png",
-      "menu": "DELL",
-      "type": "type of restaurant",
-      "description":"Bugger and pizzza"
+      "restaurant_type": "type of restaurant",
+      "price_level": 5,
+      "restaurant_description":"Bugger and pizzza",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "10",
-      "idUser": "1",
-      "name": "Dell Inspiron N7490 i5 512GB/NVidRestaurantIA MX250",
+      "idrestaurants": 10,
+      "idusers": 1,
+      "name": "Dell Inspiron N7490 i5 512GB/NVidrestaurantsIA MX250",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp08.png",
-      "menu": "DELL",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "type of restaurant",
+      "price_level": 5,
+      "restaurant_description": "Bugger and pizzza",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "11",
-      "idUser": "1",
+      "idrestaurants": 11,
+      "idusers": 1,
       "name": "MacBook Air 13 2020 1.1GHz Core i5 512GB",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
+      "operating_hours": "8AM - 20PM",
       "image": "sp11.png",
-      "menu": "MACBOOK",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "restaurant_type": "type of restaurant",
+      "price_level": 5,
+      "restaurant_description": "Bugger and pizzza",
+      "phonenumber": "12345678"
     },
     {
-      "idRestaurant": "12",
-      "idUser": "1",
+      "idrestaurants": 12,
+      "idusers": 1,
       "name": "MacBook Pro 13 2019 Touch Bar 2.4GHz Core i5",
       "address": "Yliopistokatu 9, 90570 OULU 90570 Oulu",
-      "phone": 12345678,
-      "operating_hour": "8AM - 20PM",
-      "image": "sp05.png",
-      "menu": "MACBOOK",
-      "type": "type of restaurant",
-      "description": "Bugger and pizzza"
+      "operating_hours": "8AM - 20PM",
+      "image": "sp12.png",
+      "restaurant_type": "type of restaurant",
+      "price_level": 5,
+      "restaurant_description": "Bugger and pizzza",
+      "phonenumber": "12345678"
     }
   ],
   
   "categories": [
     {
-      "idCategory": "1",
-      "idRestaurant": "1",
-      "name": "breakfast-1"
+      "idcategories": 1,
+      "idrestaurants": 1,
+      "category_name": "breakfast-1"
     },
     {
-      "idCategory": "2",
-      "idRestaurant": "1",
-      "name": "lunch-2"
+      "idcategories": 2,
+      "idrestaurants": 1,
+      "category_name": "lunch-2"
     },
     {
-      "idCategory": "3",
-      "idRestaurant": "1",
-      "name": "dinner-3"
+      "idcategories": 3,
+      "idrestaurants": 1,
+      "category_name": "dinner-3"
     },
     {
-      "idCategory": "4",
-      "idRestaurant": "2",
-      "name": "dinner-4"
+      "idcategories": 4,
+      "idrestaurants": 2,
+      "category_name": "dinner-4"
     }
   ],
   
   "products": [
     {
-      "idProduct": "1",
-      "idRestaurant": "1",
-      "idCategory": "1",
-      "name": "bread",
-      "price": 1,
-      "image": "sp01.png",
-      "description": "description of it"
+      "idproducts": 1,
+      "idrestaurants": 1,
+      "idcategories": 1,
+      "product_name": "bread",
+      "product_description": "product_description of it",
+      "product_cost": 1,
+      "product_image": "sp01.png"
     },
     {
-      "idProduct": "2",
-      "idRestaurant": "1",
-      "idCategory": "2",
-      "name": "mini buffet",
-      "price": 2,
-      "image": "sp02.png",
-      "description": "description of it"
+      "idproducts": 2,
+      "idrestaurants": 1,
+      "idcategories": 2,
+      "product_name": "mini buffet",
+      "product_description": "product_description of it",
+      "product_cost": 2,
+      "product_image": "sp02.png"
     },
     {
-      "idProduct": "3",
-      "idRestaurant": "1",
-      "idCategory": "3",
-      "name": "suop, salat",
-      "price": 3,
-      "image": "sp03.png",
-      "description": "description of it"
+      "idproducts": 3,
+      "idrestaurants": 1,
+      "idcategories": 3,
+      "product_name": "suop, salat",
+      "product_description": "product_description of it",
+      "product_cost": 3,
+      "product_image": "sp03.png"
     },
     {
-      "idProduct": "4",
-      "idRestaurant": "2",
-      "idCategory": "3",
-      "name": "suop, salat",
-      "price": 4,
-      "image": "sp04.png",
-      "description": "description of it"
+      "idproducts": 4,
+      "idrestaurants": 2,
+      "idcategories": 3,
+      "product_name": "suop, salat",
+      "product_description": "product_description of it",
+      "product_cost": 4,
+      "product_image": "sp04.png"
     },
     {
-      "idProduct": "5",
-      "idRestaurant": "1",
-      "idCategory": "1",
-      "name": "noodle",
-      "price": 5,
-      "image": "sp05.png",
-      "description": "description of it"
+      "idproducts": 5,
+      "idrestaurants": 1,
+      "idcategories": 1,
+      "product_name": "noodle",
+      "product_description": "product_description of it",
+      "product_cost": 5,
+      "product_image": "sp05.png"
     }
   ]
 }
