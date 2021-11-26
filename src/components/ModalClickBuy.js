@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import styles from '../css/ModalClickBuy.module.css';
 import cx from 'classnames';
+import { CartContext } from '../context/Contexts'
 // import axios from 'axios';
 
 export default function ModalClickBuy(props) {
   const [quantity, setQuantity] = useState(1)
+  const context = useContext(CartContext)
   function onDown() {
     let newQuantity = quantity >=1 ? quantity - 1 : quantity
     setQuantity(newQuantity)
@@ -52,6 +54,7 @@ export default function ModalClickBuy(props) {
     }
     // e.preventDefault()
     props.handleModalOpen(false)
+    context.CartCounter();
   }
 
   return (
