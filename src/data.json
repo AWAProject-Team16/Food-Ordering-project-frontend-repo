@@ -55,7 +55,6 @@
       "image": "sp01.png",
       "menu": "ASUS",
       "type": "Buffet",
-      "type_image":"category-pizza.jpg",
       "description": "Bugger and pizzza"
     },
     {
@@ -68,7 +67,6 @@
       "image": "sp02.png",
       "menu": "ACER",
       "type": "Fast-food",
-      "type_image":"category-hamburger.jpg",
       "description":"Bugger and pizzza"
     },
     {
@@ -81,7 +79,6 @@
       "image": "sp03.png",
       "menu": "MSI",
       "type": "Fast-casual",
-      "type_image":"category-kebab.jpg",
       "description": "Bugger and pizzza"
     },
     {

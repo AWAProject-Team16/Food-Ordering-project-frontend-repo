@@ -15,7 +15,7 @@ export default function Login(props) {
 
         try {
             const result = await axios.post(
-                "http://localhost:3000/loginForJWT",
+                "http://localhost:5000/loginForJWT",
                 null,
                 {
                     auth: {
@@ -29,8 +29,9 @@ export default function Login(props) {
             setLoginProcessState("success");
             setTimeout(() => {
                 setLoginProcessState("idle")
-                props.login(result.data.token);
+            //    props.login(result.data.token);
                 navigate("/", { replace: true});
+                
             }, 1500)
         } catch (error) {
             console.log(error.message);
