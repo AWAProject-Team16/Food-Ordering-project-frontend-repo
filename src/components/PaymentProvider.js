@@ -1,5 +1,7 @@
 import React from 'react'
-import styles from './../css/PaymentProvider.module.css'
+import styles from './../css/PaymentView/PaymentProvider.module.css'
+import PaymentProviderBank from './PaymentProviderBank'
+import PaymentProviderCC from './PaymentProviderCC'
 
 const PaymentProvider = (props) => {
     if(props.expanded === true && props.type === 'bank') {
@@ -9,7 +11,7 @@ const PaymentProvider = (props) => {
                     {props.name}
                 </div>
                 <div>
-                    This is a expanded view for a bank
+                    <PaymentProviderBank />
                 </div>
             </div>
         )
@@ -20,7 +22,7 @@ const PaymentProvider = (props) => {
                     {props.name}
                 </div>
                 <div>
-                    This is a expanded view for a credit card
+                    <PaymentProviderCC />
                 </div>
             </div>
         )

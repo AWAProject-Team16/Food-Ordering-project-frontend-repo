@@ -1,6 +1,6 @@
 import React from 'react'
 import PaymentProvider from './PaymentProvider'
-import styles from './../css/PaymentProviders.module.css'
+import styles from './../css/PaymentView/PaymentProviders.module.css'
 
 const PaymentProviders = (props) => {
     return (

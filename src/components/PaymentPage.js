@@ -1,4 +1,4 @@
-import styles from './../css/PaymentPage.module.css'
+import styles from './../css/PaymentView/PaymentPage.module.css'
 import React, { Component } from 'react'
 import PaymentProviders from './PaymentProviders';
 
@@ -20,13 +20,20 @@ export default class PaymentPage extends Component {
   }
 
   SelectProvider = (id) => {
-    let ProvidersArray = [...this.state.PaymentProviders]
-    let indexnumber = this.Indexfinder(ProvidersArray, id)
+    let ProvidersArray = [...this.state.PaymentProviders];
+    let indexnumber = this.Indexfinder(ProvidersArray, id);
     if(ProvidersArray[indexnumber].expanded == false) {
-      ProvidersArray[indexnumber].expanded = true
-      this.setState({ PaymentProviders: ProvidersArray});
-    } else if (ProvidersArray[indexnumber].expanded == false) {
-      ProvidersArray[indexnumber].expanded = false
+      let currentOpen = ProvidersArray.findIndex(Provider => Provider.expanded === true);
+      if(currentOpen != -1) {
+        ProvidersArray[currentOpen].expanded = false;
+        ProvidersArray[indexnumber].expanded = true;
+        this.setState({ PaymentProviders: ProvidersArray});
+      } else {
+        ProvidersArray[indexnumber].expanded = true;
+        this.setState({ PaymentProviders: ProvidersArray});
+      }
+    } else if (ProvidersArray[indexnumber].expanded == true) {
+      ProvidersArray[indexnumber].expanded = false;
       this.setState({ PaymentProviders: ProvidersArray});
     }
 
