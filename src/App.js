@@ -5,6 +5,8 @@ import RouterURL from './router/RouterURL';
 
 import styles from './App.module.css'
 import React, { Component } from 'react'
+import { CartContext } from "./context/Contexts";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ export default class App extends Component {
     if (Array.isArray(StorageCart)) {
       CartQty = StorageCart.reduce((Total, Current) => Total + Current.qty, 0);
     }
-    console.log(CartQty);
+    // console.log(CartQty);
     this.setState({ CartQty: CartQty });
   }
 
@@ -35,7 +37,9 @@ export default class App extends Component {
       <BrowserRouter>
         <div className={styles.App}>
           <Nav CartQty={this.state.CartQty} />
-          <RouterURL CartCounter={this.CartCounter} />
+          <CartContext.Provider value={{CartCounter: this.CartCounter}} >
+            <RouterURL />
+          </CartContext.Provider>
           <Footer />
         </div>
       </BrowserRouter>

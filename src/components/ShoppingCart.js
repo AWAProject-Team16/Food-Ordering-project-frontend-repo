@@ -4,6 +4,7 @@ import ProductArea from "./ProductArea"
 import styles from './../css/ShoppingCart.module.css'
 import DeliveryLocation from './DeliveryLocation';
 import { Link } from "react-router-dom";
+import { CartContext } from '../context/Contexts'
 
 
 class ShoppingCart extends React.Component {
@@ -26,6 +27,8 @@ class ShoppingCart extends React.Component {
     };
 
   }
+
+  static contextType = CartContext;
 
   componentDidMount() {
     let ShoppingCartToStore = [
@@ -63,7 +66,7 @@ class ShoppingCart extends React.Component {
     this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost });
     localStorage.setItem('ShoppingCart', JSON.stringify(this.state.ShoppingCart));
     // console.log(NewShoppingCart);
-    this.props.CartCounter();
+    this.context.CartCounter();
   }
 
   DecreaseAmount = (id, cost) => {
@@ -83,7 +86,7 @@ class ShoppingCart extends React.Component {
       // console.log("ei näin")
       // this.DeleteProduct(id, 1, cost)
     }
-    this.props.CartCounter();
+    this.context.CartCounter();
   }
 
   DeleteProduct = (id, qty, cost) => {
@@ -97,7 +100,7 @@ class ShoppingCart extends React.Component {
     let NewTotalCost = NewCost + this.state.DeliveryCost
     this.setState({ ShoppingCart: NewShoppingCart, ProductCosts: NewCost, TotalCost: NewTotalCost });
     localStorage.setItem('ShoppingCart', JSON.stringify(NewShoppingCart));
-    this.props.CartCounter();
+    this.context.CartCounter();
   }
 
   AddProduct = (id, value, qty, cost) => {
@@ -117,7 +120,7 @@ class ShoppingCart extends React.Component {
       console.log(StorageCart)
       localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
     }
-    this.props.CartCounter();
+    this.context.CartCounter();
     // console.log(StorageCart)
     // localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
   }
