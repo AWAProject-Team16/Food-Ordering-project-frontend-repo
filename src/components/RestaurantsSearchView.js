@@ -7,7 +7,7 @@ export default function RestaurantsSearchView(props) {
   return (
     <Row className={ styles.RestaurantsSearchView }>
         {
-          props.items.map(item => <RestaurantsSearchResult key={item.idRestaurant} {...item} />)
+          props.items.map(item => <RestaurantsSearchResult key={item.idrestaurants} {...item} />)
         }
     </Row>
   )
