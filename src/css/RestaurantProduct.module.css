@@ -1,0 +1,58 @@
+h3 {
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+.product {
+  display: flex;
+  margin-left: 20px;
+  /* border-top: solid; */
+  border-style: solid;
+  border-color: #d4d4d4;
+  border-width: 1px 0;
+}
+
+.productLeft {
+  flex: 2;
+}
+
+.name {
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.description {
+  padding-bottom: 10px;
+}
+
+.price {
+  padding-bottom: 10px;
+  color: #009de0;
+}
+
+.productRight {
+  flex: 1;
+}
+
+.imageM {
+  height: auto;
+  max-height: 150px;
+  margin-bottom: 0;
+}
+
+.product:hover {
+  border-width: 1.2px 0;  
+  border-style: groove;
+  cursor: pointer;
+}
+
+.modal {
+  /* width: 400px; */
+  /* margin: auto; */
+  /* background-color: aqua; */
+  background-image: url(registration-form-background.jpg);
+  position: absolute;
+  left: 25%;
+  top: 35%;
+  border-radius: 8px;
+  border: none;
+}

@@ -117,8 +117,6 @@ function renderRegistrationForm() {
         <div className={styles.inner}>
           <form action="" name="registrationForm" className={styles.form}>
             <h3>Registration Form</h3>
-            <div className={styles.formgroup}>
-            </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Username
@@ -128,6 +126,7 @@ function renderRegistrationForm() {
               </label>
               <input type="text" className={styles.formcontrol} name="username" onFocus={(event) => hideErrorMessage(event)} />
             </div>
+            {/* <FormControlInput label="Username" errorMessage="Username cannot be empty!"/> */}
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Password
