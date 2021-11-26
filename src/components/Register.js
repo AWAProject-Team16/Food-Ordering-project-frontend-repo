@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function isEmailValid(email) {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -85,12 +86,20 @@ function getFormDataAndCallAPI() {
   let userObj = {}
   formData.forEach((value, key) => userObj[key] = value);
 
-  axios.post('/users/register', userObj)
+  axios.post(API_URL + '/users/register', userObj)
     .then((response) => {
       console.log(response);
-      alert("Register successfully. You can log in now.")
+      if (response.status === 201) {
+        alert("Register successfully. You can log in now.");
+        window.location.href = '/';
+      } else {
+        alert("Something went wrong!");
+      }
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.log(err)
+      alert("Something went wrong!");
+    })
 
 }
 
@@ -107,7 +116,7 @@ function registerNow() {
   validateConfirmPassword();
   validateAcceptTerms();
 
-  // getFormDataAndCallAPI();
+  getFormDataAndCallAPI();
 }
 
 function renderRegistrationForm() {

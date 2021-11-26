@@ -2,23 +2,33 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
+const API_URL = process.env.REACT_APP_API_URL
 
 function getFormDataAndCallAPI() {
-  const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
+  const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
   let userObj = {}
   formData.forEach((value, key) => userObj[key] = value);
+  userObj.phone = '123456';
+  console.log('userObj:', userObj);
 
-  axios.post('/users/register', userObj)
+  axios.post(API_URL + '/restaurants/newRestaurant', userObj, {auth: {username: 'a', password: '1234567890Aa@'}})
     .then((response) => {
       console.log(response);
-      alert("Register successfully. You can log in now.")
+      if (response.status === 201) {
+        alert("Restaurant created.");
+      } else {
+        alert("Something went wrong!");
+      }
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.log(err)
+      alert("Something went wrong!");
+    })
 
 }
 
 function createRestaurant() {
-  const form = document.querySelector('form[name="createRestaurant"]');
+  const form = document.querySelector('form[name="createRestaurantForm"]');
 
   form.onsubmit = (event) => {
     event.preventDefault();
@@ -26,7 +36,7 @@ function createRestaurant() {
 
   console.log('creaate restaurant')
 
-  // getFormDataAndCallAPI();
+  getFormDataAndCallAPI();
 }
 
 function showChosenFileName() {
@@ -44,7 +54,7 @@ function render() {
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="createRestaurant" className={styles.form}>
+          <form action="" name="createRestaurantForm" className={styles.form}>
             <h3>Create A New Restaurant</h3>
             <div className={styles.formgroup}>
             </div>
