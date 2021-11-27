@@ -2,9 +2,8 @@
   --white-color: #fff;
   --back-color: #000;
   --text-color: #333;
-  /* --main-color: #CD1718; */
-  /* --ground-color: #F4F5F7; */
-
+  --main-color: #CD1718;
+  --ground-color: #F4F5F7;
 }
 
 * {

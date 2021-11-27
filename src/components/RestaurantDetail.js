@@ -3,13 +3,13 @@ import RestaurantProduct from './RestaurantProduct';
 
 import React from 'react';
 export default function RestaurantDetail(props) {
-  const objProducts = props.products.filter(item => item.idCategory === props.category.idCategory)
+  const objProducts = props.products.filter(item => item.idcategories === props.category.idcategories)
   return (
     <div>
-      <h3 id={props.category.idCategory} className={ styles.category }> { props.category.name } </h3>
+      <h3 id={props.category.idcategories} className={ styles.category }> { props.category.category_name } </h3>
       {
         objProducts.map(item =>
-          <RestaurantProduct item={item} key={item.idProduct}/>
+          <RestaurantProduct item={item} key={item.idproducts}/>
       )}
     </div>
   )
@@ -32,15 +32,15 @@ export default function RestaurantDetail(props) {
 //   }
   
 //   render() {
-//     const objProducts = this.props.products.filter(item => item.idCategory === this.props.category.idCategory)
+//     const objProducts = this.props.products.filter(item => item.idcategories === this.props.category.idcategories)
 //     const { clickBuy } = this.state;
 
 //     return (
 //       <div>
-//         <h3 id={ this.props.category.idCategory } className={ styles.category }> { this.props.category.name } </h3>
+//         <h3 id={ this.props.category.idcategories } className={ styles.category }> { this.props.category.name } </h3>
 //         {
 //           objProducts.map(item =>
-//             <div className={ styles.product } key={ item.idProduct } onClick={ this.openClickBuy }>
+//             <div className={ styles.product } key={ item.idproducts } onClick={ this.openClickBuy }>
 //               <div className={ styles.productLeft }>
 //                 <div className={ styles.name }> { item.name } </div>
 //                 <div className={ styles.description }> { item.description } </div>
