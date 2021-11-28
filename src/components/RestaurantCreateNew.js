@@ -2,23 +2,41 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
+const API_URL = process.env.REACT_APP_API_ADDRESS
 
 function getFormDataAndCallAPI() {
-  const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
-  let userObj = {}
-  formData.forEach((value, key) => userObj[key] = value);
+  const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
+  let restaurantObj = {}
+  formData.forEach((value, key) => restaurantObj[key] = value);
+  restaurantObj.name='xxxxxxxxxxxxxxx'
+  restaurantObj.address = 'bbb'
+  restaurantObj.phone = '123456';
+  restaurantObj.restaurant_type = 'Buffet';
+  restaurantObj.operating_hours = '8am-8pm'
+  restaurantObj.price_level = '2';
+  restaurantObj.restaurant_description = 'aaaa'
 
-  axios.post('/users/register', userObj)
+  // delete restaurantObj.image
+  console.log('restaurantObj:', restaurantObj);
+
+  axios.post(API_URL + '/restaurants/newRestaurant', formData, {auth: {username: 'a', password: '1234567890Aa@'}})
     .then((response) => {
       console.log(response);
-      alert("Register successfully. You can log in now.")
+      if (response.status === 201) {
+        alert("Restaurant created.");
+      } else {
+        alert("Something went wrong!");
+      }
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.log(err)
+      alert("Something went wrong!");
+    })
 
 }
 
 function createRestaurant() {
-  const form = document.querySelector('form[name="createRestaurant"]');
+  const form = document.querySelector('form[name="createRestaurantForm"]');
 
   form.onsubmit = (event) => {
     event.preventDefault();
@@ -26,7 +44,7 @@ function createRestaurant() {
 
   console.log('creaate restaurant')
 
-  // getFormDataAndCallAPI();
+  getFormDataAndCallAPI();
 }
 
 function showChosenFileName() {
@@ -44,7 +62,7 @@ function render() {
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="createRestaurant" className={styles.form}>
+          <form action="" name="createRestaurantForm" className={styles.form}>
             <h3>Create A New Restaurant</h3>
             <div className={styles.formgroup}>
             </div>

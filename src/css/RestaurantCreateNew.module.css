@@ -225,3 +225,13 @@ label[for="file_picker"] {
   padding-top: 10px;
   text-align: center;
 }
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex input[type="number"] {
+  width: 150px;
+  margin-left: 5px;
+}

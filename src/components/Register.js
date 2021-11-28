@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 function isEmailValid(email) {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -19,9 +20,11 @@ function validateUsername() {
   const usernameErrorMessage = document.querySelector(`.${styles.errormessage}.username`);
 
   if (!username.value.trim()) {
-    usernameErrorMessage.style.display = "inline";
+    usernameErrorMessage.style.display = "inline-block";
+    return false;
   } else {
     usernameErrorMessage.style.display = "none";
+    return true;
   }
 }
 
@@ -30,9 +33,11 @@ function validateEmail() {
   const emailErrorMessage = document.querySelector(`.${styles.errormessage}.email`);
 
   if (!isEmailValid(email.value)) {
-    emailErrorMessage.style.display = "inline";
+    emailErrorMessage.style.display = "inline-block";
+    return false;
   } else {
     emailErrorMessage.style.display = "none";
+    return true;
   }
 }
 
@@ -41,9 +46,11 @@ function validatePassword() {
   const passwordErrorMessage = document.querySelector(`.${styles.errormessage}.password`);
 
   if (!isPasswordStrong(password.value)) {
-    passwordErrorMessage.style.display = "inline";
+    passwordErrorMessage.style.display = "inline-block";
+    return false;
   } else {
     passwordErrorMessage.style.display = "none";
+    return true;
   }
 }
 
@@ -53,9 +60,11 @@ function validateConfirmPassword() {
   const confirmPasswordErrorMessage = document.querySelector(`.${styles.errormessage}.confirm_password`);
 
   if (password.value !== confirmPassword.value) {
-    confirmPasswordErrorMessage.style.display = "inline";
+    confirmPasswordErrorMessage.style.display = "inline-block";
+    return false;
   } else {
     confirmPasswordErrorMessage.style.display = "none";
+    return true;
   }
 }
 
@@ -65,8 +74,10 @@ function validateAcceptTerms() {
 
   if (!checkbox.checked) {
     checkboxErrorMessage.style.display = "block";
+    return false;
   } else {
     checkboxErrorMessage.style.display = "none";
+    return true;
   }
 }
 
@@ -84,13 +95,22 @@ function getFormDataAndCallAPI() {
   const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
   let userObj = {}
   formData.forEach((value, key) => userObj[key] = value);
+  console.log('userObj', userObj);
 
-  axios.post('/users/register', userObj)
+  axios.post(API_ADDRESS + '/users/register', userObj)
     .then((response) => {
       console.log(response);
-      alert("Register successfully. You can log in now.")
+      if (response.status === 201) {
+        alert("Register successfully. You can log in now.");
+        // window.location.href = '/';
+      } else {
+        alert("Something went wrong!");
+      }
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.log(err)
+      alert("Something went wrong!");
+    })
 
 }
 
@@ -101,13 +121,12 @@ function registerNow() {
     event.preventDefault();
   };
 
-  validateUsername();
-  validateEmail();
-  validatePassword();
-  validateConfirmPassword();
-  validateAcceptTerms();
+  let isDataValid = false;
+  isDataValid = validateUsername() && validateEmail() && validatePassword()
+    && validateConfirmPassword() && validateAcceptTerms();
 
-  // getFormDataAndCallAPI();
+  if (isDataValid) getFormDataAndCallAPI()
+  else console.log('Not all data are valid');
 }
 
 function renderRegistrationForm() {
@@ -144,15 +163,19 @@ function renderRegistrationForm() {
               <input type="password" className={styles.formcontrol} name="confirm_password" onFocus={(event) => hideErrorMessage(event)} />
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">Fullname</label>
-              <input type="text" className={styles.formcontrol} name="name" />
-            </div>
-            <div className={styles.formwrapper}>
               <label htmlFor="">
-                Email
+                Email Address
                 <span htmlFor="" className={cx(styles.errormessage, "email")}>Please enter a valid email!</span>
               </label>
               <input type="text" className={styles.formcontrol} name="email" onFocus={(event) => hideErrorMessage(event)} />
+            </div>
+            <div className={styles.formwrapper}>
+              <label htmlFor="">Full Name</label>
+              <input type="text" className={styles.formcontrol} name="name" />
+            </div>
+            <div className={styles.formwrapper}>
+              <label htmlFor="">Phone Number</label>
+              <input type="tel" className={styles.formcontrol} name="phonenumber" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Home Address</label>
@@ -160,9 +183,9 @@ function renderRegistrationForm() {
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Account Type</label>
-              <select className={cx(styles.formcontrol, styles.select)}>
-                <option value="customer">Customer</option>
-                <option value="manager">Manger</option>
+              <select className={cx(styles.formcontrol, styles.select)} name="account_type">
+                <option value="1">Customer</option>
+                <option value="2">Manger</option>
               </select>
             </div>
             <div className={styles.checkbox}>

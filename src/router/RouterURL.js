@@ -8,6 +8,11 @@ import PaymentPage from '../components/PaymentPage';
 import Data from '../data.json';
 import DevThucTestingArea from '../components/DevThucTestingArea';
 import Categories from '../components/Categories'
+import OrderHistoryManger from '../components/OrderHistory/manager/OrderHistoryManger';
+import OrderHistoryCustomer from '../components/OrderHistory/customer/OrderHistoryCustomer';
+import Register from '../components/Register';
+import RestaurantCreateNew from '../components/RestaurantCreateNew';
+import ProductCreateNew from '../components/ProductCreateNew';
 export default class RouterURL extends Component {
   render() {
     return (
@@ -21,6 +26,17 @@ export default class RouterURL extends Component {
         <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
         <Route path="/paymentpage" element={<PaymentPage />} />
+
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/managers/orders" element={<OrderHistoryManger />} />
+        <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
+        <Route path="/managers/products/create" element={<ProductCreateNew />} />
+        
+        <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
+        
+        
+        
         <Route path="/devthuc" element={<DevThucTestingArea />} />
       </Routes>
     )
