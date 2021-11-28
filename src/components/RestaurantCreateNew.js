@@ -2,16 +2,24 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_ADDRESS
 
 function getFormDataAndCallAPI() {
   const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
-  let userObj = {}
-  formData.forEach((value, key) => userObj[key] = value);
-  userObj.phone = '123456';
-  console.log('userObj:', userObj);
+  let restaurantObj = {}
+  formData.forEach((value, key) => restaurantObj[key] = value);
+  restaurantObj.name='xxxxxxxxxxxxxxx'
+  restaurantObj.address = 'bbb'
+  restaurantObj.phone = '123456';
+  restaurantObj.restaurant_type = 'Buffet';
+  restaurantObj.operating_hours = '8am-8pm'
+  restaurantObj.price_level = '2';
+  restaurantObj.restaurant_description = 'aaaa'
 
-  axios.post(API_URL + '/restaurants/newRestaurant', userObj, {auth: {username: 'a', password: '1234567890Aa@'}})
+  // delete restaurantObj.image
+  console.log('restaurantObj:', restaurantObj);
+
+  axios.post(API_URL + '/restaurants/newRestaurant', formData, {auth: {username: 'a', password: '1234567890Aa@'}})
     .then((response) => {
       console.log(response);
       if (response.status === 201) {
