@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../../../css/OrderHistory.module.css';
 import OrderHistoryPerRestaurant from './OrderHistoryPerRestaurant';
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_ADDRESS;
 
 export default class OrderHistory extends React.Component {
   constructor(props) {
