@@ -52,6 +52,7 @@
   .image {
     /* width: fit-content; */
     height: auto;
+    max-height: 360px;
   }
 /* --------- detail --------- */
 h4 {

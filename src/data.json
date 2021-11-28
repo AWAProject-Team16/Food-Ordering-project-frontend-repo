@@ -172,22 +172,22 @@
     {
       "idcategories": 1,
       "idrestaurants": 1,
-      "category_name": "breakfast-1"
+      "category_name": "Breakfast"
     },
     {
       "idcategories": 2,
       "idrestaurants": 1,
-      "category_name": "lunch-2"
+      "category_name": "Lunch"
     },
     {
       "idcategories": 3,
       "idrestaurants": 1,
-      "category_name": "dinner-3"
+      "category_name": "Dinner"
     },
     {
       "idcategories": 4,
       "idrestaurants": 2,
-      "category_name": "dinner-4"
+      "category_name": "Dinner"
     }
   ],
   
@@ -196,46 +196,46 @@
       "idproducts": 1,
       "idrestaurants": 1,
       "idcategories": 1,
-      "product_name": "bread",
+      "product_name": "Bread",
       "product_description": "product_description of it",
       "product_cost": 1,
-      "product_image": "sp01.png"
+      "product_image": "p1.png"
     },
     {
       "idproducts": 2,
       "idrestaurants": 1,
       "idcategories": 2,
-      "product_name": "mini buffet",
+      "product_name": "Mini buffet",
       "product_description": "product_description of it",
       "product_cost": 2,
-      "product_image": "sp02.png"
+      "product_image": "p2.png"
     },
     {
       "idproducts": 3,
       "idrestaurants": 1,
       "idcategories": 3,
-      "product_name": "suop, salat",
+      "product_name": "Suop, salat",
       "product_description": "product_description of it",
       "product_cost": 3,
-      "product_image": "sp03.png"
+      "product_image": "p3.png"
     },
     {
       "idproducts": 4,
       "idrestaurants": 2,
       "idcategories": 3,
-      "product_name": "suop, salat",
+      "product_name": "Suop, salat",
       "product_description": "product_description of it",
       "product_cost": 4,
-      "product_image": "sp04.png"
+      "product_image": "p3.png"
     },
     {
       "idproducts": 5,
       "idrestaurants": 1,
       "idcategories": 1,
-      "product_name": "noodle",
+      "product_name": "Noodle",
       "product_description": "product_description of it",
       "product_cost": 5,
-      "product_image": "sp05.png"
+      "product_image": "p5.png"
     }
   ]
 }
