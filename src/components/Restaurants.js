@@ -36,6 +36,9 @@ export default class Restaurants extends Component {
   render() {
     return (
       <div className={ styles.presentationModeGrid }>
+        <div className= {styles.header}>
+          <img alt="true" className= {styles.image} src={`/images/event.png`} />
+        </div>
         <div className={ styles.title }>
           <div className={ styles.name }><p>RESTAURANTS</p></div>
           <div className={ styles.search }>

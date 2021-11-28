@@ -14,11 +14,11 @@
 }
 
 .searchbar{
-  background-color: white;
-    height: 30px;
-    width: 500px;
-    border-radius: 10px;
-    font-size: 17px;
+  /* background-color: white; */
+  height: 30px;
+  width: 500px;
+  border-radius: 10px;
+  font-size: 17px;
 }
 .button{
     font-size: large;
@@ -48,4 +48,32 @@
   background-color:aqua;
   color: white;
   padding: 15px 26px;
+}
+
+.popupSearch {
+  position: absolute;
+  z-index: 1;
+  left: 0%;
+  /* right: 0%; */
+  /* top: 105%; */
+  width: 320px;
+  border: 1px solid #D3D3D3;
+  border-radius: 4px;
+  background-color: var(--white-color);
+  font-size: 14px;
+  /* transform-origin: top 75%; */
+  /* animation: HeaderNotify ease-in 0.25s; */
+  /* display: none; */
+  color: antiquewhite;
+}
+
+.wholeSearchBar {
+  background-color: white;
+  border: solid;
+  border-radius: 8px;
+}
+
+.searchbar {
+  border: none;
+  outline: none;
 }
