@@ -13,7 +13,7 @@ export default class Restaurants extends Component {
     this.state = {
       items: props.restaurants,  // Xóa props ở routerURL sau !!!
       // items: [],
-      searchString: "",
+      searchString: localStorage.getItem('valueOfInput') || '',
     }
   }
 
@@ -34,6 +34,7 @@ export default class Restaurants extends Component {
   }
 
   render() {
+    localStorage.removeItem('valueOfInput');
     return (
       <div className={ styles.presentationModeGrid }>
         <div className= {styles.header}>

@@ -64,10 +64,10 @@ export default class Nav extends Component {
     })
   }
 
-  handleKeyPress = (event) => {
-    if(event.key === 'Enter') {
-      console.log('Enterd')
-      // window.location='/restaurants';
+  handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      localStorage.setItem('valueOfInput', e.target.value)
+      window.location='/restaurants';
     }
   }
 
