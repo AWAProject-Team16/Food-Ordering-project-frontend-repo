@@ -142,6 +142,8 @@ class ShoppingCart extends React.Component {
     let NewCost = this.state.TotalCost
     NewCost = NewCost + DeliveryCost
     let DeliveryLocation = this.state.DeliveryForm
+    localStorage.setItem('DeliveryLocation', DeliveryLocation)
+    localStorage.setItem('DeliveryCost', DeliveryCost)
     this.setState({ isLocationSubmitted: true, DeliveryCost: DeliveryCost, TotalCost: NewCost, DeliveryLocation: DeliveryLocation })
   }
 

@@ -11,7 +11,7 @@ const PaymentProvider = (props) => {
                     {props.name}
                 </div>
                 <div>
-                    <PaymentProviderBank />
+                    <PaymentProviderBank name={props.name} AddOrder={props.AddOrder}/>
                 </div>
             </div>
         )
@@ -22,7 +22,7 @@ const PaymentProvider = (props) => {
                     {props.name}
                 </div>
                 <div>
-                    <PaymentProviderCC />
+                    <PaymentProviderCC name={props.name} AddOrder={props.AddOrder} />
                 </div>
             </div>
         )
