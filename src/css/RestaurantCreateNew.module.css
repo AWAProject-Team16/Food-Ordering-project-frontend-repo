@@ -11,7 +11,7 @@
   margin: auto;
   padding-top: 68px;
   padding-bottom: 48px;
-  background-image: url('./registration-form-background.jpg');
+  background-image: url("./registration-form-background.jpg");
 }
 
 .inner h3 {
@@ -144,7 +144,7 @@
   cursor: pointer;
 }
 
-.checkbox input:checked~.checkmark:after {
+.checkbox input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -169,7 +169,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
-  content: '\2713';
+  content: "\2713";
 }
 
 @media (max-width: 991px) {
@@ -192,7 +192,8 @@
   }
 }
 
-.errormessage, .checkboxerrormessage {
+.errormessage,
+.checkboxerrormessage {
   color: red;
   font-size: 0.8em;
   margin-left: 10px;
@@ -234,4 +235,9 @@ label[for="file_picker"] {
 .flex input[type="number"] {
   width: 150px;
   margin-left: 5px;
+}
+
+.productImage {
+  width: 300px;
+  height: 300px;
 }
