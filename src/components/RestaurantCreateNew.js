@@ -2,36 +2,52 @@ import React from 'react';
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import cx from 'classnames';
-const API_URL = process.env.REACT_APP_API_ADDRESS
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
 
 function getFormDataAndCallAPI() {
   const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
+  // console.log(document.querySelector('input[name="image"]').files[0])
+  // formData.append('image', document.querySelector('input[name="image"]').files[0])
+  console.log(formData)
   let restaurantObj = {}
   formData.forEach((value, key) => restaurantObj[key] = value);
-  restaurantObj.name='xxxxxxxxxxxxxxx'
-  restaurantObj.address = 'bbb'
-  restaurantObj.phone = '123456';
-  restaurantObj.restaurant_type = 'Buffet';
-  restaurantObj.operating_hours = '8am-8pm'
-  restaurantObj.price_level = '2';
-  restaurantObj.restaurant_description = 'aaaa'
 
-  // delete restaurantObj.image
+  // delete restaurantObj.image;  // BECAUSE BACKEND CANNOT HANDLE IT NOW
+
   console.log('restaurantObj:', restaurantObj);
 
-  axios.post(API_URL + '/restaurants/newRestaurant', formData, {auth: {username: 'a', password: '1234567890Aa@'}})
-    .then((response) => {
-      console.log(response);
-      if (response.status === 201) {
-        alert("Restaurant created.");
-      } else {
-        alert("Something went wrong!");
-      }
+  let token;
+
+  axios.post(API_ADDRESS + '/users/login', {}, {
+    auth: {username: 'ma99', password: '123456789Aa@'}
+  })
+    .then(res => {
+      // console.log(res)
+      token = res.data.token;
+
+      axios.post(API_ADDRESS + '/restaurants/newRestaurant', restaurantObj, {
+        headers: {
+          'Content-Type': `multipart/form-data; boundary=${restaurantObj._boundary}`,
+          'Authorization': `Bearer ${token}`
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 201) {
+            alert("Restaurant created.");
+          } else {
+            alert("Something went wrong!");
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          alert("Something went wrong!");
+        })
     })
-    .catch((err) => {
-      console.log(err)
-      alert("Something went wrong!");
-    })
+    .catch(console.log)
+  return
+
+
 
 }
 
@@ -42,7 +58,7 @@ function createRestaurant() {
     event.preventDefault();
   };
 
-  console.log('creaate restaurant')
+  console.log('create clicked')
 
   getFormDataAndCallAPI();
 }
@@ -88,6 +104,12 @@ function render() {
               <textarea required rows="12" className={cx(styles.formcontrol, styles.textarea)} name="operating_hours" />
             </div>
             <div className={styles.formwrapper}>
+              <label htmlFor="">
+                Phone Number
+              </label>
+              <input required type="tel" className={styles.formcontrol} name="phonenumber" />
+            </div>
+            <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Type</label>
               <select className={cx(styles.formcontrol, styles.select)} name="restaurant_type">
                 <option value="Buffet">Buffet</option>
@@ -101,7 +123,7 @@ function render() {
               <label htmlFor="">
                 Price Level
               </label>
-              <select className={cx(styles.formcontrol, styles.select)} name="restaurant_type">
+              <select className={cx(styles.formcontrol, styles.select)} name="price_level">
                 <option value="1">&euro;</option>
                 <option value="2">&euro;&euro;</option>
                 <option value="3">&euro;&euro;&euro;</option>
@@ -117,7 +139,7 @@ function render() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <input type="file" accept="image/*" className={cx(styles.formcontrol, styles.input_file)} name="image" id="file_picker" onChange={showChosenFileName} />
+                <input type="file" accept="image/*" className={cx(styles.formcontrol, styles.input_file)} name="image" id="file_picker" onChange={showChosenFileName} multiple />
                 <label className={styles.formcontrol} htmlFor="file_picker">Click to choose an image</label>
               </div>
             </div>
