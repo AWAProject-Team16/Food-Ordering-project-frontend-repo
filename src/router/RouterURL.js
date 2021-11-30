@@ -13,8 +13,8 @@ import OrderHistoryCustomer from '../components/OrderHistory/customer/OrderHisto
 import Register from '../components/Register';
 import RestaurantCreateNew from '../components/RestaurantCreateNew';
 import ProductCreateNew from '../components/ProductCreateNew';
+import ProductModify from '../components/ProductModify';
 import Login from '../components/Login';
-
 
 export default class RouterURL extends Component {
   constructor(props){
@@ -60,7 +60,9 @@ export default class RouterURL extends Component {
 
         <Route path="/managers/orders" element={<OrderHistoryManger />} />
         <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
-        <Route path="/managers/products/create" element={<ProductCreateNew />} />   
+        <Route path="/managers/products/create" element={<ProductCreateNew />} />
+        <Route path="/managers/products/:idproducts" element={<ProductModify />} />
+        
         <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
         <Route path="/devthuc" element={<DevThucTestingArea />} />
         </Routes>
