@@ -25,7 +25,7 @@ function createProduct() {
   };
 
   console.log('create clicked')
-
+ 
   // getFormDataAndCallAPI();
 }
 
