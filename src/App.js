@@ -3,18 +3,20 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import RouterURL from './router/RouterURL';
 import RestaurantCreateNew from './components/RestaurantCreateNew';
-import Register from './components/Register';
-
 import styles from './App.module.css'
 import React, { Component } from 'react'
 import { CartContext } from "./context/Contexts";
+
+
+const jwtFromStorage = window.localStorage.getItem('appAuthData')
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      CartQty: 0
+      CartQty: 0,
+      isUserLoggedIn: jwtFromStorage
     };
   };
 
@@ -38,9 +40,12 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div className={styles.App}>
-          <Nav CartQty={this.state.CartQty} />
+          <Nav CartQty={this.state.CartQty} nav = {(newJwt => {
+            this.setState({isUserLoggedIn:newJwt})
+          }
+            )} userLoggedIn={this.state.isUserLoggedIn} />
           <CartContext.Provider value={{CartCounter: this.CartCounter}} >
-            <RouterURL />
+            <RouterURL userLoggedIn={this.state.isUserLoggedIn} />
           </CartContext.Provider>
           <Footer />
         </div>
