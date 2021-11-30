@@ -5,13 +5,13 @@ import cx from 'classnames';
 
 function getFormDataAndCallAPI() {
   const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
-  let userObj = {}
-  formData.forEach((value, key) => userObj[key] = value);
+  let productObj = {}
+  formData.forEach((value, key) => productObj[key] = value);
 
-  axios.post('/users/register', userObj)
+  axios.post('/users/register', productObj)
     .then((response) => {
       console.log(response);
-      alert("Register successfully. You can log in now.")
+      alert("Product created successfully.")
     })
     .catch((err) => console.error(err))
 
