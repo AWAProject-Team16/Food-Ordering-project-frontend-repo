@@ -10,12 +10,16 @@ import styles from './App.module.css'
 import React, { Component } from 'react'
 import { CartContext } from "./context/Contexts";
 
+
+const jwtFromStorage = window.localStorage.getItem('appAuthData')
+
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      CartQty: 0
+      CartQty: 0,
+      isUserLoggedIn: jwtFromStorage
     };
   };
 
@@ -39,9 +43,12 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div className={styles.App}>
-          <Nav CartQty={this.state.CartQty} restaurants={ Data.restaurants }/>
+          <Nav CartQty={this.state.CartQty} restaurants={ Data.restaurants } nav = {(newJwt => {
+            this.setState({isUserLoggedIn:newJwt})
+          }
+            )} userLoggedIn={this.state.isUserLoggedIn} />
           <CartContext.Provider value={{CartCounter: this.CartCounter}} >
-            <RouterURL />
+            <RouterURL userLoggedIn={this.state.isUserLoggedIn} />
           </CartContext.Provider>
           <Footer />
         </div>

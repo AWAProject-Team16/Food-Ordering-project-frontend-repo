@@ -3,15 +3,17 @@ import React, { Component, useState } from 'react'
 import { Link, NavLink } from "react-router-dom";
 import Register from './Register'
 import Modal from 'react-modal'
+import Login from './Login'
 import SearchView from './SearchView';
 
-export default class Nav extends Component {
+export default class Nav extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { 
       sign:false, 
       login: false,
+      userJwt:null,
       CartItems: 0,
       items: props.restaurants,  // Xóa props ở routerURL sau !!!
       searchString: '',
@@ -19,6 +21,7 @@ export default class Nav extends Component {
     }
     
   }
+
   onOpenRegister = () => {
     this.setState({ sign: true });
   };
@@ -33,6 +36,15 @@ export default class Nav extends Component {
 
   onCloseLogin = () => {
     this.setState({ login: false })
+  }
+  logOut = () => {
+    this.setState({userJwt:null})
+    this.props.nav(this.state.userJwt)
+    window.localStorage.removeItem('appAuthData')
+  }
+  passToken = () => {
+
+    this.props.nav(this.state.userJwt)
   }
   
   onSearchFieldChange = (e) => {
@@ -75,11 +87,18 @@ export default class Nav extends Component {
     const { login, sign } = this.state;
     return (
       <div className={styles.nav}>
+
         <ul>
           <li>
             <Link to="/" className={styles.logo}>Slurps</Link>
-       </li>
-       </ul>
+          </li>
+        </ul>
+        
+        <Modal isOpen={sign} >
+          <button onClick={this.onCloseRegister}>Close</button>
+       <Register />
+       </Modal>
+       
         <div style={{ position: 'relative' }}>
           <div className={styles.wholeSearchBar}>
             <input className={styles.searchbar} type="text" placeholder="Search.."
@@ -95,11 +114,28 @@ export default class Nav extends Component {
             />
           </div>
         </div>
-        <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>
-        <button className={styles.button2} onClick={this.onOpenRegister}>Register</button>
-        <Modal isOpen={sign}>
-          <h3>THis is modal</h3>
+       
+        <Modal isOpen={login}>
+          <button onClick={this.onCloseLogin}>Close</button>
+        <Login login ={ (newJwt => {
+          this.setState({userJwt: newJwt})
+          window.localStorage.setItem('appAuthData', this.state.userJwt)
+          this.passToken()
+          this.onCloseLogin()
+        })}/>
         </Modal>
+
+         <div>
+          {this.props.userLoggedIn 
+          ? <button className={styles.button2} onClick = {this.logOut}  > Log out </button>
+          :
+          <div>
+          <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>  
+          <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
+          </div>
+          }
+          </div>
+
         <ul>
           <li>
             <Link to="/restaurants">Restaurants</Link>

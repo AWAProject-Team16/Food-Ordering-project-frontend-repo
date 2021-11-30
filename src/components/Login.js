@@ -1,12 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import styles from '../css/Register.module.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+
 
 
 export default function Login(props) {
 
-    let navigate = useNavigate();
     const [loginProcessState, setLoginProcessState] = useState("idle");
 
     const handleLoginSubmit = async (event) =>{
@@ -15,7 +14,7 @@ export default function Login(props) {
 
         try {
             const result = await axios.post(
-                "http://localhost:3000/loginForJWT",
+                "http://localhost:5000/loginForJWT",
                 null,
                 {
                     auth: {
@@ -25,12 +24,14 @@ export default function Login(props) {
                 }
             );
             console.log(result);
-            console.log(result.data);
+            const receivedJWT = result.data.token;
+            console.log("token "+receivedJWT);
             setLoginProcessState("success");
             setTimeout(() => {
                 setLoginProcessState("idle")
-                props.login(result.data.token);
-                navigate("/", { replace: true});
+                props.login(receivedJWT)
+               
+                
             }, 1500)
         } catch (error) {
             console.log(error.message);

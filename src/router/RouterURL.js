@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Routes, Route} from "react-router-dom";
+import React, {Component,} from 'react';
+import {Routes, Route, BrowserRouter, } from "react-router-dom";
 import Home from '../components/Home';
 import Restaurants from '../components/Restaurants';
 import Restaurant from '../components/Restaurant';
@@ -13,32 +13,61 @@ import OrderHistoryCustomer from '../components/OrderHistory/customer/OrderHisto
 import Register from '../components/Register';
 import RestaurantCreateNew from '../components/RestaurantCreateNew';
 import ProductCreateNew from '../components/ProductCreateNew';
+import Login from '../components/Login';
+
+
 export default class RouterURL extends Component {
+  constructor(props){
+    super(props)
+   this.state = {
+    
+    
+   }
+  }
+  
   render() {
+    let authRoutes = <>
+    <Route path="/" element={ <Login /> } />
+    <Route path="/" element={ <Register /> } />
+  </>
+  
+  if(this.props.userLoggedIn != null) {
+    authRoutes = <Route path="/paymentpage" element={ <PaymentPage /> }/> 
+    
+  }
     return (
-      <Routes>
-        <Route path="/" element={<Home foodTypes={Data.food_types}/>} />
-        <Route path="/:type" element={<Categories restaurants={Data.restaurants} />} />
-        <Route path="/:type/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
+      
+      
+            
+          <Routes>
+          <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
+              {
+                authRoutes
+              }
+            <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
+            
+        {/* Typessä oli kaksoispisteet*/}
+        <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
+        <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
           {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
         </Route>
         <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
-        <Route path="/paymentpage" element={<PaymentPage />} />
+        
 
         <Route path="/register" element={<Register />} />
 
         <Route path="/managers/orders" element={<OrderHistoryManger />} />
         <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
-        <Route path="/managers/products/create" element={<ProductCreateNew />} />
-        
+        <Route path="/managers/products/create" element={<ProductCreateNew />} />   
         <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
-        
-        
-        
         <Route path="/devthuc" element={<DevThucTestingArea />} />
-      </Routes>
+        </Routes>
+          
+     
+
+      
     )
   }
 }
