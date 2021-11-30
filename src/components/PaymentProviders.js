@@ -9,6 +9,7 @@ const PaymentProviders = (props) => {
         props.providers.map(i => <PaymentProvider {...i}
           SelectProvider={props.SelectProvider}
           AddOrder={props.AddOrder}
+          HandleSubmit={props.HandleSubmit}
           key={i.id}
         />)
       }

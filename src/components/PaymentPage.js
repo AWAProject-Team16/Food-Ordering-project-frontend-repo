@@ -49,18 +49,28 @@ export default class PaymentPage extends Component {
   AddOrder = async () => {
     let ShoppingCart = localStorage.getItem('ShoppingCart');
     ShoppingCart = JSON.parse(ShoppingCart)
-    const DeliveryLocation = localStorage.getItem('DeliveryLocation')
-    const User = "UserID"
-    const Restaurant = "RestaurantID"
+    const DeliveryLocation = localStorage.getItem('DeliveryLocation');
+    const User = "JWTtoken?"
+    let Restaurant = localStorage.getItem('Restaurant');
+    Restaurant = JSON.parse(Restaurant)
     const TotalCost = "542543"
 
     // const response = await axios.post('localhost:5000/order/addorder', {ShoppingCart, DeliveryLocation, User, Restaurant, TotalCost})
     
+    console.log(Restaurant.Restaurant)
     console.log({ShoppingCart, DeliveryLocation, User, Restaurant, TotalCost})
 
     const article = { title: 'React POST Request Example' };
     const test = await axios.post('https://reqres.in/api/articles', article);
     console.log(test.data)
+    // localStorage.removeItem('ShoppingCart')
+    // localStorage.removeItem('Restaurant')
+    // localStorage.removeItem('DeliveryLocation')
+    // localStorage.removeItem('DeliveryCost')
+  }
+
+  HandleSubmit = (event) => {
+    event.preventDefault();
   }
   
   render() {
@@ -72,6 +82,7 @@ export default class PaymentPage extends Component {
           providers = { this.state.PaymentProviders }
           SelectProvider = { this.SelectProvider }
           AddOrder = { this.AddOrder }
+          HandleSubmit = {this.HandleSubmit}
           />
         </div>
       </div>

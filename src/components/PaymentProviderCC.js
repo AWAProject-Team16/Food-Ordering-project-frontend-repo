@@ -10,23 +10,23 @@ const PaymentProviderCC = (props) => {
       <div>
         Insert card number here
       </div>
-      <form>
-        <input type="text" defaultValue="XXXXXXXXXXXXX" />
+      <form onSubmit={props.HandleSubmit}>
+        <input type="number" />
       </form>
       <div className={styles.SmallInfo}>
         <div className={styles.CVV}>
           <div>
             CVV
           </div>
-          <form>
-            <input type="text" />
+          <form onSubmit={props.HandleSubmit}>
+            <input type="number" />
           </form>
         </div>
         <div className={styles.ExpirationDate}>
           <div>
             Expiration date (MM/YY)
           </div>
-          <form>
+          <form onSubmit={props.HandleSubmit}>
             <input type="text" />
           </form>
         </div>

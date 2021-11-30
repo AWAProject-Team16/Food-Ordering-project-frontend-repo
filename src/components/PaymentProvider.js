@@ -22,7 +22,7 @@ const PaymentProvider = (props) => {
                     {props.name}
                 </div>
                 <div>
-                    <PaymentProviderCC name={props.name} AddOrder={props.AddOrder} />
+                    <PaymentProviderCC name={props.name} AddOrder={props.AddOrder} HandleSubmit={props.HandleSubmit} />
                 </div>
             </div>
         )

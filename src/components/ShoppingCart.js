@@ -121,6 +121,7 @@ class ShoppingCart extends React.Component {
       localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
     }
     this.context.CartCounter();
+    localStorage.setItem('Restaurant', JSON.stringify({Restaurant: 'MacDonalds', RestaurantID: 2}))
     // console.log(StorageCart)
     // localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
   }
