@@ -4,13 +4,22 @@ import { Link, NavLink } from "react-router-dom";
 import Register from './Register'
 import Modal from 'react-modal'
 import Login from './Login'
+import SearchView from './SearchView';
 
 export default class Nav extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { sign: false, login: false, CartItems: 0, userJwt:null }
-
+    this.state = { 
+      sign:false, 
+      login: false,
+      userJwt:null,
+      CartItems: 0,
+      items: props.restaurants,  // Xóa props ở routerURL sau !!!
+      searchString: '',
+      appear: 'none',
+    }
+    
   }
 
   onOpenRegister = () => {
@@ -37,23 +46,80 @@ export default class Nav extends React.Component {
 
     this.props.nav(this.state.userJwt)
   }
+  
+  onSearchFieldChange = (e) => {
+    if(e.target.value) {
+      this.setState({ 
+        searchString: e.target.value,
+        appear: 'block'      
+      });
+    }
+    else {
+      this.setState({ 
+        searchString: e.target.value,
+        appear: 'none'
+      });
+    }
+  }
+
+  changePage = () => {
+    this.setState({
+      searchString: '',
+      appear: 'none'
+    })
+  }
+
+  onCloseEvent = () => {
+    this.setState({
+      searchString: '',
+      appear: 'none'
+    })
+  }
+
+  handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      localStorage.setItem('valueOfInput', e.target.value)
+      window.location='/restaurants';
+    }
+  }
 
   render() {
     const { login, sign } = this.state;
     return (
       <div className={styles.nav}>
+        
         <ul>
           <li>
             <Link to="/" className={styles.logo}>Slurps</Link>
           </li>
         </ul>
+
         <input className={styles.searchbar} type="text" placeholder="Search.."></input>
         
         
         <Modal isOpen={sign} >
           <button onClick={this.onCloseRegister}>Close</button>
-          <Register />
-        </Modal>
+       <Register />
+       </Modal>
+       
+       
+        <div style={{ position: 'relative' }}>
+          <div className={styles.wholeSearchBar}>
+            <input className={styles.searchbar} type="text" placeholder="Search.."
+              type="text" onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
+              value={ this.state.searchString } placeholder="Find restaurant">
+            </input>
+            <button className={styles.button} onClick={this.onCloseEvent}>X</button>
+          </div>
+          <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
+            <SearchView
+              items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
+              onChangePage= { this.changePage }
+            />
+          </div>
+        </div>
+       
+        
         <Modal isOpen={login}>
         
           <button onClick={this.onCloseLogin}>Close</button>

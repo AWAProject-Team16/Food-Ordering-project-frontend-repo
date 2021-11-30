@@ -1,0 +1,55 @@
+.restaurant {
+  width: 100%;
+  background-color: rgb(255, 226, 231);
+  float: left;
+  padding: 4px;
+  box-sizing: border-box;
+  position: relative;
+  margin: auto;
+  margin-bottom: 2px;
+  height: 86px;
+}
+
+.left {
+  width: 80px;
+  height: 80px;
+  float: left;
+}
+
+img {
+  /* width: 96%; */
+  width: 78px;
+  /* height: 96%; */
+  height: 78px;
+  display: block;
+  margin: auto;
+  margin-bottom: 16px;
+}
+
+.name {
+  min-height: 25px;
+  font-weight: bold;
+  width: 100%;
+  padding-left: 8px;
+}
+
+.description {
+  width: 100%;
+  padding-left: 8px;
+}
+
+.restaurant:hover img {
+  width: 100%;
+  height: 100%;
+}
+
+.restaurant:hover div {
+  color: rgb(255, 130, 217);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
