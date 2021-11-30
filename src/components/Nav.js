@@ -87,21 +87,17 @@ export default class Nav extends React.Component {
     const { login, sign } = this.state;
     return (
       <div className={styles.nav}>
-        
+
         <ul>
           <li>
             <Link to="/" className={styles.logo}>Slurps</Link>
           </li>
         </ul>
-
-        <input className={styles.searchbar} type="text" placeholder="Search.."></input>
-        
         
         <Modal isOpen={sign} >
           <button onClick={this.onCloseRegister}>Close</button>
        <Register />
        </Modal>
-       
        
         <div style={{ position: 'relative' }}>
           <div className={styles.wholeSearchBar}>
@@ -119,11 +115,8 @@ export default class Nav extends React.Component {
           </div>
         </div>
        
-        
         <Modal isOpen={login}>
-        
           <button onClick={this.onCloseLogin}>Close</button>
-
         <Login login ={ (newJwt => {
           this.setState({userJwt: newJwt})
           window.localStorage.setItem('appAuthData', this.state.userJwt)
