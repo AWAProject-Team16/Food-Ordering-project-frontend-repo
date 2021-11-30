@@ -24,7 +24,7 @@ function createProduct() {
     event.preventDefault();
   };
 
-  console.log('creaate Product')
+  console.log('create clicked')
 
   // getFormDataAndCallAPI();
 }
