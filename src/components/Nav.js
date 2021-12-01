@@ -1,9 +1,9 @@
-import styles from './../css/Nav.module.css'
-import React, { Component, useState } from 'react'
-import { Link, NavLink } from "react-router-dom";
-import Register from './Register'
-import Modal from 'react-modal'
-import Login from './Login'
+import styles from './../css/Nav.module.css';
+import React from 'react';
+import { Link } from "react-router-dom";
+import Register from './Register';
+import Modal from 'react-modal';
+import Login from './Login';
 import SearchView from './SearchView';
 import { useNavigate } from 'react-router-dom';
 
@@ -107,9 +107,9 @@ class Nav extends React.Component {
        
         <div style={{ position: 'relative' }}>
           <div className={styles.wholeSearchBar}>
-            <input className={styles.searchbar} type="text" placeholder="Search.."
-              type="text" onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
-              value={ this.state.searchString } placeholder="Find restaurant">
+            <input className={styles.searchbar} type="text" placeholder="Find restaurant"
+              onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
+              value={ this.state.searchString }>
             </input>
             <button className={styles.button} onClick={this.onCloseEvent}>X</button>
           </div>

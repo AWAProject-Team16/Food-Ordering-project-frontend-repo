@@ -1,14 +1,30 @@
+import React, { useState, useEffect } from 'react';
 import styles from '../css/RestaurantDetail.module.css';
 import RestaurantProduct from './RestaurantProduct';
+import axios from 'axios';
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
+var path  // idCategory
 
-import React from 'react';
 export default function RestaurantDetail(props) {
-  const objProducts = props.products.filter(item => item.idcategories === props.category.idcategories)
+  path = props.category.idcategories
+  const [objProducts, setObjProducts] = useState([])
+  useEffect(() => {
+    async function fetchData(x) {
+      await axios.get(`${API_ADDRESS}/products/category/${x}`)
+        .then((res) => {
+          setObjProducts(res.data.Products)
+        })
+        .catch(err => console.log(err))
+    }
+    fetchData(path);
+  }, [])
+
+  // const objProducts = props.products.filter(item => item.idcategories === props.category.idcategories)
   return (
     <div>
       <h3 id={props.category.idcategories} className={ styles.category }> { props.category.category_name } </h3>
       {
-        objProducts.map(item =>
+        objProducts.map(item =>  // !!!
           <RestaurantProduct item={item} key={item.idproducts}/>
       )}
     </div>
