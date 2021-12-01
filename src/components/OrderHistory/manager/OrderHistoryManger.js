@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../../../css/OrderHistory.module.css';
 import OrderHistoryPerRestaurant from './OrderHistoryPerRestaurant';
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_API_URL;
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 export default class OrderHistory extends React.Component {
   constructor(props) {
@@ -133,7 +133,7 @@ export default class OrderHistory extends React.Component {
 
     axios({
       method: 'get',
-      url: API_URL + '/orders',
+      url: API_ADDRESS + '/orders',
       data: {
         userId: 1
       }
@@ -141,7 +141,7 @@ export default class OrderHistory extends React.Component {
       .then(res => console.log(res))
       .catch(err => console.log(err))
 
-    // axios.get(API_URL+'/orders', {
+    // axios.get(API_ADDRESS+'/orders', {
     //   // headers: {
     //   //   'Content-Type': 'application/x-www-form-urlencoded',
     //   //   'Accept': '*/*',
