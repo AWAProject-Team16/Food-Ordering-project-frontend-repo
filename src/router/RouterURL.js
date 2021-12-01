@@ -1,5 +1,5 @@
 import React, {Component,} from 'react';
-import {Routes, Route, BrowserRouter, } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import Home from '../components/Home';
 import Restaurants from '../components/Restaurants';
 import Restaurant from '../components/Restaurant';
@@ -21,39 +21,38 @@ export default class RouterURL extends Component {
     super(props)
    this.state = {
     
-    
    }
   }
   
   render() {
-    let authRoutes = <>
-    <Route path="/" element={ <Login /> } />
-    <Route path="/" element={ <Register /> } />
-  </>
+    let authRoutes = 
+    <>
+      <Route path="/" element={ <Login /> } />
+      <Route path="/" element={ <Register /> } />
+    </>
   
-  if(this.props.userLoggedIn != null) {
-    authRoutes = <Route path="/paymentpage" element={ <PaymentPage /> }/> 
-    
-  }
+    if(this.props.userLoggedIn != null) {
+      authRoutes = <Route path="/paymentpage" element={ <PaymentPage /> }/> 
+    }
+
     return (
-      
-      
-            
-          <Routes>
-          <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
-              {
-                authRoutes
-              }
-            <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
+      <Routes>
+        <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
+          {
+            authRoutes
+          }
+        <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
             
         {/* Typessä oli kaksoispisteet*/}
         <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
         <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
-        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } key={ Math.random() } />}>
+        
+        <Route path="/restaurants" element={<Restaurants restaurants={ this.props.restaurants } key={ Math.random() } />}>
           {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
         </Route>
-        <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
-        <Route path="/search" element={<Restaurants restaurants={ Data.restaurants } />} />
+        <Route path="/restaurants/:idOfRestaurant" element={<Restaurant />} />
+        <Route path="/search" element={<Restaurants restaurants={ this.props.restaurants } />} />
+        
         <Route path="/shoppingcart" element={<ShoppingCart />} />
         
 
@@ -66,11 +65,7 @@ export default class RouterURL extends Component {
         
         <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
         <Route path="/devthuc" element={<DevThucTestingArea />} />
-        </Routes>
-          
-     
-
-      
+      </Routes>
     )
   }
 }
