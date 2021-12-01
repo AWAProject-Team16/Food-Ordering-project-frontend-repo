@@ -34,7 +34,9 @@ export default class Restaurants extends Component {
   }
 
   render() {
-    localStorage.removeItem('valueOfInput');
+    if(localStorage.getItem('valueOfInput')) {
+      localStorage.removeItem('valueOfInput')
+    }
     return (
       <div className={ styles.presentationModeGrid }>
         <div className= {styles.header}>
