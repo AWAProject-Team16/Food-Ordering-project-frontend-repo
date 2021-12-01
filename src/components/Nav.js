@@ -5,8 +5,9 @@ import Register from './Register'
 import Modal from 'react-modal'
 import Login from './Login'
 import SearchView from './SearchView';
+import { useNavigate } from 'react-router-dom';
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
   constructor(props) {
     super(props);
 
@@ -79,7 +80,12 @@ export default class Nav extends React.Component {
   handleKeyPress = (e) => {
     if(e.key === 'Enter') {
       localStorage.setItem('valueOfInput', e.target.value)
-      window.location='/restaurants';
+      // window.location='/restaurants';
+      this.props.navigate('/search')
+      this.setState({
+        searchString: '',
+        appear: 'none'
+      })
     }
   }
 
@@ -151,3 +157,9 @@ export default class Nav extends React.Component {
   }
 }
 
+function WithNavigate(props) {
+  let navigate = useNavigate();
+  return <Nav {...props} navigate={navigate} />
+  }
+  
+export default WithNavigate

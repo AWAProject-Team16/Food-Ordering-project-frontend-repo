@@ -49,10 +49,11 @@ export default class RouterURL extends Component {
         {/* Typessä oli kaksoispisteet*/}
         <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
         <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
-        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
+        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } key={ Math.random() } />}>
           {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
         </Route>
         <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
+        <Route path="/search" element={<Restaurants restaurants={ Data.restaurants } />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
         
 

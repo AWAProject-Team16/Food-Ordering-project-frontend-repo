@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react'
 import styles from '../css/Register.module.css';
 import axios from 'axios';
-
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
 
 
 export default function Login(props) {
@@ -14,7 +14,7 @@ export default function Login(props) {
 
         try {
             const result = await axios.post(
-                "http://localhost:5000/loginForJWT",
+                API_ADDRESS + '/users/login',
                 null,
                 {
                     auth: {
