@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+// import React, { useState, useEffect } from 'react';
 import styles from '../css/RestaurantDetail.module.css';
 import RestaurantProduct from './RestaurantProduct';
-import axios from 'axios';
-const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
-var path  // idCategory
+// import axios from 'axios';
+// const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
+// var path  // idCategory
 
 export default function RestaurantDetail(props) {
-  path = props.category.idcategories
-  const [objProducts, setObjProducts] = useState([])
-  useEffect(() => {
-    async function fetchData(x) {
-      await axios.get(`${API_ADDRESS}/products/category/${x}`)
-        .then((res) => {
-          setObjProducts(res.data.Products)
-        })
-        .catch(err => console.log(err))
-    }
-    fetchData(path);
-  }, [])
+  // path = props.category.idcategories
+  // console.log(path)
+  // const [objProducts, setObjProducts] = useState([])
+  // useEffect(() => {
+  //   async function fetchData(x) {
+  //     await axios.get(`${API_ADDRESS}/products/category/${x}`)
+  //       .then((res) => {
+  //         console.log(x)
+  //         setObjProducts(res.data.Products)
+  //         // console.log(objProducts)
+  //         console.log(res.data.Products)
+  //       })
+  //       .catch(err => console.log(err))
+  //   }
+  //   fetchData(path);
+  // }, [])
+  // !!! gọi API n lần theo số lượng n category
+  // !!! render ra chỉ 1 sản phẩm duy nhất của category cuối
 
+  const objProducts = props.products.filter(item => item.categories_idcategories === props.category.idcategories)
   // const objProducts = props.products.filter(item => item.idcategories === props.category.idcategories)
   return (
     <div>
