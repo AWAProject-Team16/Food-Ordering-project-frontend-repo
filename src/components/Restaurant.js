@@ -25,12 +25,6 @@ export default function Restaurant(props) {
 
   const [objCategories, setObjCategories] = useState([])
   useEffect(() => {
-    // await axios.get(`${API_ADDRESS}/categories/restaurant/${result.idOfRestaurant}`)
-    //   .then((res) => {
-    //     setObjCategories(res.data.Categories)
-    //   })
-    //   .catch(err => console.log(err))
-    // ------------------------------------------------
     async function fetchData(x) {
       // const response = await MyAPI.getData(someId);
       await axios.get(`${API_ADDRESS}/categories/restaurant/${x}`)
@@ -40,6 +34,18 @@ export default function Restaurant(props) {
       .catch(err => console.log(err))
     }
     fetchData(path)
+  }, [])
+
+  const [objProducts, setObjProducts] = useState([])
+  useEffect(() => {
+    async function fetchData(x) {
+      await axios.get(`${API_ADDRESS}/products/restaurant/${x}`)
+        .then((res) => {
+          setObjProducts(res.data.Products)
+        })
+        .catch(err => console.log(err))
+    }
+    fetchData(path);
   }, [])
 
   // const obj = props.restaurants.find(item => item.idrestaurants === parseInt(result.idOfRestaurant));
@@ -84,7 +90,7 @@ export default function Restaurant(props) {
                 idrestaurants={ parseInt(result.idOfRestaurant) }
                 categories ={ objCategories }
                 category={ item }
-                // products={ objProducts }
+                products={ objProducts }
               />) 
           }
         </div>
