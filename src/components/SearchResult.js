@@ -9,7 +9,7 @@ export default function SearchResult(props) {
       onClick={ props.onChangePage }>
       <div className={ styles.restaurant }>
         <div className={ styles.left }>
-          <img alt="true" src={`/images/${props.image}`} />
+          <img className={ styles.imgSearchResult } alt="true" src={`/images/${props.image}`} />
         </div>
         <div className={ styles.right }>
           <div className={ styles.name }>
