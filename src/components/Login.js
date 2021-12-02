@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import styles from '../css/Register.module.css';
+import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
 
