@@ -1,36 +1,40 @@
-import React from 'react';
-import styles from '../css/RestaurantCreateNew.module.css';
-import axios from 'axios';
-import cx from 'classnames';
-const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
+import React from "react";
+import styles from "../css/RestaurantCreateNew.module.css";
+import axios from "axios";
+import cx from "classnames";
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 function getFormDataAndCallAPI() {
-  const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
-  // console.log(document.querySelector('input[name="image"]').files[0])
-  // formData.append('image', document.querySelector('input[name="image"]').files[0])
-  console.log(formData)
-  let restaurantObj = {}
-  formData.forEach((value, key) => restaurantObj[key] = value);
-
-  // delete restaurantObj.image;  // BECAUSE BACKEND CANNOT HANDLE IT NOW
-
-  console.log('restaurantObj:', restaurantObj);
-
+  const formData = new FormData(
+    document.querySelector('form[name="createRestaurantForm"]')
+  );
+  
   let token;
 
-  axios.post(API_ADDRESS + '/users/login', {}, {
-    auth: {username: 'ma99', password: '123456789Aa@'}
-  })
-    .then(res => {
-      // console.log(res)
+  axios
+    .post(
+      API_ADDRESS + "/users/login",
+      {},
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        auth: { username: "ma99", password: "123456789Aa@" },
+      }
+    )
+    .then((res) => {
+      console.log('res', res)
       token = res.data.token;
 
-      axios.post(API_ADDRESS + '/restaurants/newRestaurant', restaurantObj, {
-        headers: {
-          'Content-Type': `multipart/form-data; boundary=${restaurantObj._boundary}`,
-          'Authorization': `Bearer ${token}`
-        },
-      })
+      axios
+        .post(
+          API_ADDRESS + "/restaurants/newRestaurantMultipart",
+          formData,
+          {
+            headers: {
+              "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((response) => {
           console.log(response);
           if (response.status === 201) {
@@ -40,15 +44,12 @@ function getFormDataAndCallAPI() {
           }
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           alert("Something went wrong!");
-        })
+        });
     })
-    .catch(console.log)
-  return
-
-
-
+    .catch(console.log);
+  
 }
 
 function createRestaurant() {
@@ -58,7 +59,7 @@ function createRestaurant() {
     event.preventDefault();
   };
 
-  console.log('create clicked')
+  console.log("create clicked");
 
   getFormDataAndCallAPI();
 }
@@ -80,8 +81,7 @@ function render() {
         <div className={styles.inner}>
           <form action="" name="createRestaurantForm" className={styles.form}>
             <h3>Create A New Restaurant</h3>
-            <div className={styles.formgroup}>
-            </div>
+            <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Restaurant Name
@@ -89,29 +89,46 @@ function render() {
                   Restaurant Name cannot be empty!
                 </span>
               </label>
-              <input required type="text" className={styles.formcontrol} name="name" />
+              <input
+                required
+                type="text"
+                className={styles.formcontrol}
+                name="name"
+              />
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">
-                Restaurant Address
-              </label>
-              <input required type="text" className={styles.formcontrol} name="address" />
+              <label htmlFor="">Restaurant Address</label>
+              <input
+                required
+                type="text"
+                className={styles.formcontrol}
+                name="address"
+              />
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">
-                Operating Hours
-              </label>
-              <textarea required rows="12" className={cx(styles.formcontrol, styles.textarea)} name="operating_hours" />
+              <label htmlFor="">Operating Hours</label>
+              <textarea
+                required
+                rows="12"
+                className={cx(styles.formcontrol, styles.textarea)}
+                name="operating_hours"
+              />
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">
-                Phone Number
-              </label>
-              <input required type="tel" className={styles.formcontrol} name="phonenumber" />
+              <label htmlFor="">Phone Number</label>
+              <input
+                required
+                type="tel"
+                className={styles.formcontrol}
+                name="phonenumber"
+              />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Type</label>
-              <select className={cx(styles.formcontrol, styles.select)} name="restaurant_type">
+              <select
+                className={cx(styles.formcontrol, styles.select)}
+                name="restaurant_type"
+              >
                 <option value="Buffet">Buffet</option>
                 <option value="Fast food">Fast food</option>
                 <option value="Fast casual">Fast casual</option>
@@ -120,10 +137,11 @@ function render() {
               </select>
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">
-                Price Level
-              </label>
-              <select className={cx(styles.formcontrol, styles.select)} name="price_level">
+              <label htmlFor="">Price Level</label>
+              <select
+                className={cx(styles.formcontrol, styles.select)}
+                name="price_level"
+              >
                 <option value="1">&euro;</option>
                 <option value="2">&euro;&euro;</option>
                 <option value="3">&euro;&euro;&euro;</option>
@@ -131,21 +149,35 @@ function render() {
               </select>
             </div>
             <div className={styles.formwrapper}>
-              <label htmlFor="">
-                Restaurant Description
-              </label>
-              <textarea required rows="12" className={cx(styles.formcontrol, styles.textarea)} name="restaurant_description" />
+              <label htmlFor="">Restaurant Description</label>
+              <textarea
+                required
+                rows="12"
+                className={cx(styles.formcontrol, styles.textarea)}
+                name="restaurant_description"
+              />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <input type="file" accept="image/*" className={cx(styles.formcontrol, styles.input_file)} name="image" id="file_picker" onChange={showChosenFileName} multiple />
-                <label className={styles.formcontrol} htmlFor="file_picker">Click to choose an image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className={cx(styles.formcontrol, styles.input_file)}
+                  name="image"
+                  id="file_picker"
+                  onChange={showChosenFileName}
+                  multiple
+                />
+                <label className={styles.formcontrol} htmlFor="file_picker">
+                  Click to choose an image
+                </label>
               </div>
             </div>
 
-
-            <button onClick={createRestaurant} className={styles.button}>Create</button>
+            <button onClick={createRestaurant} className={styles.button}>
+              Create
+            </button>
           </form>
         </div>
       </div>

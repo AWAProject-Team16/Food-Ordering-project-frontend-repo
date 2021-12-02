@@ -61,7 +61,7 @@ export default class RouterURL extends Component {
         <Route path="/managers/orders" element={<OrderHistoryManger />} />
         <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
         <Route path="/managers/products/create" element={<ProductCreateNew />} />
-        <Route path="/managers/products/:idproducts" element={<ProductModify />} />
+        <Route path="/managers/products/edit/:idproducts" element={<ProductModify />} />
         
         <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
         <Route path="/devthuc" element={<DevThucTestingArea />} />
