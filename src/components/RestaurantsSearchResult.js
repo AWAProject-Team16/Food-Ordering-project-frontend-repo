@@ -23,7 +23,8 @@ export default function RestaurantsSearchResult(props) {
 
           <hr />
           <div className={ styles.more }>
-              <div className={ styles.time }>15-25 min</div>
+            <div className={ styles.price }>{ props.price_level } $</div>
+            <div className={ styles.time }>15-25 min</div>
           </div>
         </div>
       </Link>

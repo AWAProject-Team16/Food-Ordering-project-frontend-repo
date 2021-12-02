@@ -16,11 +16,10 @@ class Nav extends React.Component {
       login: false,
       userJwt:null,
       CartItems: 0,
-      items: props.restaurants,  // Xóa props ở routerURL sau !!!
+      // items: props.restaurants,
       searchString: '',
       appear: 'none',
     }
-    
   }
 
   onOpenRegister = () => {
@@ -115,7 +114,7 @@ class Nav extends React.Component {
           </div>
           <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
             <SearchView
-              items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
+              items={ this.props.restaurants.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
               onChangePage= { this.changePage }
             />
           </div>
