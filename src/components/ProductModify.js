@@ -11,22 +11,50 @@ function getFormDataAndCallAPI(idproducts) {
   const formData = new FormData(
     document.querySelector('form[name="modifyProduct"]')
   );
-  let productObj = {};
-  formData.forEach((value, key) => (productObj[key] = value));
+
+  let token;
 
   axios
     .post(
-      `${API_ADDRESS}/products/category/1/product/${idproducts}/editProduct`,
-      productObj
+      API_ADDRESS + "/users/login",
+      {},
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        auth: { username: "ma99", password: "123456789Aa@" },
+      }
     )
-    .then((response) => {
-      console.log(response);
-      alert("Product modified successfully.");
+    .then((res) => {
+      console.log("res", res);
+      token = res.data.token;
+
+      axios
+        .post(
+          `${API_ADDRESS}/products/${idproducts}/editProductMultipart`,
+          formData,
+          {
+            headers: {
+              "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            alert("Restaurant modified.");
+          } else {
+            alert("Something went wrong!");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Something went wrong!");
+        });
     })
-    .catch((err) => console.error(err));
+    .catch(console.log);
 }
 
-function modifyProduct() {
+function modifyProduct(idproducts) {
   const form = document.querySelector('form[name="modifyProduct"]');
 
   form.onsubmit = (event) => {
@@ -35,7 +63,7 @@ function modifyProduct() {
 
   console.log("save clicked");
 
-  getFormDataAndCallAPI();
+  getFormDataAndCallAPI(idproducts);
 }
 
 function showNewImageChosenFileName() {
@@ -161,7 +189,10 @@ export default function ProductModify() {
               </div>
             </div>
 
-            <button onClick={modifyProduct} className={styles.button}>
+            <button
+              onClick={() => modifyProduct(idproducts)}
+              className={styles.button}
+            >
               Save
             </button>
           </form>
