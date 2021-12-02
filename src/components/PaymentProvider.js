@@ -6,7 +6,7 @@ import PaymentProviderCC from './PaymentProviderCC'
 const PaymentProvider = (props) => {
     if(props.expanded === true && props.type === 'bank') {
         return (
-            <div>
+            <div className={styles.ProviderItem}>
                 <div className={styles.ProviderBox} onClick = { () => props.SelectProvider(props.id)}>
                     {props.name}
                 </div>
@@ -17,7 +17,7 @@ const PaymentProvider = (props) => {
         )
     } else if ( props.expanded === true && props.type === 'credit card') {
         return (
-            <div>
+            <div className={styles.ProviderItem}>
                 <div className={styles.ProviderBox} onClick = { () => props.SelectProvider(props.id)}>
                     {props.name}
                 </div>
@@ -28,7 +28,7 @@ const PaymentProvider = (props) => {
         )
     } else {
         return (
-            <div>
+            <div className={styles.ProviderItem}>
                 <div className={styles.ProviderBox} onClick = { () => props.SelectProvider(props.id)}>
                     {props.name}
                 </div>

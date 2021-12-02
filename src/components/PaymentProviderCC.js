@@ -4,7 +4,7 @@ import styles from './../css/PaymentView/PaymentProviderCC.module.css'
 const PaymentProviderCC = (props) => {
   return (
     <div className={styles.ExpandedView}>
-      <div>
+      <div className={styles.Name}>
         {props.name}
       </div>
       <div>
