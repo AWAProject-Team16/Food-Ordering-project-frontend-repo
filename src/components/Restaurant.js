@@ -3,13 +3,14 @@ import styles from '../css/Restaurant.module.css';
 import { useParams } from 'react-router-dom';
 import RestaurantDetail from './RestaurantDetail';
 import axios from 'axios';
-const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
 // const result = window.location.pathname.split('/')[2]
-var path
 
 export default function Restaurant(props) {
-  const result = useParams()
-  path = result.idOfRestaurant
+  var API_ADDRESS = process.env.REACT_APP_API_ADDRESS
+  var result = useParams()
+  var path = result.idOfRestaurant
+
+  console.log('xxxxxxxxxxxxxxxx')
 
   const [obj, setObj] = useState([])
   useEffect(() => {
@@ -20,8 +21,8 @@ export default function Restaurant(props) {
       })
       .catch(err => console.log(err))
     }
-    fetchOne(path)
-  }, [])
+    fetchOne(path, 'res.data[0])')
+  }, [path])
 
   const [objCategories, setObjCategories] = useState([])
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Restaurant(props) {
       .catch(err => console.log(err))
     }
     fetchData(path)
-  }, [])
+  }, [path])
 
   const [objProducts, setObjProducts] = useState([])
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Restaurant(props) {
         .catch(err => console.log(err))
     }
     fetchData(path);
-  }, [])
+  }, [path])
 
   // const obj = props.restaurants.find(item => item.idrestaurants === parseInt(result.idOfRestaurant));
   // if(obj == null) {
