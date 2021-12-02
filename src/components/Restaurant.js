@@ -1,37 +1,65 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import styles from '../css/Restaurant.module.css';
 import { useParams } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 import RestaurantDetail from './RestaurantDetail';
-// import axios from 'axios';  // waiting everybody change to use SQL insteads of data.json
+import axios from 'axios';
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
+// const result = window.location.pathname.split('/')[2]
+var path
 
 export default function Restaurant(props) {
-  // const result = window.location.pathname.split('/')[2]
   const result = useParams()
+  path = result.idOfRestaurant
 
-  // const [obj, setObj] = useState([])
-  // useEffect(() => {
-  //   axios.get(`http://localhost:5000/restaurants/id/${result.idOfRestaurant}`)
-  //     .then((res) => {
-  //       setObj(res.data[0])
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [])
+  const [obj, setObj] = useState([])
+  useEffect(() => {
+    async function fetchOne(x) {
+      await axios.get(`${API_ADDRESS}/restaurants/id/${x}`)
+      .then((res) => {
+        setObj(res.data[0])
+      })
+      .catch(err => console.log(err))
+    }
+    fetchOne(path)
+  }, [])
 
-  // delete props from routerURL sau !!!
-  const obj = props.restaurants.find(item => item.idrestaurants === parseInt(result.idOfRestaurant));
-  if(obj == null) {
-  // if(obj.idrestaurants == null) {
-    // console.log('hehe')  // sao lại phải render 2 lần, dư thừa !
+  const [objCategories, setObjCategories] = useState([])
+  useEffect(() => {
+    async function fetchData(x) {
+      // const response = await MyAPI.getData(someId);
+      await axios.get(`${API_ADDRESS}/categories/restaurant/${x}`)
+      .then((res) => {
+        setObjCategories(res.data.Categories)
+      })
+      .catch(err => console.log(err))
+    }
+    fetchData(path)
+  }, [])
+
+  const [objProducts, setObjProducts] = useState([])
+  useEffect(() => {
+    async function fetchData(x) {
+      await axios.get(`${API_ADDRESS}/products/restaurant/${x}`)
+        .then((res) => {
+          setObjProducts(res.data.Products)
+        })
+        .catch(err => console.log(err))
+    }
+    fetchData(path);
+  }, [])
+
+  // const obj = props.restaurants.find(item => item.idrestaurants === parseInt(result.idOfRestaurant));
+  // if(obj == null) {
+  if(obj.idrestaurants == null) {
     return <div><h1 style={{textAlign: 'center'}}>No matching restaurant</h1></div>
   }
   
   // console.log(props.categories)
   // const objCategories = props.categories.find(item => item.idrestaurants === obj.idrestaurants);
-  const objCategories = props.categories.filter(item => item.idrestaurants === obj.idrestaurants)  // !!! tạm thời lấy json nên có -13
+  // const objCategories = props.categories.filter(item => item.idrestaurants === obj.idrestaurants)  // fine
   // console.log(objCategories)
   
-  const objProducts = props.products.filter(item => item.idrestaurants === obj.idrestaurants)
+  // const objProducts = props.products.filter(item => item.idrestaurants === obj.idrestaurants)  // !!!
   
   return (
     <div>
@@ -62,7 +90,8 @@ export default function Restaurant(props) {
                 idrestaurants={ parseInt(result.idOfRestaurant) }
                 categories ={ objCategories }
                 category={ item }
-                products={ objProducts }/>)
+                products={ objProducts }
+              />) 
           }
         </div>
         <div className= {styles.info}>
