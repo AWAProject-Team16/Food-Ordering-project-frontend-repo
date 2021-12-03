@@ -15,6 +15,7 @@ import RestaurantCreateNew from '../components/RestaurantCreateNew';
 import ProductCreateNew from '../components/ProductCreateNew';
 import ProductModify from '../components/ProductModify';
 import Login from '../components/Login';
+import CategoryCreateNew from '../components/CategoryCreateNew';
 
 export default class RouterURL extends Component {
   constructor(props){
@@ -62,6 +63,8 @@ export default class RouterURL extends Component {
         <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
         <Route path="/managers/products/create" element={<ProductCreateNew />} />
         <Route path="/managers/products/edit/:idproducts" element={<ProductModify />} />
+
+        <Route path="/managers/categories/create" element={<CategoryCreateNew />} />
         
         <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
         <Route path="/devthuc" element={<DevThucTestingArea />} />
