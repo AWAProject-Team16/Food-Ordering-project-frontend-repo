@@ -173,7 +173,7 @@ export default function ProductModify() {
                 <img
                   ref={productImageRef}
                   className={styles.productImage}
-                  src={window.location.origin + "/" + data.product_image}
+                  src={`${API_ADDRESS}/images/${data.product_image}`}
                 />
                 <input
                   type="file"
