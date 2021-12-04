@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import axios from 'axios';
 import Categories from './Categories';
 
+
 class Home extends React.Component {
   constructor(props)
   {
@@ -11,13 +12,13 @@ class Home extends React.Component {
     this.state = {
     }
   }
-  componentDidMount(){
+  /*componentDidMount(){
     axios.get('http://localhost:3000/food_types')
     .then((response)=> {
       this.setState({foodTypes: response.data.food_types});
     })
     .catch(err=> console.log(err))
-  }
+  }*/
 
   render()
   {
@@ -45,6 +46,7 @@ class Home extends React.Component {
       },
 
     ]
+    
   return (
     <div>
       <div>

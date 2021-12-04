@@ -5,7 +5,7 @@ import RouterURL from './router/RouterURL';
 import RestaurantCreateNew from './components/RestaurantCreateNew';
 import Register from './components/Register';
 import Data from './data.json';
-
+import jwt from 'jsonwebtoken'
 import styles from './App.module.css'
 import React, { Component } from 'react'
 import { CartContext } from "./context/Contexts";
@@ -25,6 +25,11 @@ export default class App extends Component {
 
   componentDidMount() {
     this.CartCounter();
+    this.CheckAccountType();
+  }
+  CheckAccountType = () => {
+    const decodedToken = jwt.decode(jwtFromStorage);
+    console.log("app puolella type " + decodedToken.user.account_type)
   }
 
   CartCounter = () => {

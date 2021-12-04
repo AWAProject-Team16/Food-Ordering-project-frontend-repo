@@ -14,6 +14,8 @@ import Register from '../components/Register';
 import RestaurantCreateNew from '../components/RestaurantCreateNew';
 import ProductCreateNew from '../components/ProductCreateNew';
 import Login from '../components/Login';
+import { TypeContext } from '../context/Contexts';
+import ManagerView from '../components/ManagerView';
 
 
 export default class RouterURL extends Component {
@@ -24,28 +26,41 @@ export default class RouterURL extends Component {
     
    }
   }
-  
+  static contextType = TypeContext
+
+ 
   render() {
+    let typeValue = this.context 
+
     let authRoutes = <>
+   
     <Route path="/" element={ <Login /> } />
+    
     <Route path="/" element={ <Register /> } />
   </>
   
-  if(this.props.userLoggedIn != null) {
-    authRoutes = <Route path="/paymentpage" element={ <PaymentPage /> }/> 
+  //if(this.props.userLoggedIn != null) {
+  //  authRoutes = <Route path="/paymentpage" element={ <PaymentPage /> }/> 
     
+ // }
+   if(typeValue != null) {
+    authRoutes = <Route path="/manager" element={ <ManagerView />} />
+    console.log("type  "+ typeValue)
   }
+  
     return (
-      
-      
+      <>
             
           <Routes>
           <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
-              {
-                authRoutes
-              }
+              
+                  {
+                    authRoutes    
+                  }     
+              
             <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
-            
+          
+                
         {/* Typessä oli kaksoispisteet*/}
         <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
         <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
@@ -66,7 +81,7 @@ export default class RouterURL extends Component {
         </Routes>
           
      
-
+        </>
       
     )
   }

@@ -1,12 +1,14 @@
 import React, {useState, useContext} from 'react'
 import styles from '../css/Register.module.css';
 import axios from 'axios';
-
+import jwt from 'jsonwebtoken'
+import { TypeContext } from '../context/Contexts';
 
 
 export default function Login(props) {
-
+    let TypeContextValue = useContext(TypeContext)
     const [loginProcessState, setLoginProcessState] = useState("idle");
+    
 
     const handleLoginSubmit = async (event) =>{
         event.preventDefault();
@@ -14,7 +16,7 @@ export default function Login(props) {
 
         try {
             const result = await axios.post(
-                "http://localhost:5000/loginForJWT",
+                "http://localhost:5000/users/login",
                 null,
                 {
                     auth: {
@@ -30,7 +32,16 @@ export default function Login(props) {
             setTimeout(() => {
                 setLoginProcessState("idle")
                 props.login(receivedJWT)
-               
+
+                const decodedToken = jwt.decode(receivedJWT);
+                //console.log("decoded token "+ decodedToken)
+               // console.log("user account type " + decodedToken.user.account_type)
+               // setType(decodedToken.user.account_type);
+                //const type = (decodedToken.user.account_type)
+                TypeContextValue = decodedToken.user.account_type
+                
+                
+
                 
             }, 1500)
         } catch (error) {
@@ -39,7 +50,8 @@ export default function Login(props) {
             setTimeout(() => setLoginProcessState("idle"), 1500)
         }
     }
-
+   
+    
     let loginUIControls = null;
   switch(loginProcessState) {
     case "idle":
@@ -78,6 +90,7 @@ export default function Login(props) {
         { loginUIControls }
     </form>
     </div>
+    <TypeContext.Provider value = {TypeContextValue}/>
     </div>
     )
   }
