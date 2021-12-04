@@ -286,3 +286,7 @@ label[for="file_picker"] {
 .close:after {
   transform: rotate(-45deg);
 }
+
+.ban {
+  cursor: not-allowed;
+}
