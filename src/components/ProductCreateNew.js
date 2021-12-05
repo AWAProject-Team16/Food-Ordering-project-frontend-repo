@@ -4,6 +4,8 @@ import axios from "axios";
 import cx from "classnames";
 import Modal from "react-modal";
 import CategoryCreateNew from "./CategoryCreateNew";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
@@ -30,9 +32,9 @@ function getFormDataAndCallAPI() {
     )
     .then((res) => {
       if (res.status === 201) {
-        alert("Product created.");
+        toast.success("Product created.");
       } else {
-        alert("Something went wrong!");
+        toast.error("Something went wrong!");
       }
     })
     .catch((err) => {
@@ -55,7 +57,7 @@ function createProduct() {
     form.product_image.files.length > 0;
 
   if (!isDataValid) {
-    alert("All data are required and price must be greater than 0");
+    toast.error("All data are required and price must be greater than 0");
   } else {
     getFormDataAndCallAPI();
   }
@@ -255,6 +257,17 @@ export default function ProductCreateNew() {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

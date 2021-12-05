@@ -2,54 +2,37 @@ import React from "react";
 import styles from "../css/RestaurantCreateNew.module.css";
 import axios from "axios";
 import cx from "classnames";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 function getFormDataAndCallAPI() {
   const formData = new FormData(
     document.querySelector('form[name="createRestaurantForm"]')
   );
-  
-  let token;
+
+  const token = localStorage.getItem("appAuthData");
 
   axios
-    .post(
-      API_ADDRESS + "/users/login",
-      {},
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-        auth: { username: "ma99", password: "123456789Aa@" },
-      }
-    )
-    .then((res) => {
-      console.log('res', res)
-      token = res.data.token;
-
-      axios
-        .post(
-          API_ADDRESS + "/restaurants/newRestaurantMultipart",
-          formData,
-          {
-            headers: {
-              "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          if (response.status === 201) {
-            alert("Restaurant created.");
-          } else {
-            alert("Something went wrong!");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("Something went wrong!");
-        });
+    .post(API_ADDRESS + "/restaurants/newRestaurantMultipart", formData, {
+      headers: {
+        "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch(console.log);
-  
+    .then((response) => {
+      console.log(response);
+      if (response.status === 201) {
+        toast.success("Restaurant created.");
+      } else {
+        toast.error("Something went wrong!");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Something went wrong!");
+    });
 }
 
 function createRestaurant() {
@@ -181,6 +164,17 @@ function render() {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

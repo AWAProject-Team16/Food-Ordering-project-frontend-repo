@@ -2,61 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "../css/RestaurantCreateNew.module.css";
 import axios from "axios";
 import cx from "classnames";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-
-function getFormDataAndCallAPI() {
-  const formData = new FormData(
-    document.querySelector('form[name="createCategory"]')
-  );
-
-  let categoryObj = {};
-  formData.forEach((value, key) => (categoryObj[key] = value));
-
-  const token = localStorage.getItem("appAuthData");
-  const idrestaurants = document.querySelector(
-    'select[name="select_a_restaurant"]'
-  ).value;
-
-  axios
-    .post(
-      `${API_ADDRESS}/categories/restaurant/${idrestaurants}/addCategory2`,
-      categoryObj,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-    .then((res) => {
-      if (res.status === 201) {
-        alert("Category created.");
-        document.querySelector('form[name="createCategory"]').name.value = '';
-      } else {
-        alert("Something went wrong!");
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function createCategory() {
-  const form = document.querySelector('form[name="createCategory"]');
-
-  form.onsubmit = (event) => {
-    event.preventDefault();
-  };
-
-  const isDataValid =
-    Number(form.select_a_restaurant.value) > 0 && form.name.value.trim() != "";
-
-  if (!isDataValid) {
-    alert("All data are required");
-  } else {
-    getFormDataAndCallAPI();
-  }
-}
 
 export default function CategoryCreateNew() {
   const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([
@@ -88,6 +37,60 @@ export default function CategoryCreateNew() {
         console.error(err);
       });
   }, []);
+
+  function getFormDataAndCallAPI() {
+    const formData = new FormData(
+      document.querySelector('form[name="createCategory"]')
+    );
+
+    let categoryObj = {};
+    formData.forEach((value, key) => (categoryObj[key] = value));
+
+    const token = localStorage.getItem("appAuthData");
+    const idrestaurants = document.querySelector(
+      'select[name="select_a_restaurant"]'
+    ).value;
+
+    axios
+      .post(
+        `${API_ADDRESS}/categories/restaurant/${idrestaurants}/addCategory2`,
+        categoryObj,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          toast.success("Category created.");
+          document.querySelector('form[name="createCategory"]').name.value = "";
+        } else {
+          toast.error("Something went wrong!");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function createCategory() {
+    const form = document.querySelector('form[name="createCategory"]');
+
+    form.onsubmit = (event) => {
+      event.preventDefault();
+    };
+
+    const isDataValid =
+      Number(form.select_a_restaurant.value) > 0 &&
+      form.name.value.trim() != "";
+
+    if (!isDataValid) {
+      toast.error("All data are required");
+    } else {
+      getFormDataAndCallAPI();
+    }
+  }
 
   return (
     <div>
@@ -130,6 +133,17 @@ export default function CategoryCreateNew() {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
