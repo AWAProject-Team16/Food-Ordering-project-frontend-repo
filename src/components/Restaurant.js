@@ -10,44 +10,46 @@ export default function Restaurant(props) {
   var result = useParams()
   var path = result.idOfRestaurant
 
-  console.log('xxxxxxxxxxxxxxxx')
-
   const [obj, setObj] = useState([])
   useEffect(() => {
-    async function fetchOne(x) {
-      await axios.get(`${API_ADDRESS}/restaurants/id/${x}`)
+    function fetchOne(x) {
+      axios.get(`${API_ADDRESS}/restaurants/id/${x}`)
       .then((res) => {
         setObj(res.data[0])
       })
       .catch(err => console.log(err))
     }
-    fetchOne(path, 'res.data[0])')
-  }, [path])
+    fetchOne(path)
+  }, [path, API_ADDRESS])
 
   const [objCategories, setObjCategories] = useState([])
   useEffect(() => {
-    async function fetchData(x) {
-      // const response = await MyAPI.getData(someId);
-      await axios.get(`${API_ADDRESS}/categories/restaurant/${x}`)
+    function fetchData(x) {
+      axios.get(`${API_ADDRESS}/categories/restaurant/${x}`)
       .then((res) => {
         setObjCategories(res.data.Categories)
       })
       .catch(err => console.log(err))
     }
     fetchData(path)
-  }, [path])
+  }, [path, API_ADDRESS])
 
   const [objProducts, setObjProducts] = useState([])
   useEffect(() => {
     async function fetchData(x) {
-      await axios.get(`${API_ADDRESS}/products/restaurant/${x}`)
-        .then((res) => {
-          setObjProducts(res.data.Products)
-        })
-        .catch(err => console.log(err))
+      // const response = await MyAPI.getData(someId);
+      try {
+        let res = await axios.get(`${API_ADDRESS}/products/restaurant/${x}`)
+        setObjProducts(res.data.Products)
+        // return res.data.Products
+      }
+      catch(err) {
+        // alert(err)
+        console.log(err)
+      }
     }
     fetchData(path);
-  }, [path])
+  }, [path, API_ADDRESS])
 
   // const obj = props.restaurants.find(item => item.idrestaurants === parseInt(result.idOfRestaurant));
   // if(obj == null) {

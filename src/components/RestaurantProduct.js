@@ -5,6 +5,7 @@ import ModalClickBuy from './ModalClickBuy';
 import React, { useState } from 'react';
 Modal.setAppElement('#root');
 export default function RestaurantDetail(props) {
+  var API_ADDRESS = process.env.REACT_APP_API_ADDRESS
   const [modalOpen, setModalOpen] = useState(false)
   return (
     <div>
@@ -16,7 +17,7 @@ export default function RestaurantDetail(props) {
           <div className={ styles.price }> { '$ ' + props.item.product_cost } </div>
         </div>
         <div className={ styles.productRight }>
-          <img alt="true" className={styles.imageM} src={`/images/${props.item.product_image}`} />
+          <img alt="true" className={styles.imageM} src={`${API_ADDRESS}/images/${props.item.product_image}`} />
         </div>
       </div>
       {/* {modalOpen && <ModalClickBuy handleModalOpen={setModalOpen} item={ props.item }/>} */}

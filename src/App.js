@@ -41,8 +41,8 @@ export default class App extends Component {
     this.setState({ CartQty: CartQty });
   }
 
-  async getDataRestaurants() {
-    await axios.get( API_ADDRESS + '/restaurants')
+  getDataRestaurants() {
+    axios.get( API_ADDRESS + '/restaurants')
     .then((res) => {
       this.setState({ items: res.data.Restaurants})
     })
