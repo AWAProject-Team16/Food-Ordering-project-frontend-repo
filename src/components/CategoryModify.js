@@ -3,6 +3,8 @@ import styles from "../css/RestaurantCreateNew.module.css";
 import axios from "axios";
 import cx from "classnames";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
@@ -29,7 +31,8 @@ export default function CategoryModify(props) {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (res.data.length == 0) {
-          alert("Access denied");
+          toast.error("Access denied");
+          window.location.href = "/"
           return;
         } else {
           setData(res.data[0]);
@@ -51,7 +54,7 @@ export default function CategoryModify(props) {
     };
 
     if (!form.name.value.trim()) {
-      alert("Category name is required.");
+      toast.error("Category name is required.");
       return;
     }
 
@@ -86,9 +89,9 @@ export default function CategoryModify(props) {
       )
       .then((response) => {
         if (response.status === 200) {
-          alert("Category modified.");
+          toast.success("Category modified.");
         } else {
-          alert("Something went wrong!");
+          toast.error("Something went wrong!");
         }
       })
       .catch((err) => {
@@ -128,7 +131,7 @@ export default function CategoryModify(props) {
                 <input
                   disabled
                   type="text"
-                  className={cx(styles.formcontrol,styles.ban)}
+                  className={cx(styles.formcontrol, styles.ban)}
                   name="restaurant_name"
                   value={data.restaurant_name}
                 />
@@ -144,6 +147,17 @@ export default function CategoryModify(props) {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

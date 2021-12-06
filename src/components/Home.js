@@ -21,6 +21,14 @@ class Home extends React.Component {
 
   render()
   {
+    // Temporarily added by Thuc. For better performance, use RouterURL
+    const jwt = require('jsonwebtoken');
+    const token = window.localStorage.getItem('appAuthData');
+    if (token) {
+      const payload = jwt.decode(token);
+      if(payload.account_type===2) window.location.href = '/managers/';
+    }
+
     const foodTypes = 
     [
       {

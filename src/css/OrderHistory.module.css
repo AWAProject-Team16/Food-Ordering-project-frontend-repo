@@ -38,9 +38,11 @@
   justify-content: flex-end;
 }
 
-.criterionTitle {}
+.criterionTitle {
+}
 
-.criterionInput {}
+.criterionInput {
+}
 
 .orderList {
   margin-left: 20px;
@@ -82,19 +84,21 @@
   border-bottom: 1px solid #888;
 }
 
-.OrderHistoryListItem {}
+.OrderHistoryListItem {
+}
 
-.OrderHistoryListItem>div {
+.OrderHistoryListItem > div {
   padding: 5px;
   margin-bottom: 5px;
   margin-top: 5px;
   border-bottom: 1px solid #ccc;
 }
 
-.viewDetails {}
+.viewDetails {
+}
 
 .viewDetails:hover {
-  filter: brightness(.8);
+  filter: brightness(0.8);
 }
 
 .close {
@@ -111,10 +115,11 @@
   opacity: 1;
 }
 
-.close:before, .close:after {
+.close:before,
+.close:after {
   position: absolute;
   left: 15px;
-  content: ' ';
+  content: " ";
   height: 33px;
   width: 2px;
   background-color: #333;
@@ -141,7 +146,7 @@
   margin: auto;
   padding-top: 68px;
   padding-bottom: 48px;
-  background-image: url('./registration-form-background.jpg');
+  background-image: url("./registration-form-background.jpg");
 }
 
 .inner h3 {
@@ -177,6 +182,10 @@
 .formwrapper label {
   margin-bottom: 9px;
   display: block;
+}
+
+.formwrapper *[disabled] {
+  cursor: not-allowed;
 }
 
 .formcontrol {
@@ -275,7 +284,7 @@
   cursor: pointer;
 }
 
-.checkbox input:checked~.checkmark:after {
+.checkbox input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -300,7 +309,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
-  content: '\2713';
+  content: "\2713";
 }
 
 @media (max-width: 991px) {
@@ -324,7 +333,8 @@
   }
 }
 
-.errormessage, .checkboxerrormessage {
+.errormessage,
+.checkboxerrormessage {
   color: red;
   font-size: 0.8em;
   margin-left: 10px;
@@ -366,7 +376,11 @@ label[for="file_picker"] {
   color: red;
 }
 
-.ETC {}
+.ETC {
+}
+
+.customerETC {
+}
 
 .orderTracking {
   align-self: flex-start;
@@ -380,31 +394,56 @@ label[for="file_picker"] {
   margin: 0px 20px 30px 0px;
   border-radius: 50%;
   border: 1px solid #ccc;
-  background-color: #EEEEF0;
+  background-color: #eeeef0;
   text-align: center;
   font-size: 30px;
   z-index: 1;
 }
 
 .currentStatus {
-  background-color: #F11A09;
-  color: white;
-  box-shadow: 4px 0px 10px #000;
+  background-color: #f11a09 !important;
+  color: white !important;
+  box-shadow: 4px 0px 10px #000 !important;
 }
 
 .prevStatus {
-  background-color: lightgreen;
+  background-color: lightgreen !important;
 }
 
 .prevStatus::after {
-  content: "\2713";
-  color: white;
-  font-size: 30px;
+  content: "\2713" !important;
+  color: white !important;
+  font-size: 30px !important;
 }
 
-.orderStatusText {
-  align-self: flex-start;
-  margin-top: 10px;
+.defaultStatus {
+  background-color: #eeeef0;
+  box-shadow: none;
+  z-index: 1;
+}
+
+.defaultStatus:nth-child(1)::after {
+  content: "1";
+}
+
+.defaultStatus:nth-child(2)::after {
+  content: "2";
+}
+
+.defaultStatus:nth-child(3)::after {
+  content: "3";
+}
+
+.defaultStatus:nth-child(4)::after {
+  content: "4";
+}
+
+.defaultStatus:nth-child(5)::after {
+  content: "5";
+}
+
+.defaultStatus:nth-child(6)::after {
+  content: "6";
 }
 
 .line {
@@ -419,3 +458,16 @@ label[for="file_picker"] {
 .relative {
   position: relative;
 }
+
+.statusImages,
+.statusTexts {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderStatusText {
+  align-self: flex-start;
+  margin-top: 10px;
+  height: 68px;
+}
+
