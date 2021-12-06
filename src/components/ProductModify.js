@@ -3,6 +3,9 @@ import styles from "../css/RestaurantCreateNew.module.css";
 import axios from "axios";
 import cx from "classnames";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 const productImageRef = createRef();
@@ -12,46 +15,31 @@ function getFormDataAndCallAPI(idproducts) {
     document.querySelector('form[name="modifyProduct"]')
   );
 
-  let token;
+  const token = localStorage.getItem("appAuthData");
 
   axios
     .post(
-      API_ADDRESS + "/users/login",
-      {},
+      `${API_ADDRESS}/products/${idproducts}/editProductMultipart`,
+      formData,
       {
-        headers: { "Content-Type": "multipart/form-data" },
-        auth: { username: "ma99", password: "123456789Aa@" },
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
-    .then((res) => {
-      console.log("res", res);
-      token = res.data.token;
-
-      axios
-        .post(
-          `${API_ADDRESS}/products/${idproducts}/editProductMultipart`,
-          formData,
-          {
-            headers: {
-              "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            alert("Restaurant modified.");
-          } else {
-            alert("Something went wrong!");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("Something went wrong!");
-        });
+    .then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        toast.success("Restaurant modified.");
+      } else {
+        toast.error("Something went wrong!");
+      }
     })
-    .catch(console.log);
+    .catch((err) => {
+      console.log(err);
+      toast.error("Something went wrong!");
+    });
 }
 
 function modifyProduct(idproducts) {
@@ -198,6 +186,17 @@ export default function ProductModify() {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

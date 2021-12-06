@@ -13,7 +13,7 @@ export default function OrderHistoryPerRestaurant(props) {
           <div className={cx(styles.column1, styles.title)}>Order no.</div>
           <div className={cx(styles.column2, styles.title)}>Status</div>
           <div className={cx(styles.column3, styles.title)}>Total</div>
-          <div className={cx(styles.column4, styles.title)}>Order date</div>
+          <div className={cx(styles.column4, styles.title)}>Order time</div>
           {/* <div className={cx(styles.column5, styles.title)}>.</div> */}
         </div>
         {props.orderData.map((order, index) => {

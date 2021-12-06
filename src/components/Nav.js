@@ -88,6 +88,17 @@ class Nav extends React.Component {
     }
   }
 
+  // Added by Thuc
+  showOrderHistoryForCustomer = () => {
+    const token = window.localStorage.getItem('appAuthData');
+    if (!token) return <></>;
+    const jwt = require('jsonwebtoken');
+    const payload = jwt.decode(token);
+    const account_type = payload.account_type;
+    if (account_type === 1) return <li><Link to="/orders">Customer Order History</Link></li>;
+    else return <></>
+  }
+
   render() {
     const { login, sign } = this.state;
     return (
@@ -149,6 +160,8 @@ class Nav extends React.Component {
             <Link to="/shoppingcart">ShoppingCart [{this.props.CartQty}]</Link>
             {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
           </li>
+          {/* Added by Thuc */}
+          {this.showOrderHistoryForCustomer()}
         </ul>
       </div>
     )
