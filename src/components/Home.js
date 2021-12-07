@@ -29,12 +29,12 @@ class Home extends React.Component {
   render()
   {
     // Temporarily added by Thuc. For better performance, use RouterURL
-    const jwt = require('jsonwebtoken');
+  /*  const jwt = require('jsonwebtoken');
     const token = window.localStorage.getItem('appAuthData');
     if (token) {
       const payload = jwt.decode(token);
       if(payload.account_type===2) window.location.href = '/managers/';
-    }
+    } */
 
     const foodTypes = 
     [
@@ -77,24 +77,6 @@ class Home extends React.Component {
                  <img src={`/images/${types.image}`}/></Link>
                 </div>
                 )}
-     {/* <TypeContext.Consumer>
-            {typeContextValue => (<div>{typeContextValue == 2 
-            ? ""/*<>
-            <div>
-            <Link to ="/managers/orders"> Check orders</Link>
-            </div>
-            <div>
-            <Link to ="/managers/restaurants/create"> Create restaurant </Link>
-            </div>
-            <div>
-            <Link to ="managers/products/create"> Create product </Link>
-            </div>
-           </>
-            :  <>
-           
-                
-            </div> </> }</div>)}        
-            </TypeContext.Consumer> */}
 
     </div>
     </div>

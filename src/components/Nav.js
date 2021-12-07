@@ -45,6 +45,10 @@ class Nav extends React.Component {
     this.setState({typeJwt: null})
     this.props.navType(this.state.typeJwt)
     window.localStorage.removeItem('typeData')
+    window.localStorage.removeItem('ShoppingCart')
+    window.localStorage.removeItem('DeliveryLocation')
+    window.localStorage.removeItem('DeliveryCost')
+
   }
   passToken = () => {
 
@@ -94,7 +98,7 @@ class Nav extends React.Component {
   }
 
   // Added by Thuc
-  showOrderHistoryForCustomer = () => {
+ /* showOrderHistoryForCustomer = () => {
     const token = window.localStorage.getItem('appAuthData');
     if (!token) return <></>;
     const jwt = require('jsonwebtoken');
@@ -102,51 +106,22 @@ class Nav extends React.Component {
     const account_type = payload.account_type;
     if (account_type === 1) return <li><Link to="/orders">Customer Order History</Link></li>;
     else return <></>
-  }
+  }*/
+  /*getStaleJwt = () => {
+    const jwtToken = window.localStorage.getItem('appAuthData')
+    const jwt = require('jsonwebtoken')
+    const payload = jwt.decode(jwtToken)
+    const account_type = payload.account_type
+    return account_type
+  }*/
 
   render() {
     const { login, sign } = this.state;
     console.log("type nav"+this.state.typeJwt)
+    
     return (
       <div className={styles.nav}>
-        
-        <Modal isOpen={sign} >
-          <button onClick={this.onCloseRegister}>Close</button>
-       <Register />
-       </Modal>
-       
-        <div style={{ position: 'relative' }}>
-          <div className={styles.wholeSearchBar}>
-            <input className={styles.searchbar} type="text" placeholder="Find restaurant"
-              onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
-              value={ this.state.searchString }>
-            </input>
-            <button className={styles.button} onClick={this.onCloseEvent}>X</button>
-          </div>
-          <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
-            <SearchView
-              items={ this.props.restaurants.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
-              onChangePage= { this.changePage }
-            />
-          </div>
-        </div>
-       
-        <Modal isOpen={login}>
-          <button onClick={this.onCloseLogin}>Close</button>
-        <Login loginToken ={ (newJwt => {
-          this.setState({userJwt: newJwt})
-          console.log("typetoken" + this.state.userJwt )
-          window.localStorage.setItem('appAuthData', this.state.userJwt)
-          this.passToken()
-          this.onCloseLogin()
-        })} typeToken = {(newTypeJwt => {
-          this.setState({typeJwt: newTypeJwt})
-          console.log("typetoken" + this.state.typeJwt)
-          window.localStorage.setItem('typeData', this.state.typeJwt)
-          this.passToken()
-          this.onCloseLogin()
-        })}/>
-        </Modal>
+
 
          <div>
           {this.props.userLoggedIn 
@@ -173,11 +148,26 @@ class Nav extends React.Component {
             <Link to="/" className={styles.logo}>Slurps</Link>
           </li>
           {/* Added by Thuc */}
-          {this.showOrderHistoryForCustomer()}
+          {/*this.showOrderHistoryForCustomer()*/}
         </ul>
 
           <div>
-        <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative' }}>
+          <div className={styles.wholeSearchBar}>
+            <input className={styles.searchbar} type="text" placeholder="Find restaurant"
+              onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
+              value={ this.state.searchString }>
+            </input>
+            <button className={styles.button} onClick={this.onCloseEvent}>X</button>
+          </div>
+          <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
+            <SearchView
+              items={ this.props.restaurants.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
+              onChangePage= { this.changePage }
+            />
+          </div>
+        </div>
+      {/*}  <div style={{ position: 'relative' }}>
          <div className={styles.wholeSearchBar}>
            <input className={styles.searchbar} type="text" placeholder="Search.."
              type="text" onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
@@ -189,10 +179,32 @@ class Nav extends React.Component {
            <SearchView
              items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
              onChangePage= { this.changePage }
-           />
+           /> 
          </div>
+       </div> */}
        </div>
-       </div>
+       <Modal isOpen={sign} >
+          <button onClick={this.onCloseRegister}>Close</button>
+       <Register />
+       </Modal>
+       
+       
+        <Modal isOpen={login}>
+          <button onClick={this.onCloseLogin}>Close</button>
+        <Login loginToken ={ (newJwt => {
+          this.setState({userJwt: newJwt})
+          console.log("typetoken" + this.state.userJwt )
+          window.localStorage.setItem('appAuthData', this.state.userJwt)
+          this.passToken()
+          this.onCloseLogin()
+        })} typeToken = {(newTypeJwt => {
+          this.setState({typeJwt: newTypeJwt})
+          console.log("typetoken" + this.state.typeJwt)
+          window.localStorage.setItem('typeData', this.state.typeJwt)
+          this.passToken()
+          this.onCloseLogin()
+        })}/>
+        </Modal>
        
             <div>
            <ul>

@@ -16,7 +16,6 @@ import ProductCreateNew from '../components/ProductCreateNew';
 import ProductModify from '../components/ProductModify';
 import Login from '../components/Login';
 import { TypeContext } from '../context/Contexts';
-import ManagerView from '../components/ManagerView';
 
 import CategoryCreateNew from '../components/CategoryCreateNew';
 import CategoryModify from '../components/CategoryModify';
@@ -61,7 +60,7 @@ export default class RouterURL extends Component {
         <Route path="/managers/products/create" element={<ProductCreateNew />} />  
         <Route path="/managers/products/modify/:idproducts" element={<ProductModify />} /> 
         <Route path="/managers/" element={<ManagerDashboard />} />
-        <Route path="*" element= {<ManagerView />} /> 
+        <Route path="*" element= {<ManagerDashboard />} /> 
     </>
   }
   let hideRoutesFromManager = <>

@@ -7,14 +7,7 @@ import jwt from 'jsonwebtoken'
 import styles from './App.module.css'
 import React, { Component } from 'react'
 import { CartContext } from "./context/Contexts";
-import { TypeContext } from "./context/Contexts";
-import RestaurantCreateNew from './components/RestaurantCreateNew';
-import Register from './components/Register';
 // import Data from './data.json';
-
-import styles from './App.module.css'
-import React, { Component } from 'react'
-import { CartContext } from "./context/Contexts";
 import axios from 'axios';
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
