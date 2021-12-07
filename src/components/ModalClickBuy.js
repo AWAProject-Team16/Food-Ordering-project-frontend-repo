@@ -40,7 +40,7 @@ export default function ModalClickBuy(props) {
     StorageCart = JSON.parse(StorageCart)
     let Restaurant = localStorage.getItem('RestaurantID')
     if ( Restaurant === null) {
-      localStorage.setItem('RestaurantID', props.item.idrestaurants)
+      localStorage.setItem('RestaurantID', props.idrestaurants)
       PushToCart(props, StorageCart)
       // if (Array.isArray(StorageCart)) {
       //   let indexnumber = StorageCart.findIndex(Product => Product.id === props.item.idproducts);

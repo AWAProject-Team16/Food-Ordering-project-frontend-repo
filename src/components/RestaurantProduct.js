@@ -22,7 +22,7 @@ export default function RestaurantDetail(props) {
       </div>
       {/* {modalOpen && <ModalClickBuy handleModalOpen={setModalOpen} item={ props.item }/>} */}
       <Modal isOpen={modalOpen} className= { styles.modal }>
-        <ModalClickBuy handleModalOpen={setModalOpen} item={ props.item }/>
+        <ModalClickBuy handleModalOpen={setModalOpen} item={ props.item } idrestaurants={props.idrestaurants}/>
       </Modal>
     </div>
   )
