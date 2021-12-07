@@ -1,7 +1,7 @@
 import React from 'react'
 import TotalCostBox from "./Totalcost";
 import ProductArea from "./ProductArea"
-import styles from './../css/ShoppingCart.module.css'
+import styles from './../css/ShoppingCart/ShoppingCart.module.css'
 import DeliveryLocation from './DeliveryLocation';
 import { Link } from "react-router-dom";
 import { CartContext } from '../context/Contexts'
@@ -187,7 +187,7 @@ class ShoppingCart extends React.Component {
           />
           <div>
             {/* <Link to="/paymentpage" > */}
-              <button className={styles.PaymentButton} onClick={() => this.PaymentClicked() } >
+              <button className={styles.PaymentButton} onClick={() => this.PaymentClicked() } style={{ backgroundColor: this.state.isLocationSubmitted === true ? 'rgb(177, 231, 97)' : 'grey'}} >
                 <span className={styles.PaymentLink}>Proceed to payment</span>
               </button>
             {/* </Link> */}

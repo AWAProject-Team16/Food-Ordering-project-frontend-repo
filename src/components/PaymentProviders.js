@@ -4,7 +4,7 @@ import styles from './../css/PaymentView/PaymentProviders.module.css'
 
 const PaymentProviders = (props) => {
   return (
-    <div className={styles.ProviderItem}>
+    <div className={styles.ProviderItems}>
       {
         props.providers.map(i => <PaymentProvider {...i}
           SelectProvider={props.SelectProvider}

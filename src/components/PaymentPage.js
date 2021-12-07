@@ -15,10 +15,15 @@ class PaymentPage extends Component {
         { id: 3, name: 'Paypal', type: 'bank', expanded: false },
         { id: 4, name: 'Danske Bank', type: 'bank', expanded: false },
         { id: 5, name: 'Nordea', type: 'bank', expanded: false },
-        { id: 6, name: 'OP', type: 'bank', expanded: false }
+        { id: 6, name: 'OP', type: 'bank', expanded: false },
+        { id: 7, name: 'Handelsbanken', type: 'bank', expanded: false},
+        { id: 8, name: 'Aktia', type: 'bank', expanded: false}
       ],
       TotalCost: 0,
-      DeliveryCost: 0
+      DeliveryCost: 0,
+      DeliveryLocation: '',
+      RestaurantID: 0,
+      ShoppingCart: []
     }
   }
 
@@ -27,7 +32,9 @@ class PaymentPage extends Component {
     ShoppingCart = JSON.parse(ShoppingCart)
     let DeliveryCost = parseInt(localStorage.getItem('DeliveryCost'))
     let TotalCost = this.CostCalc(ShoppingCart, DeliveryCost)
-    this.setState({ TotalCost: TotalCost, DeliveryCost: DeliveryCost})
+    let DeliveryLocation = localStorage.getItem('DeliveryLocation')
+    let Restaurant = parseInt(localStorage.getItem('RestaurantID'))
+    this.setState({ TotalCost: TotalCost, DeliveryCost: DeliveryCost, DeliveryLocation: DeliveryLocation, RestaurantID:Restaurant, ShoppingCart:ShoppingCart})
     // console.log(this.props.navigate)
   }
 
@@ -58,21 +65,17 @@ class PaymentPage extends Component {
   }
 
   AddOrder = async () => {
-    let ShoppingCart = localStorage.getItem('ShoppingCart');
-    ShoppingCart = JSON.parse(ShoppingCart)
-    const DeliveryLocation = localStorage.getItem('DeliveryLocation');
-    const User = "JWTtoken?"
-    let Restaurant = localStorage.getItem('RestaurantID');
-    Restaurant = parseInt(Restaurant)
+    let ShoppingCart = this.state.ShoppingCart;
+    let DeliveryLocation = this.state.DeliveryLocation;
+    let Restaurant = this.state.RestaurantID;
     const JWTtoken = localStorage.getItem('appAuthData')
     // Restaurant = JSON.parse(Restaurant)
-    const DeliveryCost = parseInt(localStorage.getItem('DeliveryCost'))
-    const TotalCost = this.CostCalc(ShoppingCart, DeliveryCost)
+    let TotalCost = this.state.TotalCost
     // const TotalCost = ProductCosts + DeliveryCost
     // console.log(TotalCost)
     // console.log(`Bearer ${JWTtoken}`)
     console.log({ DeliveryLocation, JWTtoken, Restaurant, TotalCost, ShoppingCart})
-    const response = await axios.post('http://localhost:5000/orders/addOrder', {restaurants_idrestaurants:36, order_delivery_location: DeliveryLocation,order_total_cost: TotalCost, ShoppingCart: ShoppingCart}, { headers: { 'Authorization': `Bearer ${JWTtoken}` } })
+    const response = await axios.post('http://localhost:5000/orders/addOrder', {restaurants_idrestaurants: Restaurant, order_delivery_location: DeliveryLocation, order_total_cost: TotalCost, ShoppingCart: ShoppingCart}, { headers: { 'Authorization': `Bearer ${JWTtoken}` } })
     console.log(response)
     this.props.navigateHook('/customers/orders')
     // console.log(Restaurant.Restaurant)

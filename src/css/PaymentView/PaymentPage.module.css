@@ -1,8 +1,23 @@
+.PaymentArea {
+  padding-left: 20px;
+  min-width: 1024px;
+}
+
 .PaymentTitle {
   margin-top: 20px;
   font-size: 24px;
+  background-color: peru;
+  margin-right: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  font-weight: bold;
 }
 
 .OrderCost {
-  margin-top: 10px
+  padding-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  padding-left: 20px;
+  background-color: peru;
+  padding-bottom: 20px;
 }

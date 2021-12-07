@@ -1,5 +1,7 @@
-.ProviderItem {
+.ProviderItems {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    background-color: peru;
+    margin-right: 20px;
 }
