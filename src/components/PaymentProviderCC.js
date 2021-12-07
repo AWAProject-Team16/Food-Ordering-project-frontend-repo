@@ -8,7 +8,7 @@ const PaymentProviderCC = (props) => {
         {props.name}
       </div>
       <div>
-        Insert card number here
+        Card number
       </div>
       <form onSubmit={props.HandleSubmit}>
         <input type="number" />
