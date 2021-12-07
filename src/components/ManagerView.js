@@ -1,6 +1,5 @@
 import React from 'react'
-import ProductCreateNew from './ProductCreateNew'
-import RestaurantCreateNew from './RestaurantCreateNew'
+import {Link} from 'react-router-dom'
 
 export default function ManagerView() {
 
@@ -8,8 +7,17 @@ export default function ManagerView() {
     return (
         <div>
             <h1>Manager view</h1>
-            <ProductCreateNew/>
-            <RestaurantCreateNew/>
+            <>
+            <div>
+            <Link to ="/managers/orders"> Check orders</Link>
+            </div>
+            <div>
+            <Link to ="/managers/restaurants/create"> Create restaurant </Link>
+            </div>
+            <div>
+            <Link to ="/managers/products/create"> Create product </Link>
+            </div>
+              </>
         </div>
     )
 }

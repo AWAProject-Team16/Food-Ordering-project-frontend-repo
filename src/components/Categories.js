@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from '../css/RestaurantsSearchResult.module.css';
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';

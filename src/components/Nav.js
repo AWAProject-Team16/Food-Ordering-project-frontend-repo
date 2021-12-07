@@ -1,10 +1,11 @@
 import styles from './../css/Nav.module.css'
-import React, { Component, useState } from 'react'
+import React from 'react'
 import { Link, NavLink } from "react-router-dom";
 import Register from './Register'
 import Modal from 'react-modal'
 import Login from './Login'
 import SearchView from './SearchView';
+import { TypeContext } from '../context/Contexts';
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class Nav extends React.Component {
       sign:false, 
       login: false,
       userJwt:null,
+      typeJwt: null,
       CartItems: 0,
       items: props.restaurants,  // Xóa props ở routerURL sau !!!
       searchString: '',
@@ -41,10 +43,14 @@ export default class Nav extends React.Component {
     this.setState({userJwt:null})
     this.props.nav(this.state.userJwt)
     window.localStorage.removeItem('appAuthData')
+    this.setState({typeJwt: null})
+    this.props.navType(this.state.typeJwt)
+    window.localStorage.removeItem('typeData')
   }
   passToken = () => {
 
     this.props.nav(this.state.userJwt)
+    this.props.navType(this.state.typeJwt)
   }
   
   onSearchFieldChange = (e) => {
@@ -87,39 +93,25 @@ export default class Nav extends React.Component {
     const { login, sign } = this.state;
     return (
       <div className={styles.nav}>
-
-        <ul>
-          <li>
-            <Link to="/" className={styles.logo}>Slurps</Link>
-          </li>
-        </ul>
         
         <Modal isOpen={sign} >
           <button onClick={this.onCloseRegister}>Close</button>
        <Register />
        </Modal>
        
-        <div style={{ position: 'relative' }}>
-          <div className={styles.wholeSearchBar}>
-            <input className={styles.searchbar} type="text" placeholder="Search.."
-              type="text" onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
-              value={ this.state.searchString } placeholder="Find restaurant">
-            </input>
-            <button className={styles.button} onClick={this.onCloseEvent}>X</button>
-          </div>
-          <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
-            <SearchView
-              items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
-              onChangePage= { this.changePage }
-            />
-          </div>
-        </div>
        
         <Modal isOpen={login}>
           <button onClick={this.onCloseLogin}>Close</button>
-        <Login login ={ (newJwt => {
+        <Login loginToken ={ (newJwt => {
           this.setState({userJwt: newJwt})
+          console.log("typetoken" + this.state.userJwt )
           window.localStorage.setItem('appAuthData', this.state.userJwt)
+          this.passToken()
+          this.onCloseLogin()
+        })} typeToken = {(newTypeJwt => {
+          this.setState({typeJwt: newTypeJwt})
+          console.log("typetoken" + this.state.typeJwt)
+          window.localStorage.setItem('typeData', this.state.typeJwt)
           this.passToken()
           this.onCloseLogin()
         })}/>
@@ -136,15 +128,55 @@ export default class Nav extends React.Component {
           }
           </div>
 
-        <ul>
+
+          
+           { this.state.typeJwt  == 2 
+           ? "Manager" 
+           
+           : 
+           <>
+
+           <ul>
           <li>
-            <Link to="/restaurants">Restaurants</Link>
-          </li>
-          <li>
-            <Link to="/shoppingcart">ShoppingCart [{this.props.CartQty}]</Link>
-            {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
+            <Link to="/" className={styles.logo}>Slurps</Link>
           </li>
         </ul>
+
+          <div>
+        <div style={{ position: 'relative' }}>
+         <div className={styles.wholeSearchBar}>
+           <input className={styles.searchbar} type="text" placeholder="Search.."
+             type="text" onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
+             value={ this.state.searchString } placeholder="Find restaurant">
+           </input>
+           <button className={styles.button} onClick={this.onCloseEvent}>X</button>
+         </div>
+         <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
+           <SearchView
+             items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
+             onChangePage= { this.changePage }
+           />
+         </div>
+       </div>
+       </div>
+       
+            <div>
+           <ul>
+           <li>
+             <Link to="/restaurants">Restaurants</Link>
+           </li>
+           <li>
+             <Link to="/shoppingcart">ShoppingCart [{this.props.CartQty}]</Link>
+             {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
+           </li>
+         </ul>
+         </div>
+
+         </>
+         }  
+           
+        
+        
       </div>
     )
 

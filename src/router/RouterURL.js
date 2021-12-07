@@ -30,23 +30,43 @@ export default class RouterURL extends Component {
 
  
   render() {
-    let typeValue = this.context 
-
+    //let typeValue = this.context 
+    //console.log("type routerissa " + this.props.typeContextValue)
     let authRoutes = <>
    
+    <Route path="/" element={ <Login /> } />
+    <Route path="/" element={ <Register /> } />
+  </>
+  
+  if(this.props.userLoggedIn != null) {
+   authRoutes = 
+   <>
+   <Route path="/paymentpage" element={ <PaymentPage /> }/>
+   <Route path="/customers/orders" element={<OrderHistoryCustomer />} /> 
+   </>
+  }
+  let managerRoutes = <>
     <Route path="/" element={ <Login /> } />
     
     <Route path="/" element={ <Register /> } />
   </>
-  
-  //if(this.props.userLoggedIn != null) {
-  //  authRoutes = <Route path="/paymentpage" element={ <PaymentPage /> }/> 
-    
- // }
-   if(typeValue != null) {
-    authRoutes = <Route path="/manager" element={ <ManagerView />} />
-    console.log("type  "+ typeValue)
+  if(this.props.typeValue == 2) {
+    managerRoutes = 
+    <>
+        <Route path="/managers/orders" element={<OrderHistoryManger />} />
+        <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
+        <Route path="/managers/products/create" element={<ProductCreateNew />} />   
+        <Route path="/managers" element={<ManagerView />} />
+    </>
   }
+  /*<TypeContext.Consumer> 
+    {typeContextValue => (<div>{typeContextValue == 2 
+            ? " "
+            : " "
+    }</div>)
+    }
+   </TypeContext.Consumer>*/
+  
   
     return (
       <>
@@ -54,11 +74,11 @@ export default class RouterURL extends Component {
           <Routes>
           <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
               
-                  {
-                    authRoutes    
-                  }     
+                  {authRoutes} 
+                  {managerRoutes}    
               
             <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
+
           
                 
         {/* Typessä oli kaksoispisteet*/}
@@ -73,11 +93,7 @@ export default class RouterURL extends Component {
 
         <Route path="/register" element={<Register />} />
 
-        <Route path="/managers/orders" element={<OrderHistoryManger />} />
-        <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
-        <Route path="/managers/products/create" element={<ProductCreateNew />} />   
-        <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
-        <Route path="/devthuc" element={<DevThucTestingArea />} />
+        
         </Routes>
           
      

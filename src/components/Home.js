@@ -1,8 +1,11 @@
 import styles from './../css/Home.module.css'
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link,Route} from 'react-router-dom'
 import axios from 'axios';
-import Categories from './Categories';
+import { TypeContext } from '../context/Contexts';
+
+
+
 
 
 class Home extends React.Component {
@@ -12,6 +15,7 @@ class Home extends React.Component {
     this.state = {
     }
   }
+  static contextType = TypeContext
   /*componentDidMount(){
     axios.get('http://localhost:3000/food_types')
     .then((response)=> {
@@ -19,7 +23,8 @@ class Home extends React.Component {
     })
     .catch(err=> console.log(err))
   }*/
-
+  
+  
   render()
   {
     const foodTypes = 
@@ -46,6 +51,7 @@ class Home extends React.Component {
       },
 
     ]
+     
     
   return (
     <div>
@@ -53,16 +59,34 @@ class Home extends React.Component {
         User login status:{this.props.userLoggedIn ? "is logged in" : "not logged in"  }  
       </div>
       <h3 className={styles.header}>Food types</h3>
-    <div className={styles.categoryGrid}>
-      
-      {foodTypes.map(types =>
-        <div className={styles.box}>
-        <Link to={`/foodType/${types.name}`} element={this.props.foodTypes}  >
-          {types.name}
-         <img src={`/images/${types.image}`}/></Link>
-        </div>
-        )}
-        
+            <div className={styles.categoryGrid}>
+              
+              {foodTypes.map(types =>
+                <div className={styles.box}>
+                <Link to={`/foodType/${types.name}`} element={this.props.foodTypes}  >
+                  {types.name}
+                 <img src={`/images/${types.image}`}/></Link>
+                </div>
+                )}
+     {/* <TypeContext.Consumer>
+            {typeContextValue => (<div>{typeContextValue == 2 
+            ? ""/*<>
+            <div>
+            <Link to ="/managers/orders"> Check orders</Link>
+            </div>
+            <div>
+            <Link to ="/managers/restaurants/create"> Create restaurant </Link>
+            </div>
+            <div>
+            <Link to ="managers/products/create"> Create product </Link>
+            </div>
+           </>
+            :  <>
+           
+                
+            </div> </> }</div>)}        
+            </TypeContext.Consumer> */}
+
     </div>
     </div>
     
