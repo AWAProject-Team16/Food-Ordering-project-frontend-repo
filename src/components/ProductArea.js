@@ -1,6 +1,6 @@
 import React from 'react'
 import ShoppingCartProduct from './ShoppingCartProduct'
-import styles from './../css/ProductArea.module.css'
+import styles from './../css/ShoppingCart/ProductArea.module.css'
 
 const ProductArea = props => {
   //     return <div className={styles.ProductArea}>

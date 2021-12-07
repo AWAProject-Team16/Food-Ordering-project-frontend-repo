@@ -5,12 +5,13 @@ import { Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
 export default function RestaurantsSearchResult(props) {
+  var API_ADDRESS = process.env.REACT_APP_API_ADDRESS
   return (
     <Col lg={4}>
-      <Link to={ props.idrestaurants.toString() }>
+      <Link to={ `/../restaurants/${props.idrestaurants.toString()}` }>
         <div className={ styles.restaurant }>
           <div>
-            <img alt="true" src={`/images/${props.image}`} />
+            <img alt="true" src={`${API_ADDRESS}/images/${props.image}`} />
           </div>
 
           <div className={ styles.name }>
@@ -23,7 +24,8 @@ export default function RestaurantsSearchResult(props) {
 
           <hr />
           <div className={ styles.more }>
-              <div className={ styles.time }>15-25 min</div>
+            <div className={ styles.price }>{ props.price_level } $</div>
+            <div className={ styles.time }>15-25 min</div>
           </div>
         </div>
       </Link>

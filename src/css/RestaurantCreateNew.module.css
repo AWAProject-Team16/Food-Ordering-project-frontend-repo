@@ -11,7 +11,7 @@
   margin: auto;
   padding-top: 68px;
   padding-bottom: 48px;
-  background-image: url('./registration-form-background.jpg');
+  background-image: url("./registration-form-background.jpg");
 }
 
 .inner h3 {
@@ -144,7 +144,7 @@
   cursor: pointer;
 }
 
-.checkbox input:checked~.checkmark:after {
+.checkbox input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -169,7 +169,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
-  content: '\2713';
+  content: "\2713";
 }
 
 @media (max-width: 991px) {
@@ -192,7 +192,8 @@
   }
 }
 
-.errormessage, .checkboxerrormessage {
+.errormessage,
+.checkboxerrormessage {
   color: red;
   font-size: 0.8em;
   margin-left: 10px;
@@ -215,6 +216,7 @@
   height: 70px !important;
   width: 100% !important;
   padding-top: 10px !important;
+  line-height: 19px;
 }
 
 .input_file {
@@ -234,4 +236,57 @@ label[for="file_picker"] {
 .flex input[type="number"] {
   width: 150px;
   margin-left: 5px;
+}
+
+.productImage {
+  width: 300px;
+  height: 300px;
+}
+
+.addCategoryLink {
+  margin-bottom: 15px;
+  display: block;
+  margin-top: -10px;
+  margin-left: 30px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.addCategoryLink:hover {
+  color: #f11a09;
+}
+
+.close {
+  position: absolute;
+  right: 22px;
+  top: 12px;
+  width: 22px;
+  height: 22px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.ban {
+  cursor: not-allowed;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './../css/Totalcost.module.css'
+import styles from './../css/ShoppingCart/Totalcost.module.css'
 
 
 const TotalCostBox = props => {

@@ -10,16 +10,19 @@
 
 .Productqty {
   font-weight: bold;
+  padding-top: 4px;
 }
 
 .ProductName {
   padding-left: 20px;
+  padding-top: 4px;
 }
 
 .ProductCost {
   margin-left: auto;
   padding-left: 40px;
   margin-right: 40px;
+  padding-top: 4px;
 }
 
 .PlusButton {

@@ -1,13 +1,13 @@
-import styles from './../css/Nav.module.css'
-import React from 'react'
-import { Link, NavLink } from "react-router-dom";
-import Register from './Register'
-import Modal from 'react-modal'
-import Login from './Login'
+import styles from './../css/Nav.module.css';
+import React from 'react';
+import { Link } from "react-router-dom";
+import Register from './Register';
+import Modal from 'react-modal';
+import Login from './Login';
 import SearchView from './SearchView';
-import { TypeContext } from '../context/Contexts';
+import { useNavigate } from 'react-router-dom';
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,11 +17,10 @@ export default class Nav extends React.Component {
       userJwt:null,
       typeJwt: null,
       CartItems: 0,
-      items: props.restaurants,  // Xóa props ở routerURL sau !!!
+      // items: props.restaurants,
       searchString: '',
       appear: 'none',
     }
-    
   }
 
   onOpenRegister = () => {
@@ -85,8 +84,24 @@ export default class Nav extends React.Component {
   handleKeyPress = (e) => {
     if(e.key === 'Enter') {
       localStorage.setItem('valueOfInput', e.target.value)
-      window.location='/restaurants';
+      // window.location='/restaurants';
+      this.props.navigate('/search')
+      this.setState({
+        searchString: '',
+        appear: 'none'
+      })
     }
+  }
+
+  // Added by Thuc
+  showOrderHistoryForCustomer = () => {
+    const token = window.localStorage.getItem('appAuthData');
+    if (!token) return <></>;
+    const jwt = require('jsonwebtoken');
+    const payload = jwt.decode(token);
+    const account_type = payload.account_type;
+    if (account_type === 1) return <li><Link to="/orders">Customer Order History</Link></li>;
+    else return <></>
   }
 
   render() {
@@ -100,6 +115,21 @@ export default class Nav extends React.Component {
        <Register />
        </Modal>
        
+        <div style={{ position: 'relative' }}>
+          <div className={styles.wholeSearchBar}>
+            <input className={styles.searchbar} type="text" placeholder="Find restaurant"
+              onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
+              value={ this.state.searchString }>
+            </input>
+            <button className={styles.button} onClick={this.onCloseEvent}>X</button>
+          </div>
+          <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
+            <SearchView
+              items={ this.props.restaurants.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
+              onChangePage= { this.changePage }
+            />
+          </div>
+        </div>
        
         <Modal isOpen={login}>
           <button onClick={this.onCloseLogin}>Close</button>
@@ -142,6 +172,8 @@ export default class Nav extends React.Component {
           <li>
             <Link to="/" className={styles.logo}>Slurps</Link>
           </li>
+          {/* Added by Thuc */}
+          {this.showOrderHistoryForCustomer()}
         </ul>
 
           <div>
@@ -185,3 +217,9 @@ export default class Nav extends React.Component {
   }
 }
 
+function WithNavigate(props) {
+  let navigate = useNavigate();
+  return <Nav {...props} navigate={navigate} />
+  }
+  
+export default WithNavigate

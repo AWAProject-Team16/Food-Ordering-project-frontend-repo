@@ -1,5 +1,5 @@
 import React, {Component,} from 'react';
-import {Routes, Route, BrowserRouter, } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import Home from '../components/Home';
 import Restaurants from '../components/Restaurants';
 import Restaurant from '../components/Restaurant';
@@ -13,16 +13,19 @@ import OrderHistoryCustomer from '../components/OrderHistory/customer/OrderHisto
 import Register from '../components/Register';
 import RestaurantCreateNew from '../components/RestaurantCreateNew';
 import ProductCreateNew from '../components/ProductCreateNew';
+import ProductModify from '../components/ProductModify';
 import Login from '../components/Login';
 import { TypeContext } from '../context/Contexts';
 import ManagerView from '../components/ManagerView';
 
+import CategoryCreateNew from '../components/CategoryCreateNew';
+import CategoryModify from '../components/CategoryModify';
+import ManagerDashboard from '../components/ManagerDashboard';
 
 export default class RouterURL extends Component {
   constructor(props){
     super(props)
    this.state = {
-    
     
    }
   }
@@ -49,10 +52,15 @@ export default class RouterURL extends Component {
   if(this.props.typeValue == 2) {
     managerRoutes = 
     <>
+       <Route path="/managers/categories/create" element={<CategoryCreateNew />} />
+        <Route path="/managers/categories/modify/:idcategories" element={<CategoryModify />} />
+
         <Route path="/managers/orders" element={<OrderHistoryManger />} />
         <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
-        <Route path="/managers/products/create" element={<ProductCreateNew />} />   
-        <Route path="/managers" element={<ManagerView />} />
+
+        <Route path="/managers/products/create" element={<ProductCreateNew />} />  
+        <Route path="/managers/products/modify/:idproducts" element={<ProductModify />} /> 
+        <Route path="/managers/" element={<ManagerDashboard />} />
         <Route path="*" element= {<ManagerView />} /> 
     </>
   }
@@ -64,24 +72,19 @@ export default class RouterURL extends Component {
     <>
         <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
         <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
-        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
+        
+        <Route path="/restaurants" element={<Restaurants restaurants={ this.props.restaurants } key={ Math.random() } />}>
           {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
         </Route>
-        <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
+        <Route path="/restaurants/:idOfRestaurant" element={<Restaurant />} />
+        <Route path="/search" element={<Restaurants restaurants={ this.props.restaurants } />} />
+        
         <Route path="/shoppingcart" element={<ShoppingCart />} />
         <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} />
         <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
          
     </>
   }
-  /*<TypeContext.Consumer> 
-    {typeContextValue => (<div>{typeContextValue == 2 
-            ? " "
-            : " "
-    }</div>)
-    }
-   </TypeContext.Consumer>*/
-  
   
     return (
       <>
@@ -90,7 +93,7 @@ export default class RouterURL extends Component {
                   {authRoutes} 
                   {managerRoutes}  
                   {hideRoutesFromManager}  
-        </Routes>
+         </Routes>
           
      
         </>

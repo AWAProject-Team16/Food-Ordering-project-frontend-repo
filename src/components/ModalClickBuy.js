@@ -9,7 +9,7 @@ export default function ModalClickBuy(props) {
   const [quantity, setQuantity] = useState(1)
   const context = useContext(CartContext)
   function onDown() {
-    let newQuantity = quantity >=1 ? quantity - 1 : quantity
+    let newQuantity = quantity >1 ? quantity - 1 : quantity
     setQuantity(newQuantity)
   }
   function onUp() {
@@ -38,6 +38,49 @@ export default function ModalClickBuy(props) {
     // .catch(err => console.log(err))
     let StorageCart = localStorage.getItem("ShoppingCart")
     StorageCart = JSON.parse(StorageCart)
+    let Restaurant = localStorage.getItem('RestaurantID')
+    if ( Restaurant === null) {
+      localStorage.setItem('RestaurantID', props.item.idrestaurants)
+      PushToCart(props, StorageCart)
+      // if (Array.isArray(StorageCart)) {
+      //   let indexnumber = StorageCart.findIndex(Product => Product.id === props.item.idproducts);
+      //   if (indexnumber === -1) {
+      //     StorageCart.push({ id: props.item.idproducts, value: props.item.product_name, qty: quantity, cost: props.item.product_cost })
+      //   } else {
+      //     StorageCart[indexnumber].qty += quantity
+      //   }
+      //   localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      // } else {
+      //   let StorageCart = []
+      //   StorageCart.push({ id: props.item.idproducts, value: props.item.product_name, qty: quantity, cost: props.item.product_cost })
+      //   console.log(StorageCart)
+      //   localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+      // }
+    } else if (Restaurant ==! props.item.idrestaurants) {
+      alert('You currently have items from another restaurant in your shopping cart. One order can only contain items from one restaurant')
+    } else {
+      PushToCart(props, StorageCart)
+    }
+    // if (Array.isArray(StorageCart)) {
+    //   let indexnumber = StorageCart.findIndex(Product => Product.id === props.item.idproducts);
+    //   if (indexnumber === -1) {
+    //     StorageCart.push({ id: props.item.idproducts, value: props.item.product_name, qty: quantity, cost: props.item.product_cost })
+    //   } else {
+    //     StorageCart[indexnumber].qty += quantity
+    //   }
+    //   localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+    // } else {
+    //   let StorageCart = []
+    //   StorageCart.push({ id: props.item.idproducts, value: props.item.product_name, qty: quantity, cost: props.item.product_cost })
+    //   console.log(StorageCart)
+    //   localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
+    // }
+    // e.preventDefault()
+    props.handleModalOpen(false)
+    context.CartCounter();
+  }
+
+  function PushToCart(props, StorageCart) {
     if (Array.isArray(StorageCart)) {
       let indexnumber = StorageCart.findIndex(Product => Product.id === props.item.idproducts);
       if (indexnumber === -1) {
@@ -52,9 +95,6 @@ export default function ModalClickBuy(props) {
       console.log(StorageCart)
       localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
     }
-    // e.preventDefault()
-    props.handleModalOpen(false)
-    context.CartCounter();
   }
 
   return (

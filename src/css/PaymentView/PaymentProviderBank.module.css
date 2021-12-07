@@ -1,0 +1,10 @@
+.ConfirmButton {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgb(177, 231, 97);
+}
+
+.ConfirmButton:hover {
+  background-color: rgb(104, 155, 28);
+  transform: translateY(-2px);
+}

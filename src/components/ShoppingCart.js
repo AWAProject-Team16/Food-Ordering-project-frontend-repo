@@ -1,10 +1,11 @@
 import React from 'react'
 import TotalCostBox from "./Totalcost";
 import ProductArea from "./ProductArea"
-import styles from './../css/ShoppingCart.module.css'
+import styles from './../css/ShoppingCart/ShoppingCart.module.css'
 import DeliveryLocation from './DeliveryLocation';
 import { Link } from "react-router-dom";
 import { CartContext } from '../context/Contexts'
+import { useNavigate } from 'react-router-dom';
 
 
 class ShoppingCart extends React.Component {
@@ -121,6 +122,7 @@ class ShoppingCart extends React.Component {
       localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
     }
     this.context.CartCounter();
+    localStorage.setItem('Restaurant', JSON.stringify({Restaurant: 'MacDonalds', RestaurantID: 2}))
     // console.log(StorageCart)
     // localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
   }
@@ -139,10 +141,20 @@ class ShoppingCart extends React.Component {
     event.preventDefault();
     console.log(this.state.isLocationSubmitted)
     const DeliveryCost = 5;
-    let NewCost = this.state.TotalCost
+    let NewCost = this.state.ProductCosts
     NewCost = NewCost + DeliveryCost
     let DeliveryLocation = this.state.DeliveryForm
+    localStorage.setItem('DeliveryLocation', DeliveryLocation)
+    localStorage.setItem('DeliveryCost', DeliveryCost)
     this.setState({ isLocationSubmitted: true, DeliveryCost: DeliveryCost, TotalCost: NewCost, DeliveryLocation: DeliveryLocation })
+  }
+
+  PaymentClicked = () => {
+    if(this.state.isLocationSubmitted === false) {
+      alert("Please input delivery location before proceeding to payment")
+    } else {
+      this.props.navigateHook('/paymentpage')
+    }
   }
 
 
@@ -174,19 +186,23 @@ class ShoppingCart extends React.Component {
             TotalCost={this.state.TotalCost}
           />
           <div>
-            <Link to="/paymentpage" >
-              <button className={styles.PaymentButton} >
+            {/* <Link to="/paymentpage" > */}
+              <button className={styles.PaymentButton} onClick={() => this.PaymentClicked() } style={{ backgroundColor: this.state.isLocationSubmitted === true ? 'rgb(177, 231, 97)' : 'grey'}} >
                 <span className={styles.PaymentLink}>Proceed to payment</span>
               </button>
-            </Link>
+            {/* </Link> */}
           </div>
-          <button onClick={() => this.AddProduct(20, "carrot", 5, 12)}>add carrot</button>
-          <button onClick={() => this.AddProduct(25, "salad", 2, 8)}>add salad</button>
+          {/* <button onClick={() => this.AddProduct(20, "carrot", 5, 12)}>add carrot</button>
+          <button onClick={() => this.AddProduct(25, "salad", 2, 8)}>add salad</button> */}
         </div>
       </div>
     </div>
   }
 }
 
+function WithUseNavigate(props) {
+  const navigateHook = useNavigate();
+  return <ShoppingCart {...props} navigateHook = {navigateHook} />
+}
 
-export default ShoppingCart
+export default WithUseNavigate

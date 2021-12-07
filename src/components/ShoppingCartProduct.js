@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './../css/ShoppingCartProduct.module.css'
+import styles from './../css/ShoppingCart/ShoppingCartProduct.module.css'
 
 const ShoppingCartProduct = props => {
   const cost = props.cost;

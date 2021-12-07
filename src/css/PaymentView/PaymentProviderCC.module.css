@@ -1,0 +1,52 @@
+.ExpandedView {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  border: solid 2px black;
+  padding: 20px;
+  background-color: whitesmoke;
+}
+
+.Name {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.SmallInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.CVV {
+  display: flex;
+  flex-direction: column;
+}
+
+.ExpirationDate {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.ConfirmButton {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgb(177, 231, 97);
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.ConfirmButton:hover {
+  background-color: rgb(104, 155, 28);
+  transform: translateY(-2px);
+}
