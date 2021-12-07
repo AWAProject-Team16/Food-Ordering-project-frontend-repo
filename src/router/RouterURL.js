@@ -33,9 +33,7 @@ export default class RouterURL extends Component {
     //let typeValue = this.context 
     //console.log("type routerissa " + this.props.typeContextValue)
     let authRoutes = <>
-   
-    <Route path="/" element={ <Login /> } />
-    <Route path="/" element={ <Register /> } />
+  
   </>
   
   if(this.props.userLoggedIn != null) {
@@ -46,9 +44,7 @@ export default class RouterURL extends Component {
    </>
   }
   let managerRoutes = <>
-    <Route path="/" element={ <Login /> } />
-    
-    <Route path="/" element={ <Register /> } />
+   
   </>
   if(this.props.typeValue == 2) {
     managerRoutes = 
@@ -57,6 +53,25 @@ export default class RouterURL extends Component {
         <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
         <Route path="/managers/products/create" element={<ProductCreateNew />} />   
         <Route path="/managers" element={<ManagerView />} />
+        <Route path="*" element= {<ManagerView />} /> 
+    </>
+  }
+  let hideRoutesFromManager = <>
+
+  </>
+  if(this.props.typeValue != 2) {
+    hideRoutesFromManager=
+    <>
+        <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
+        <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
+        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
+          {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
+        </Route>
+        <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
+        <Route path="/shoppingcart" element={<ShoppingCart />} />
+        <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} />
+        <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
+         
     </>
   }
   /*<TypeContext.Consumer> 
@@ -72,28 +87,9 @@ export default class RouterURL extends Component {
       <>
             
           <Routes>
-          <Route path="/" element={<Home userLoggedIn={this.props.userLoggedIn != null}  />} />
-              
                   {authRoutes} 
-                  {managerRoutes}    
-              
-            <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
-
-          
-                
-        {/* Typessä oli kaksoispisteet*/}
-        <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
-        <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
-        <Route path="/restaurants" element={<Restaurants restaurants={ Data.restaurants } />}>
-          {/* <Route path="/:idOfRestaurant" element={<RestaurantDetailView restaurants={ Data.restaurants } menus={ Data.menus } products={ Data.products } /> } /> */}
-        </Route>
-        <Route path="/restaurants/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
-        <Route path="/shoppingcart" element={<ShoppingCart />} />
-        
-
-        <Route path="/register" element={<Register />} />
-
-        
+                  {managerRoutes}  
+                  {hideRoutesFromManager}  
         </Routes>
           
      

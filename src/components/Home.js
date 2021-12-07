@@ -3,6 +3,7 @@ import React from 'react'
 import {Link,Route} from 'react-router-dom'
 import axios from 'axios';
 import { TypeContext } from '../context/Contexts';
+import Categories from './Categories';
 
 
 
@@ -63,7 +64,7 @@ class Home extends React.Component {
               
               {foodTypes.map(types =>
                 <div className={styles.box}>
-                <Link to={`/foodType/${types.name}`} element={this.props.foodTypes}  >
+                <Link to={`/foodType/${types.name}`}  >
                   {types.name}
                  <img src={`/images/${types.image}`}/></Link>
                 </div>

@@ -91,6 +91,7 @@ export default class Nav extends React.Component {
 
   render() {
     const { login, sign } = this.state;
+    console.log("type nav"+this.state.typeJwt)
     return (
       <div className={styles.nav}>
         
@@ -132,6 +133,7 @@ export default class Nav extends React.Component {
           
            { this.state.typeJwt  == 2 
            ? "Manager" 
+           
            
            : 
            <>
