@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PaymentProviders from './PaymentProviders';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 class PaymentPage extends Component {
   constructor(props) {
@@ -31,7 +32,10 @@ class PaymentPage extends Component {
     let ShoppingCart = localStorage.getItem('ShoppingCart');
     ShoppingCart = JSON.parse(ShoppingCart)
     let DeliveryCost = parseInt(localStorage.getItem('DeliveryCost'))
-    let TotalCost = this.CostCalc(ShoppingCart, DeliveryCost)
+    let TotalCost = 0;
+    if(Array.isArray(ShoppingCart)) {
+      TotalCost = this.CostCalc(ShoppingCart, DeliveryCost)
+    }
     let DeliveryLocation = localStorage.getItem('DeliveryLocation')
     let Restaurant = parseInt(localStorage.getItem('RestaurantID'))
     this.setState({ TotalCost: TotalCost, DeliveryCost: DeliveryCost, DeliveryLocation: DeliveryLocation, RestaurantID:Restaurant, ShoppingCart:ShoppingCart})
@@ -77,18 +81,19 @@ class PaymentPage extends Component {
     console.log({ DeliveryLocation, JWTtoken, Restaurant, TotalCost, ShoppingCart})
     const response = await axios.post('http://localhost:5000/orders/addOrder', {restaurants_idrestaurants: Restaurant, order_delivery_location: DeliveryLocation, order_total_cost: TotalCost, ShoppingCart: ShoppingCart}, { headers: { 'Authorization': `Bearer ${JWTtoken}` } })
     console.log(response)
-    this.props.navigateHook('/customers/orders')
     // console.log(Restaurant.Restaurant)
-
-
+    if(response.status === 201) {
+      this.props.navigateHook('/orders')
+      localStorage.removeItem('ShoppingCart')
+      localStorage.removeItem('RestaurantID')
+      localStorage.removeItem('DeliveryLocation')
+      localStorage.removeItem('DeliveryCost')
+    }
+    
     // const article = { title: 'React POST Request Example' };
     // const test = await axios.post('https://reqres.in/api/articles', article);
     // console.log(test.data)
 
-    // localStorage.removeItem('ShoppingCart')
-    // localStorage.removeItem('Restaurant')
-    // localStorage.removeItem('DeliveryLocation')
-    // localStorage.removeItem('DeliveryCost')
   }
 
   CostCalc(Cart, DeliveryCost) {
