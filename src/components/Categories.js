@@ -1,22 +1,20 @@
-import React from 'react'
-import styles from '../css/RestaurantsSearchResult.module.css';
+import React from "react";
+import styles from "../css/RestaurantsSearchResult.module.css";
 import { Link } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Restaurants from './Restaurants';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Restaurants from "./Restaurants";
 
 export default function Categories(props) {
-
-  const result = useParams()
+  const result = useParams();
   //const obj = props.restaurants.find(item => item.type === types.name);
   //const foodType = props.foodTypes;
   //console.log("category prop "+props.foodTypes)
-  console.log(result.foodtype)
-  console.log(props.restaurants)
+  console.log(result.foodtype);
+  console.log(props.restaurants);
   if (result == null) {
-    return <div>No restaurants</div>
+    return <div>No restaurants</div>;
   }
 
   // const handleTypeSubmit = async (event) => {
@@ -38,28 +36,32 @@ export default function Categories(props) {
 
   function MakeFilter() {
     if (result.foodtype === "Fast-food") {
-      return "fast food"
+      return "fast food";
     } else if (result.foodtype === "Buffet") {
-      return "buffet"
+      return "buffet";
     } else if (result.foodtype === "Fast-casual") {
-      return "fast casual"
+      return "fast casual";
     } else if (result.foodtype === "Casual-dining") {
-      return "casual dining"
+      return "casual dining";
     } else if (result.foodtype === "Fine-dining") {
-      return "fine dining"
+      return "fine dining";
     }
   }
 
-  const filteredRestaurants = FilterRestaurants(props.restaurants, typefilter)
+  const filteredRestaurants = FilterRestaurants(props.restaurants, typefilter);
 
   function FilterRestaurants(arr, foodtype) {
     return arr.filter(function (item) {
-      console.log('foodtype', foodtype)
-      return item.restaurant_type.toLowerCase().indexOf(foodtype.toString().toLowerCase()) !== -1
-    })
+      console.log("foodtype", foodtype);
+      return (
+        item.restaurant_type
+          .toLowerCase()
+          .indexOf(foodtype.toString().toLowerCase()) !== -1
+      );
+    });
   }
 
-  console.log("filtered are:", filteredRestaurants)
+  console.log("filtered are:", filteredRestaurants);
 
   return (
     <div>
@@ -86,9 +88,6 @@ export default function Categories(props) {
              <div>{obj.type}</div>
              </Link>
     </div> */}
-
-
     </div>
-  )
+  );
 }
-
