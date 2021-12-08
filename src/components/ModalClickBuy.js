@@ -6,6 +6,7 @@ import { CartContext } from '../context/Contexts'
 // import axios from 'axios';
 
 export default function ModalClickBuy(props) {
+  var API_ADDRESS = process.env.REACT_APP_API_ADDRESS
   const [quantity, setQuantity] = useState(1)
   const context = useContext(CartContext)
   function onDown() {
@@ -40,7 +41,7 @@ export default function ModalClickBuy(props) {
     StorageCart = JSON.parse(StorageCart)
     let Restaurant = localStorage.getItem('RestaurantID')
     if ( Restaurant === null) {
-      localStorage.setItem('RestaurantID', props.item.idrestaurants)
+      localStorage.setItem('RestaurantID', props.idrestaurants)
       PushToCart(props, StorageCart)
       // if (Array.isArray(StorageCart)) {
       //   let indexnumber = StorageCart.findIndex(Product => Product.id === props.item.idproducts);
@@ -105,7 +106,7 @@ export default function ModalClickBuy(props) {
       <div className={ styles.item }>
         <div className={ styles.col1 }>
           {/*  */}
-          <img alt="true" src={`/images/${props.item.product_image}`} />
+          <img alt="true" src={`${API_ADDRESS}/images/${props.item.product_image}`} />
         </div>
         <div className={ styles.col2 }>
           <div className={ styles.name }><b>{ props.item.product_name }</b></div>
@@ -137,7 +138,7 @@ export default function ModalClickBuy(props) {
         </div>
         <button onClick={ addNewItem } className={styles.button}>Add to cart</button>
       </form> */}
-        <button onClick={ addNewItem } className={styles.button}>Add to cart</button>
+        <button onClick={ addNewItem } className={cx(styles.button, styles.addToCart) }>Add to cart</button>
     </div>
   )
 }

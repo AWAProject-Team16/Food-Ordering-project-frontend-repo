@@ -33,7 +33,7 @@ export default function RestaurantDetail(props) {
       <h3 id={props.category.idcategories} className={ styles.category }> { props.category.category_name } </h3>
       {
         objProducts.map(item =>  // !!!
-          <RestaurantProduct item={item} key={item.idproducts}/>
+          <RestaurantProduct item={item} idrestaurants={props.idrestaurants} key={item.idproducts}/>
       )}
     </div>
   )
