@@ -7,71 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-
 const productImageRef = createRef();
-
-function getFormDataAndCallAPI(idproducts) {
-  const formData = new FormData(
-    document.querySelector('form[name="modifyProduct"]')
-  );
-
-  const token = localStorage.getItem("appAuthData");
-
-  axios
-    .post(
-      `${API_ADDRESS}/products/${idproducts}/editProductMultipart`,
-      formData,
-      {
-        headers: {
-          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response);
-      if (response.status === 200) {
-        toast.success("Restaurant modified.");
-      } else {
-        toast.error("Something went wrong!");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      toast.error("Something went wrong!");
-    });
-}
-
-function modifyProduct(idproducts) {
-  const form = document.querySelector('form[name="modifyProduct"]');
-
-  form.onsubmit = (event) => {
-    event.preventDefault();
-  };
-
-  console.log("save clicked");
-
-  getFormDataAndCallAPI(idproducts);
-}
-
-function showNewImageChosenFileName() {
-  const imageLabel = document.querySelector('label[for="file_picker"]');
-  const filePicker = document.querySelector('input[type="file"]');
-
-  if (FileReader && filePicker.files && filePicker.files.length) {
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      productImageRef.current.src = fileReader.result;
-    };
-    fileReader.readAsDataURL(filePicker.files[0]);
-  }
-
-  if (filePicker.files.length > 0) {
-    imageLabel.textContent = filePicker.files[0].name;
-  } else {
-    imageLabel.textContent = "Click to choose an image";
-  }
-}
 
 export default function ProductModify() {
   const [data, setData] = useState({
@@ -82,6 +18,7 @@ export default function ProductModify() {
     product_cost: 0,
     product_image: "",
   });
+
   const idproducts = useParams().idproducts;
 
   useEffect(() => {
@@ -90,16 +27,73 @@ export default function ProductModify() {
         const res = await axios.get(
           `${API_ADDRESS}/products/product/${idproducts}`
         );
-        console.log(res);
         setData(res.data[0]);
-        console.log(data.product_name);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
 
     fetchData();
   }, []);
+
+  function getFormDataAndCallAPI(idproducts) {
+    const formData = new FormData(
+      document.querySelector('form[name="modifyProduct"]')
+    );
+
+    const token = localStorage.getItem("appAuthData");
+
+    axios
+      .post(
+        `${API_ADDRESS}/products/${idproducts}/editProductMultipart`,
+        formData,
+        {
+          headers: {
+            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Product modified.");
+        } else {
+          toast.error("Something went wrong!");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function modifyProduct(idproducts) {
+    const form = document.querySelector('form[name="modifyProduct"]');
+
+    form.onsubmit = (event) => {
+      event.preventDefault();
+    };
+
+    getFormDataAndCallAPI(idproducts);
+  }
+
+  function showNewImageChosenFileName() {
+    const imageLabel = document.querySelector('label[for="file_picker"]');
+    const filePicker = document.querySelector('input[type="file"]');
+
+    if (FileReader && filePicker.files && filePicker.files.length) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        productImageRef.current.src = fileReader.result;
+      };
+      fileReader.readAsDataURL(filePicker.files[0]);
+    }
+
+    if (filePicker.files.length > 0) {
+      imageLabel.textContent = filePicker.files[0].name;
+    } else {
+      imageLabel.textContent = "Click to choose an image";
+    }
+  }
 
   return (
     <div>

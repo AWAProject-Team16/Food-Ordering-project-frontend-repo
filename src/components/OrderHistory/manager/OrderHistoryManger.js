@@ -44,20 +44,24 @@ export default class OrderHistory extends React.Component {
     return (
       <div>
         <h2>Order History</h2>
+        {this.state.orderData.length == 0 && "(You have no orders)"}
         {this.state.restaurantData.map((restaurant, index) => {
           return (
-            <div className={styles.orderHistoryPerRestaurant} key={index}>
-              <OrderHistoryPerRestaurant
-                {...this.state}
-                updateAnOrder={this.updateAnOrder}
-                name={restaurant.name}
-                orderData={this.state.orderData.filter((order) => {
-                  return (
-                    order.restaurants_idrestaurants === restaurant.idrestaurants
-                  );
-                })}
-              />
-            </div>
+            <>
+              <div className={styles.orderHistoryPerRestaurant} key={index}>
+                <OrderHistoryPerRestaurant
+                  {...this.state}
+                  updateAnOrder={this.updateAnOrder}
+                  name={restaurant.name}
+                  orderData={this.state.orderData.filter((order) => {
+                    return (
+                      order.restaurants_idrestaurants ===
+                      restaurant.idrestaurants
+                    );
+                  })}
+                />
+              </div>
+            </>
           );
         })}
       </div>
