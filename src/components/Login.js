@@ -18,8 +18,7 @@ export default function Login(props) {
 
         try {
             const result = await axios.post(
-                "http://localhost:5000/users/login",
-                //API_ADDRESS + '/users/login',
+                `${API_ADDRESS}/users/login`,
                 null,
                 {
                     auth: {
@@ -36,8 +35,8 @@ export default function Login(props) {
                 setLoginProcessState("idle")
                 props.loginToken(receivedJWT)
                 const decodedToken = jwt.decode(receivedJWT);
-                console.log("user account type loginissa " + decodedToken.user.account_type)
-                const typeToken = decodedToken.user.account_type
+                console.log("user account type loginissa " + decodedToken.account_type)
+                const typeToken = decodedToken.account_type
                 props.typeToken(typeToken)
 
                 if (typeToken == 2)

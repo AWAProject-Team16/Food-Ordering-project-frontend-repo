@@ -54,7 +54,8 @@ export default function Categories(props) {
 
   function FilterRestaurants(arr, foodtype) {
     return arr.filter(function (item) {
-      return item.restaurant_type.toLowerCase().indexOf(foodtype.toLowerCase()) !== -1
+      console.log('foodtype', foodtype)
+      return item.restaurant_type.toLowerCase().indexOf(foodtype.toString().toLowerCase()) !== -1
     })
   }
 
