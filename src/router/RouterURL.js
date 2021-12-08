@@ -14,8 +14,6 @@ import Register from '../components/Register';
 import RestaurantCreateNew from '../components/RestaurantCreateNew';
 import ProductCreateNew from '../components/ProductCreateNew';
 import ProductModify from '../components/ProductModify';
-import Login from '../components/Login';
-import { TypeContext } from '../context/Contexts';
 
 import CategoryCreateNew from '../components/CategoryCreateNew';
 import CategoryModify from '../components/CategoryModify';
@@ -28,12 +26,10 @@ export default class RouterURL extends Component {
     
    }
   }
-  static contextType = TypeContext
+
 
  
   render() {
-    //let typeValue = this.context 
-    //console.log("type routerissa " + this.props.typeContextValue)
     let authRoutes = <>
   
   </>
