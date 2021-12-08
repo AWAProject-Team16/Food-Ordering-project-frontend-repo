@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import styles from "../css/RestaurantCreateNew.module.css";
 import axios from "axios";
 import cx from "classnames";
@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
+const productImageRef = createRef();
 
 function getFormDataAndCallAPI() {
   const formData = new FormData(
@@ -22,16 +23,15 @@ function getFormDataAndCallAPI() {
       },
     })
     .then((response) => {
-      console.log(response);
       if (response.status === 201) {
         toast.success("Restaurant created.");
+        resetForm();
       } else {
         toast.error("Something went wrong!");
       }
     })
     .catch((err) => {
-      console.log(err);
-      toast.error("Something went wrong!");
+      console.error(err);
     });
 }
 
@@ -42,14 +42,42 @@ function createRestaurant() {
     event.preventDefault();
   };
 
-  console.log("create clicked");
+  const isDataValid =
+    form.name.value.trim() != "" &&
+    form.address.value.trim() != "" &&
+    form.operating_hours.value.trim() != "" &&
+    form.phonenumber.value.trim() != "" &&
+    form.restaurant_type.value.trim() != "" &&
+    form.price_level.value.trim() != "" &&
+    form.restaurant_description.value.trim() != "" &&
+    form.image.files.length > 0;
 
-  getFormDataAndCallAPI();
+  if (!isDataValid) {
+    toast.error("All data are required and price must be greater than 0");
+  } else {
+    getFormDataAndCallAPI();
+  }
 }
 
-function showChosenFileName() {
+function resetForm() {
+  document.querySelector('form[name="createRestaurantForm"]').reset();
+  document.getElementsByClassName(styles.productImage)[0].src = " ";
+  document.querySelector('label[for="file_picker"]').textContent =
+    "Click to choose an image";
+}
+
+function showNewImageChosenFileName() {
   const imageLabel = document.querySelector('label[for="file_picker"]');
   const filePicker = document.querySelector('input[type="file"]');
+
+  if (FileReader && filePicker.files && filePicker.files.length) {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      productImageRef.current.src = fileReader.result;
+    };
+    fileReader.readAsDataURL(filePicker.files[0]);
+  }
+
   if (filePicker.files.length > 0) {
     imageLabel.textContent = filePicker.files[0].name;
   } else {
@@ -72,17 +100,11 @@ function render() {
                   Restaurant Name cannot be empty!
                 </span>
               </label>
-              <input
-                required
-                type="text"
-                className={styles.formcontrol}
-                name="name"
-              />
+              <input type="text" className={styles.formcontrol} name="name" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Address</label>
               <input
-                required
                 type="text"
                 className={styles.formcontrol}
                 name="address"
@@ -91,7 +113,6 @@ function render() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Operating Hours</label>
               <textarea
-                required
                 rows="12"
                 className={cx(styles.formcontrol, styles.textarea)}
                 name="operating_hours"
@@ -100,7 +121,6 @@ function render() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Phone Number</label>
               <input
-                required
                 type="tel"
                 className={styles.formcontrol}
                 name="phonenumber"
@@ -134,7 +154,6 @@ function render() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Description</label>
               <textarea
-                required
                 rows="12"
                 className={cx(styles.formcontrol, styles.textarea)}
                 name="restaurant_description"
@@ -143,17 +162,17 @@ function render() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
+                <img ref={productImageRef} className={styles.productImage} />
                 <input
                   type="file"
                   accept="image/*"
                   className={cx(styles.formcontrol, styles.input_file)}
                   name="image"
                   id="file_picker"
-                  onChange={showChosenFileName}
-                  multiple
+                  onChange={showNewImageChosenFileName}
                 />
                 <label className={styles.formcontrol} htmlFor="file_picker">
-                  Click to choose an image
+                  Click to choose another image
                 </label>
               </div>
             </div>

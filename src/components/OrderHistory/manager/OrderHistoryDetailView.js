@@ -206,7 +206,7 @@ export default function OrderHistoryDetailView(props) {
     <div>
       <div>
         <div className={styles.wrapper}>
-          <div className={cx(styles.inner, styles.flex)}>
+          <div className={cx(styles.inner, styles.orderDetailContainer)}>
             <form action="" className={styles.form}>
               <h3>Order Details</h3>
               {props.isManagerView && (
@@ -450,6 +450,36 @@ export default function OrderHistoryDetailView(props) {
                 </div>
               </div>
             )}
+
+            <table>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Product</th>
+                  <th>Amount</th>
+                  <th>Unit Price</th>
+                  <th>Line Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1.</td>
+                  <td>Salad</td>
+                  <td>20</td>
+                  <td>2</td>
+                  <td>&euro;40</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>TOTAL</td>
+                  <td>&euro;100</td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         </div>
       </div>
