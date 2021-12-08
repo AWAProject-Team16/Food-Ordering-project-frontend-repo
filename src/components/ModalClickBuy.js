@@ -57,7 +57,7 @@ export default function ModalClickBuy(props) {
       //   console.log(StorageCart)
       //   localStorage.setItem('ShoppingCart', JSON.stringify(StorageCart))
       // }
-    } else if (Restaurant ==! props.item.idrestaurants) {
+    } else if (Restaurant ==! props.idrestaurants) {
       alert('You currently have items from another restaurant in your shopping cart. One order can only contain items from one restaurant')
     } else {
       PushToCart(props, StorageCart)

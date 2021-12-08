@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import PaymentProviders from './PaymentProviders';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 class PaymentPage extends Component {
   constructor(props) {
@@ -83,7 +82,7 @@ class PaymentPage extends Component {
     console.log(response)
     // console.log(Restaurant.Restaurant)
     if(response.status === 201) {
-      this.props.navigateHook('/orders')
+      this.props.navigateHook('customers/orders')
       localStorage.removeItem('ShoppingCart')
       localStorage.removeItem('RestaurantID')
       localStorage.removeItem('DeliveryLocation')
