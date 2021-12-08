@@ -47,7 +47,7 @@ export default class RouterURL extends Component {
         <Route path="*" element= {<Home userLoggedIn={this.props.userLoggedIn != null}/>} /> 
             
         {/* Typessä oli kaksoispisteet*/}
-        <Route path="/foodType/:foodtype" element={<Categories restaurants={Data.restaurants} />} />
+        <Route path="/foodType/:foodtype" element={<Categories restaurants={ this.props.restaurants } />} />
         <Route path="/foodType/:foodtype/:idOfRestaurant" element={<Restaurant restaurants={ Data.restaurants } categories={ Data.categories } products={ Data.products } /> } />
         
         <Route path="/restaurants" element={<Restaurants restaurants={ this.props.restaurants } key={ Math.random() } />}>
