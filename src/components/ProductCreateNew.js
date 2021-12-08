@@ -256,10 +256,7 @@ export default function ProductCreateNew() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <img
-                  ref={productImageRef}
-                  className={styles.productImage}
-                />
+                <img ref={productImageRef} className={styles.productImage} />
                 <input
                   type="file"
                   accept="image/*"
