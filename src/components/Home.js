@@ -16,14 +16,7 @@ class Home extends React.Component {
     this.state = {
     }
   }
-  static contextType = TypeContext
-  /*componentDidMount(){
-    axios.get('http://localhost:3000/food_types')
-    .then((response)=> {
-      this.setState({foodTypes: response.data.food_types});
-    })
-    .catch(err=> console.log(err))
-  }*/
+
   
   
   render()
