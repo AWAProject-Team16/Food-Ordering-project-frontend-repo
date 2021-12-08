@@ -4,6 +4,8 @@ import PaymentProviders from './PaymentProviders';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
+
 class PaymentPage extends Component {
   constructor(props) {
     super(props);
@@ -78,7 +80,7 @@ class PaymentPage extends Component {
     // console.log(TotalCost)
     // console.log(`Bearer ${JWTtoken}`)
     console.log({ DeliveryLocation, JWTtoken, Restaurant, TotalCost, ShoppingCart})
-    const response = await axios.post('http://localhost:5000/orders/addOrder', {restaurants_idrestaurants: Restaurant, order_delivery_location: DeliveryLocation, order_total_cost: TotalCost, ShoppingCart: ShoppingCart}, { headers: { 'Authorization': `Bearer ${JWTtoken}` } })
+    const response = await axios.post(API_ADDRESS + '/orders/addOrder', {restaurants_idrestaurants: Restaurant, order_delivery_location: DeliveryLocation, order_total_cost: TotalCost, ShoppingCart: ShoppingCart}, { headers: { 'Authorization': `Bearer ${JWTtoken}` } })
     console.log(response)
     // console.log(Restaurant.Restaurant)
     if(response.status === 201) {
