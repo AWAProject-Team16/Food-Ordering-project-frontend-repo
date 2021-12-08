@@ -5,7 +5,6 @@ import cx from 'classnames';
 
 export default function OrderHistoryPerRestaurant(props) {
   // Requried props: orderData: array, restaurantData: array, orderStatusData: array, [isManagerView: boolean]
-  console.log(props)
   return (
     <div>
       <h3>{props.name}</h3>

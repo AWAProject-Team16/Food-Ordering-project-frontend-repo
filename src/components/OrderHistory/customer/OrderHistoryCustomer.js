@@ -70,13 +70,17 @@ export default function OrderHistoryCustomer() {
 
   return (
     <div>
-      <OrderHistoryPerRestaurant
-        name={name}
-        orderData={orderData}
-        restaurantData={restaurantData}
-        orderStatusData={orderStatusData}
-        isManagerView={isManagerView}
-      />
+      <h2>Order History</h2>
+      {orderData.length === 0 && "(You have no orders)"}
+      {orderData.length !== 0 && (
+        <OrderHistoryPerRestaurant
+          name={name}
+          orderData={orderData}
+          restaurantData={restaurantData}
+          orderStatusData={orderStatusData}
+          isManagerView={isManagerView}
+        />
+      )}
     </div>
   );
 }
