@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import styles from "../css/RestaurantCreateNew.module.css";
 import axios from "axios";
 import cx from "classnames";
@@ -8,70 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-
-function getFormDataAndCallAPI() {
-  const formData = new FormData(
-    document.querySelector('form[name="createProduct"]')
-  );
-
-  const token = localStorage.getItem("appAuthData");
-  const idcategories = document.querySelector(
-    'select[name="select_a_category"]'
-  ).value;
-
-  axios
-    .post(
-      `${API_ADDRESS}/products/category/${idcategories}/addProductMultipart`,
-      formData,
-      {
-        headers: {
-          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-    .then((res) => {
-      if (res.status === 201) {
-        toast.success("Product created.");
-      } else {
-        toast.error("Something went wrong!");
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function createProduct() {
-  const form = document.querySelector('form[name="createProduct"]');
-
-  form.onsubmit = (event) => {
-    event.preventDefault();
-  };
-
-  const isDataValid =
-    Number(form.select_a_category.value) > 0 &&
-    form.product_name.value.trim() != "" &&
-    form.product_description.value.trim() != "" &&
-    Number(form.product_cost.value) > 0 &&
-    form.product_image.files.length > 0;
-
-  if (!isDataValid) {
-    toast.error("All data are required and price must be greater than 0");
-  } else {
-    getFormDataAndCallAPI();
-  }
-}
-
-function showChosenFileName() {
-  const imageLabel = document.querySelector('label[for="file_picker"]');
-  const filePicker = document.querySelector('input[type="file"]');
-  if (filePicker.files.length > 0) {
-    imageLabel.textContent = filePicker.files[0].name;
-  } else {
-    imageLabel.textContent = "Click to choose an image";
-  }
-}
+const productImageRef = createRef();
 
 export default function ProductCreateNew() {
   const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([
@@ -84,42 +21,6 @@ export default function ProductCreateNew() {
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleModalAndUpdateCategoryDropdown = () => {
-    setIsModalOpen(!isModalOpen);
-    handleCategoryDropdown();
-  };
-
-  const token = localStorage.getItem("appAuthData");
-
-  function handleCategoryDropdown() {
-    //call api
-    //set items
-    const idrestaurants = document.querySelector(
-      'select[name="select_a_restaurant'
-    ).value;
-
-    axios
-      .get(`${API_ADDRESS}/categories/restaurant/${idrestaurants}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setCategoryDropdownItems(res.data.Categories);
-        } else if (res.status === 404) {
-          setCategoryDropdownItems(initialCategoryDropdownItems);
-        }
-      })
-      .catch(() => {
-        setCategoryDropdownItems(initialCategoryDropdownItems);
-      });
-  }
-
-  function showCategoryCreateNew() {
-    toggleModalAndUpdateCategoryDropdown();
-  }
 
   useEffect(() => {
     if (!token) {
@@ -134,9 +35,9 @@ export default function ProductCreateNew() {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setRestaurantDropdownItems(res.data.Own_Restaurants);
+          handleCategoryDropdown();
         } else {
           console.log("Something went wrong!");
         }
@@ -145,6 +46,127 @@ export default function ProductCreateNew() {
         console.error(err);
       });
   }, []);
+
+  const toggleModalAndUpdateCategoryDropdown = () => {
+    setIsModalOpen(!isModalOpen);
+    handleCategoryDropdown();
+  };
+
+  const token = localStorage.getItem("appAuthData");
+
+  function handleCategoryDropdown() {
+    const idrestaurants = document.querySelector(
+      'select[name="select_a_restaurant'
+    ).value;
+
+    axios
+      .get(`${API_ADDRESS}/categories/restaurant/${idrestaurants}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setCategoryDropdownItems(
+            res.data.Categories.sort((a, b) =>
+              a.category_name.toLowerCase() < b.category_name.toLowerCase()
+                ? -1
+                : 1
+            )
+          );
+        } else if (res.status === 404) {
+          setCategoryDropdownItems(initialCategoryDropdownItems);
+        }
+      })
+      .catch(() => {
+        setCategoryDropdownItems(initialCategoryDropdownItems);
+      });
+  }
+
+  function showCategoryCreateNew() {
+    toggleModalAndUpdateCategoryDropdown();
+  }
+
+  function resetForm() {
+    document.querySelector('form[name="createProduct"]').reset();
+    document.getElementsByClassName(styles.productImage)[0].src = " ";
+    document.querySelector('label[for="file_picker"]').textContent =
+      "Click to choose an image";
+  }
+
+  function getFormDataAndCallAPI() {
+    const formData = new FormData(
+      document.querySelector('form[name="createProduct"]')
+    );
+
+    const token = localStorage.getItem("appAuthData");
+    const idcategories = document.querySelector(
+      'select[name="select_a_category"]'
+    ).value;
+
+    axios
+      .post(
+        `${API_ADDRESS}/products/category/${idcategories}/addProductMultipart`,
+        formData,
+        {
+          headers: {
+            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          toast.success("Product created.");
+          resetForm();
+        } else {
+          toast.error("Something went wrong!");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function createProduct() {
+    const form = document.querySelector('form[name="createProduct"]');
+
+    form.onsubmit = (event) => {
+      event.preventDefault();
+    };
+
+    const isDataValid =
+      Number(form.select_a_category.value) > 0 &&
+      form.product_name.value.trim() != "" &&
+      form.product_description.value.trim() != "" &&
+      Number(form.product_cost.value) > 0 &&
+      form.product_image.files.length > 0;
+
+    if (!isDataValid) {
+      toast.error("All data are required and price must be greater than 0");
+    } else {
+      getFormDataAndCallAPI();
+    }
+  }
+
+  function showNewImageChosenFileName() {
+    const imageLabel = document.querySelector('label[for="file_picker"]');
+    const filePicker = document.querySelector('input[type="file"]');
+
+    if (FileReader && filePicker.files && filePicker.files.length) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        productImageRef.current.src = fileReader.result;
+      };
+      fileReader.readAsDataURL(filePicker.files[0]);
+    }
+
+    if (filePicker.files.length > 0) {
+      imageLabel.textContent = filePicker.files[0].name;
+    } else {
+      imageLabel.textContent = "Click to choose an image";
+    }
+  }
 
   return (
     <div>
@@ -207,7 +229,6 @@ export default function ProductCreateNew() {
                 </span>
               </label>
               <input
-                required
                 type="text"
                 className={styles.formcontrol}
                 name="product_name"
@@ -216,7 +237,6 @@ export default function ProductCreateNew() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Product Description</label>
               <textarea
-                required
                 rows="12"
                 className={cx(styles.formcontrol, styles.textarea)}
                 name="product_description"
@@ -227,7 +247,6 @@ export default function ProductCreateNew() {
               <div className={styles.flex}>
                 <div>&euro;</div>
                 <input
-                  required
                   type="number"
                   className={styles.formcontrol}
                   name="product_cost"
@@ -237,16 +256,20 @@ export default function ProductCreateNew() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
+                <img
+                  ref={productImageRef}
+                  className={styles.productImage}
+                />
                 <input
                   type="file"
                   accept="image/*"
                   className={cx(styles.formcontrol, styles.input_file)}
                   name="product_image"
                   id="file_picker"
-                  onChange={showChosenFileName}
+                  onChange={showNewImageChosenFileName}
                 />
                 <label className={styles.formcontrol} htmlFor="file_picker">
-                  Click to choose an image
+                  Click to choose another image
                 </label>
               </div>
             </div>

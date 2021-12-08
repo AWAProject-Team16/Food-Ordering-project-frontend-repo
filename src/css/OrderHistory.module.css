@@ -58,6 +58,18 @@
   align-items: center;
 }
 
+.orderDetailContainer{
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .column1 {
   width: 100px;
 }
