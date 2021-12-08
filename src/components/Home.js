@@ -1,8 +1,13 @@
 import styles from './../css/Home.module.css'
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link,Route} from 'react-router-dom'
 import axios from 'axios';
+import { TypeContext } from '../context/Contexts';
 import Categories from './Categories';
+
+
+
+
 
 class Home extends React.Component {
   constructor(props)
@@ -11,23 +16,18 @@ class Home extends React.Component {
     this.state = {
     }
   }
-  componentDidMount(){
-    axios.get('http://localhost:3000/food_types')
-    .then((response)=> {
-      this.setState({foodTypes: response.data.food_types});
-    })
-    .catch(err=> console.log(err))
-  }
 
+  
+  
   render()
   {
     // Temporarily added by Thuc. For better performance, use RouterURL
-    const jwt = require('jsonwebtoken');
+  /*  const jwt = require('jsonwebtoken');
     const token = window.localStorage.getItem('appAuthData');
     if (token) {
       const payload = jwt.decode(token);
       if(payload.account_type===2) window.location.href = '/managers/';
-    }
+    } */
 
     const foodTypes = 
     [
@@ -53,22 +53,24 @@ class Home extends React.Component {
       },
 
     ]
+     
+    
   return (
     <div>
       <div>
         User login status:{this.props.userLoggedIn ? "is logged in" : "not logged in"  }  
       </div>
       <h3 className={styles.header}>Food types</h3>
-    <div className={styles.categoryGrid}>
-      
-      {foodTypes.map(types =>
-        <div className={styles.box}>
-        <Link to={`/foodType/${types.name}`} element={this.props.foodTypes}  >
-          {types.name}
-         <img src={`/images/${types.image}`}/></Link>
-        </div>
-        )}
-        
+            <div className={styles.categoryGrid}>
+              
+              {foodTypes.map(types =>
+                <div className={styles.box}>
+                <Link to={`/foodType/${types.name}`}  >
+                  {types.name}
+                 <img src={`/images/${types.image}`}/></Link>
+                </div>
+                )}
+
     </div>
     </div>
     

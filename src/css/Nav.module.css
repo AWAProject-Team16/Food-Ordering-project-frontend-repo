@@ -16,13 +16,13 @@
 .searchbar{
   /* background-color: white; */
   height: 30px;
-  width: 500px;
+  width: 400px;
   border-radius: 10px;
   font-size: 17px;
 }
 .button{
     font-size: large;
-    padding: 15px 26px;
+    padding: 12px 23px;
     border-radius: 10px;;
     background-color: aqua;
     color: white;
@@ -37,7 +37,7 @@
 }
 .button2{
   font-size: large;
-  padding: 15px 26px;
+  padding: 12px 23px;
   border-radius: 10px;;
   background-color:white;
   color: aqua;
@@ -76,4 +76,11 @@
 .searchbar {
   border: none;
   outline: none;
+}
+
+.wrapButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
 }

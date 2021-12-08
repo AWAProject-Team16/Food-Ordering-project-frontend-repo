@@ -1,12 +1,16 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
+import jwt from 'jsonwebtoken'
+import { useNavigate } from 'react-router';
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
 
 
 export default function Login(props) {
-
+   
     const [loginProcessState, setLoginProcessState] = useState("idle");
+    let navigate = useNavigate()
+
 
     const handleLoginSubmit = async (event) =>{
         event.preventDefault();
@@ -14,7 +18,8 @@ export default function Login(props) {
 
         try {
             const result = await axios.post(
-                API_ADDRESS + '/users/login',
+                "http://localhost:5000/users/login",
+                //API_ADDRESS + '/users/login',
                 null,
                 {
                     auth: {
@@ -29,8 +34,22 @@ export default function Login(props) {
             setLoginProcessState("success");
             setTimeout(() => {
                 setLoginProcessState("idle")
-                props.login(receivedJWT)
-               
+                props.loginToken(receivedJWT)
+                const decodedToken = jwt.decode(receivedJWT);
+                console.log("user account type loginissa " + decodedToken.user.account_type)
+                const typeToken = decodedToken.user.account_type
+                props.typeToken(typeToken)
+
+                if (typeToken == 2)
+                {
+                  navigate("/managers")
+                }
+                else {
+                  navigate("/")
+                }
+                
+                
+
                 
             }, 1500)
         } catch (error) {
@@ -39,7 +58,8 @@ export default function Login(props) {
             setTimeout(() => setLoginProcessState("idle"), 1500)
         }
     }
-
+   
+    
     let loginUIControls = null;
   switch(loginProcessState) {
     case "idle":
@@ -78,6 +98,7 @@ export default function Login(props) {
         { loginUIControls }
     </form>
     </div>
+       
     </div>
     )
   }

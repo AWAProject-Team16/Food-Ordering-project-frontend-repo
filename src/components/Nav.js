@@ -15,6 +15,7 @@ class Nav extends React.Component {
       sign:false, 
       login: false,
       userJwt:null,
+      typeJwt: null,
       CartItems: 0,
       // items: props.restaurants,
       searchString: '',
@@ -38,13 +39,24 @@ class Nav extends React.Component {
     this.setState({ login: false })
   }
   logOut = () => {
-    this.setState({userJwt:null})
-    this.props.nav(this.state.userJwt)
     window.localStorage.removeItem('appAuthData')
+    window.localStorage.removeItem('typeData')
+    window.localStorage.removeItem('ShoppingCart')
+    window.localStorage.removeItem('DeliveryLocation')
+    window.localStorage.removeItem('DeliveryCost')
+
+    this.state.userJwt = null;
+    this.state.typeJwt = null;
+    this.passToken()
+    this.props.navigate("/")
+    
   }
+
+
   passToken = () => {
 
     this.props.nav(this.state.userJwt)
+    this.props.navType(this.state.typeJwt)
   }
   
   onSearchFieldChange = (e) => {
@@ -89,7 +101,7 @@ class Nav extends React.Component {
   }
 
   // Added by Thuc
-  showOrderHistoryForCustomer = () => {
+ /* showOrderHistoryForCustomer = () => {
     const token = window.localStorage.getItem('appAuthData');
     if (!token) return <></>;
     const jwt = require('jsonwebtoken');
@@ -97,25 +109,36 @@ class Nav extends React.Component {
     const account_type = payload.account_type;
     if (account_type === 1) return <li><Link to="/orders">Customer Order History</Link></li>;
     else return <></>
+  }*/
+  getStaleJwt = () => {
+    const jwtToken = window.localStorage.getItem('typeData')
+    console.log(jwtToken)
+    return jwtToken
   }
 
   render() {
     const { login, sign } = this.state;
+    console.log("type nav"+this.state.typeJwt)
+    
     return (
       <div className={styles.nav}>
 
-        <ul>
+           { this.getStaleJwt()  == 2 
+           ? "" 
+           
+           : 
+           <>
+
+           <ul>
           <li>
             <Link to="/" className={styles.logo}>Slurps</Link>
           </li>
+          {/* Added by Thuc */}
+          {/*this.showOrderHistoryForCustomer()*/}
         </ul>
-        
-        <Modal isOpen={sign} >
-          <button onClick={this.onCloseRegister}>Close</button>
-       <Register />
-       </Modal>
-       
-        <div style={{ position: 'relative' }}>
+
+          <div>
+          <div style={{ position: 'relative' }}>
           <div className={styles.wholeSearchBar}>
             <input className={styles.searchbar} type="text" placeholder="Find restaurant"
               onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
@@ -130,20 +153,56 @@ class Nav extends React.Component {
             />
           </div>
         </div>
+
+       </div>
+       <Modal isOpen={sign} >
+          <button onClick={this.onCloseRegister}>Close</button>
+       <Register />
+       </Modal>
+       
        
         <Modal isOpen={login}>
           <button onClick={this.onCloseLogin}>Close</button>
-        <Login login ={ (newJwt => {
+        <Login loginToken ={ (newJwt => {
           this.setState({userJwt: newJwt})
+          console.log("typetoken" + this.state.userJwt )
           window.localStorage.setItem('appAuthData', this.state.userJwt)
+          this.passToken()
+          this.onCloseLogin()
+        })} typeToken = {(newTypeJwt => {
+          this.setState({typeJwt: newTypeJwt})
+          console.log("typetoken" + this.state.typeJwt)
+          window.localStorage.setItem('typeData', this.state.typeJwt)
           this.passToken()
           this.onCloseLogin()
         })}/>
         </Modal>
 
+            <div className = {styles.wrapButtons}>
+            
+           <ul>
+           <li>
+             <div>
+             <Link to="/restaurants"><button className = {styles.button2}>Restaurants</button></Link>
+             </div>
+           </li>
+           </ul>
+           <ul>
+           <li>
+           <div>
+             <Link to="/shoppingcart"><button className = {styles.button2}>ShoppingCart [{this.props.CartQty}]</button></Link>
+             </div>
+             {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
+           </li>
+         </ul>
+         </div>
+
+         </>
+         }  
+
          <div>
           {this.props.userLoggedIn 
-          ? <button className={styles.button2} onClick = {this.logOut}  > Log out </button>
+          ? <button className={styles.button2} onClick = {this.logOut} > Log out </button>
           :
           <div>
           <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>  
@@ -151,18 +210,8 @@ class Nav extends React.Component {
           </div>
           }
           </div>
-
-        <ul>
-          <li>
-            <Link to="/restaurants">Restaurants</Link>
-          </li>
-          <li>
-            <Link to="/shoppingcart">ShoppingCart [{this.props.CartQty}]</Link>
-            {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
-          </li>
-          {/* Added by Thuc */}
-          {this.showOrderHistoryForCustomer()}
-        </ul>
+        
+        
       </div>
     )
 
