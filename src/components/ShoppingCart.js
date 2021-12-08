@@ -24,7 +24,8 @@ class ShoppingCart extends React.Component {
       DeliveryForm: '',
       DeliveryLocation: '',
       DeliveryCost: 0,
-      isLocationSubmitted: false
+      isLocationSubmitted: false,
+      isUserLoggedin: null
     };
 
   }
@@ -54,6 +55,10 @@ class ShoppingCart extends React.Component {
       ProductCosts = ProductCostCalc(StorageCart);
     }
     this.setState({ ProductCosts: ProductCosts, TotalCost: ProductCosts });
+
+    let accountype = null;
+    accountype = localStorage.getItem('typeData')
+    this.setState({isUserLoggedin:accountype})
   }
 
   IncreaseAmount = (id, cost) => {
@@ -155,6 +160,10 @@ class ShoppingCart extends React.Component {
     } else {
       this.props.navigateHook('/paymentpage')
     }
+    if(this.state.isUserLoggedin == null) {
+      alert("Please login or register first")
+    }
+
   }
 
 

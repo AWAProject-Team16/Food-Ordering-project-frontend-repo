@@ -39,17 +39,20 @@ class Nav extends React.Component {
     this.setState({ login: false })
   }
   logOut = () => {
-    this.setState({userJwt:null})
-    this.props.nav(this.state.userJwt)
     window.localStorage.removeItem('appAuthData')
-    this.setState({typeJwt: null})
-    this.props.navType(this.state.typeJwt)
     window.localStorage.removeItem('typeData')
     window.localStorage.removeItem('ShoppingCart')
     window.localStorage.removeItem('DeliveryLocation')
     window.localStorage.removeItem('DeliveryCost')
 
+    this.state.userJwt = null;
+    this.state.typeJwt = null;
+    this.passToken()
+    this.props.navigate("/")
+    
   }
+
+
   passToken = () => {
 
     this.props.nav(this.state.userJwt)
@@ -107,13 +110,11 @@ class Nav extends React.Component {
     if (account_type === 1) return <li><Link to="/orders">Customer Order History</Link></li>;
     else return <></>
   }*/
-  /*getStaleJwt = () => {
-    const jwtToken = window.localStorage.getItem('appAuthData')
-    const jwt = require('jsonwebtoken')
-    const payload = jwt.decode(jwtToken)
-    const account_type = payload.account_type
-    return account_type
-  }*/
+  getStaleJwt = () => {
+    const jwtToken = window.localStorage.getItem('typeData')
+    console.log(jwtToken)
+    return jwtToken
+  }
 
   render() {
     const { login, sign } = this.state;
@@ -122,23 +123,8 @@ class Nav extends React.Component {
     return (
       <div className={styles.nav}>
 
-
-         <div>
-          {this.props.userLoggedIn 
-          ? <button className={styles.button2} onClick = {this.logOut}  > Log out </button>
-          :
-          <div>
-          <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>  
-          <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
-          </div>
-          }
-          </div>
-
-
-          
-           { this.state.typeJwt  == 2 
-           ? "Manager" 
-           
+           { this.getStaleJwt()  == 2 
+           ? "" 
            
            : 
            <>
@@ -167,21 +153,7 @@ class Nav extends React.Component {
             />
           </div>
         </div>
-      {/*}  <div style={{ position: 'relative' }}>
-         <div className={styles.wholeSearchBar}>
-           <input className={styles.searchbar} type="text" placeholder="Search.."
-             type="text" onChange={ this.onSearchFieldChange } onKeyPress={this.handleKeyPress}
-             value={ this.state.searchString } placeholder="Find restaurant">
-           </input>
-           <button className={styles.button} onClick={this.onCloseEvent}>X</button>
-         </div>
-         <div className={ styles.popupSearch} style={{ display: `${this.state.appear}` }}>
-           <SearchView
-             items={ this.state.items.filter(item => item.name.toLowerCase().includes(this.state.searchString.toLowerCase())) }
-             onChangePage= { this.changePage }
-           /> 
-         </div>
-       </div> */}
+
        </div>
        <Modal isOpen={sign} >
           <button onClick={this.onCloseRegister}>Close</button>
@@ -205,14 +177,21 @@ class Nav extends React.Component {
           this.onCloseLogin()
         })}/>
         </Modal>
-       
-            <div>
+
+            <div className = {styles.wrapButtons}>
+            
            <ul>
            <li>
-             <Link to="/restaurants">Restaurants</Link>
+             <div>
+             <Link to="/restaurants"><button className = {styles.button2}>Restaurants</button></Link>
+             </div>
            </li>
+           </ul>
+           <ul>
            <li>
-             <Link to="/shoppingcart">ShoppingCart [{this.props.CartQty}]</Link>
+           <div>
+             <Link to="/shoppingcart"><button className = {styles.button2}>ShoppingCart [{this.props.CartQty}]</button></Link>
+             </div>
              {/* <NavLink to="/shoppingcart" activeClassName="selected">ShoppingCart</NavLink> */}
            </li>
          </ul>
@@ -220,7 +199,17 @@ class Nav extends React.Component {
 
          </>
          }  
-           
+
+         <div>
+          {this.props.userLoggedIn 
+          ? <button className={styles.button2} onClick = {this.logOut} > Log out </button>
+          :
+          <div>
+          <button className={styles.button} onClick={this.onOpenLogin}>Log in</button>  
+          <button className={styles.button2}onClick={this.onOpenRegister}>Register</button>
+          </div>
+          }
+          </div>
         
         
       </div>

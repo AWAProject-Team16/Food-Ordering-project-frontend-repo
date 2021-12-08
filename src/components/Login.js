@@ -1,18 +1,16 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import styles from '../css/RestaurantCreateNew.module.css';
 import axios from 'axios';
 import jwt from 'jsonwebtoken'
-import { TypeContext } from '../context/Contexts';
-import Home from './Home';
 import { useNavigate } from 'react-router';
-import RouterURL from '../router/RouterURL';
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS
 
 
 export default function Login(props) {
-   // let TypeContextValue = useContext(TypeContext)
+   
     const [loginProcessState, setLoginProcessState] = useState("idle");
     let navigate = useNavigate()
+
 
     const handleLoginSubmit = async (event) =>{
         event.preventDefault();
@@ -37,14 +35,8 @@ export default function Login(props) {
             setTimeout(() => {
                 setLoginProcessState("idle")
                 props.loginToken(receivedJWT)
-
                 const decodedToken = jwt.decode(receivedJWT);
-                //console.log("decoded token "+ decodedToken)
                 console.log("user account type loginissa " + decodedToken.user.account_type)
-               // setType(decodedToken.user.account_type);
-                //const type = (decodedToken.user.account_type)
-                //TypeContextValue = decodedToken.user.account_type
-                //console.log("typecontextvalue: " + TypeContextValue)
                 const typeToken = decodedToken.user.account_type
                 props.typeToken(typeToken)
 
