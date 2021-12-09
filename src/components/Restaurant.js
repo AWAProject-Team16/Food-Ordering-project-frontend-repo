@@ -5,7 +5,7 @@ import RestaurantDetail from './RestaurantDetail';
 import axios from 'axios';
 // const result = window.location.pathname.split('/')[2]
 
-export default function Restaurant(props) {
+export default function Restaurant({isManagerView}) {
   var API_ADDRESS = process.env.REACT_APP_API_ADDRESS
   var result = useParams()
   var path = result.idOfRestaurant
@@ -94,6 +94,7 @@ export default function Restaurant(props) {
                 categories ={ objCategories }
                 category={ item }
                 products={ objProducts }
+                isManagerView={isManagerView}
               />) 
           }
         </div>

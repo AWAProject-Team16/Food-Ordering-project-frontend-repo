@@ -3,7 +3,7 @@ import React from 'react'
 import {Link,Route} from 'react-router-dom'
 import axios from 'axios';
 import { TypeContext } from '../context/Contexts';
-import Categories from './Categories';
+import RestaurantsCategories from './RestaurantsCategories';
 
 
 

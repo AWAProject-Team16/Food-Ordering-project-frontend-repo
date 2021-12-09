@@ -42,6 +42,7 @@
 
 .formwrapper {
   margin-bottom: 17px;
+  margin-right: 20px;
 }
 
 .formwrapper label {
@@ -60,7 +61,7 @@
 }
 
 .formcontrol:focus {
-  border: 1px solid #ae3c33;
+  border: 1px solid #b1e761;
   outline: none;
 }
 
@@ -85,9 +86,9 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  background: #ae3c33;
+  background: #b1e761;
   font-size: 13px;
-  color: #fff;
+  color: #000;
   text-transform: uppercase;
   border-radius: 20px;
   overflow: hidden;
@@ -109,7 +110,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #f11a09;
+  background: #b1e761;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform-origin: 0 50%;
@@ -233,6 +234,14 @@ label[for="file_picker"] {
   align-items: center;
 }
 
+.center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
 .flex input[type="number"] {
   width: 150px;
   margin-left: 5px;
@@ -253,7 +262,7 @@ label[for="file_picker"] {
 }
 
 .addCategoryLink:hover {
-  color: #f11a09;
+  color: #b1e761;
 }
 
 .close {
@@ -270,10 +279,11 @@ label[for="file_picker"] {
   opacity: 1;
 }
 
-.close:before, .close:after {
+.close:before,
+.close:after {
   position: absolute;
   left: 15px;
-  content: ' ';
+  content: " ";
   height: 33px;
   width: 2px;
   background-color: #333;
@@ -289,4 +299,70 @@ label[for="file_picker"] {
 
 .ban {
   cursor: not-allowed;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 40px;
+  padding: 40px;
+}
+
+.quickActionContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 50%;
+}
+
+.quickAction {
+  text-decoration: none;
+  padding: 0px 20px;
+  width: 190px;
+}
+
+.marginRight1 {
+  margin-right: 1em;
+}
+
+.marginTop1 {
+  margin-top: 1em;
+}
+
+.marginTop2 {
+  margin-top: 2em;
+}
+
+.marginBottom1 {
+  margin-bottom: 1em;
+}
+
+.marginBottom2 {
+  margin-bottom: 2em;
+}
+
+.pb1 {
+  padding-bottom: 1em;
+}
+
+.fontSize15 {
+  font-size: 1.5em;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.textDecorNone {
+  text-decoration: none !important;
+}
+
+.onHoverColor1 {
+}
+
+.onHoverColor1:hover {
+  background-color: #b1e761;
+}
+
+.width300 {
+  width: 300px;
 }

@@ -6,7 +6,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Restaurants from "./Restaurants";
 
-export default function Categories(props) {
+export default function RestaurantsCategories(props) {
+  // This is a set of restaurants of the same food type (aka restaurant type)
+
   const result = useParams();
   //const obj = props.restaurants.find(item => item.type === types.name);
   //const foodType = props.foodTypes;

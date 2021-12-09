@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../css/RestaurantCreateNew.module.css";
+import styles from "../css/_Common.module.css";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router";

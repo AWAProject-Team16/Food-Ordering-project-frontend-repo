@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
-import styles from "../css/RestaurantCreateNew.module.css";
+import styles from "../css/_Common.module.css";
 import axios from "axios";
 import cx from "classnames";
 import { useParams } from "react-router-dom";

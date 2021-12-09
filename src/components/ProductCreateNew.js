@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createRef } from "react";
-import styles from "../css/RestaurantCreateNew.module.css";
+import styles from "../css/_Common.module.css";
 import axios from "axios";
 import cx from "classnames";
 import Modal from "react-modal";

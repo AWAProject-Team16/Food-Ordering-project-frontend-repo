@@ -41,6 +41,7 @@ export default class OrderHistory extends React.Component {
   }
 
   render() {
+    console.log("this.state", this.state);
     return (
       <div>
         <h2>Order History</h2>
@@ -88,8 +89,23 @@ export default class OrderHistory extends React.Component {
             name: item.restaurant_name,
           };
         });
+        console.log("_restaurantData", _restaurantData);
 
-        const restaurantData = [...new Set(_restaurantData)];
+        // const restaurantData = _restaurantData.filter(
+        //   (item, index, self) =>
+        //     self.findIndex(
+        //       (i) => i.place === item.place && i.name === item.name
+        //     ) === index
+        // );
+        const restaurantData = _restaurantData.filter((item, index) => {
+          return (
+            _restaurantData.findIndex((element) => {
+              return element.idrestaurants == item.idrestaurants;
+            }) == index
+          );
+        });
+
+        console.log("restaurantData", restaurantData);
 
         const orderStatusData = [
           "Received",
