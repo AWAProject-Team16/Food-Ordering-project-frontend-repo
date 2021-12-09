@@ -8,13 +8,36 @@ import "react-toastify/dist/ReactToastify.css";
 import ConfirmationDiaglog from "../../ConfirmationDiaglog";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
+const confirmDeliveredRef = createRef();
 
 export default function OrderHistoryDetailView(props) {
-  const [orderStatus, setOrderStatus] = useState(props.orderData.order_status);
+  const [orderDetailData, setOrderDetailData] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
 
-  const [orderStatusExtraInfo, setOrderStatusExtraInfo] = useState(
-    props.orderData.order_status_extra_info
-  );
+  useEffect(() => {
+    const token = window.localStorage.getItem("appAuthData");
+    const idorders = props.orderData.idorders;
+
+    axios
+      .post(
+        `${API_ADDRESS}/orders/orderId/${idorders}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("res.data", res.data);
+        setOrderDetailData(res.data);
+        setSubTotal(res.data.reduce((total, item) => item.product_cost * item.product_amount + total, 0));
+      })
+      .catch(console.error);
+  }, []);
+
+  const [orderStatus, setOrderStatus] = useState(props.orderData.order_status);
+  const [orderStatusExtraInfo, setOrderStatusExtraInfo] = useState(props.orderData.order_status_extra_info);
 
   useEffect(() => {
     if (props.isManagerView) hideEditButtonIfClosedStatus();
@@ -22,14 +45,8 @@ export default function OrderHistoryDetailView(props) {
 
   useEffect(() => {
     const orderStatusNumber = props.orderStatusData.indexOf(orderStatus) + 1;
-
-    const statusImages = Array.from(
-      document.getElementsByClassName(styles.defaultStatus)
-    );
-
-    const customerETCs = Array.from(
-      document.getElementsByClassName(styles.customerETC)
-    );
+    const statusImages = Array.from(document.getElementsByClassName(styles.defaultStatus));
+    const customerETCs = Array.from(document.getElementsByClassName(styles.customerETC));
 
     statusImages.forEach((element) => {
       const siblingOrder = Number(element.getAttribute("data-sibling-order"));
@@ -40,10 +57,17 @@ export default function OrderHistoryDetailView(props) {
       } else if (siblingOrder === orderStatusNumber) {
         element.classList.remove(styles.prevStatus);
         element.classList.add(styles.currentStatus);
+
         if (orderStatusNumber === 6) {
           // Last "Closed" status
           element.classList.remove(styles.currentStatus);
           element.classList.add(styles.prevStatus);
+        }
+
+        if (orderStatusNumber === 4) {
+          // Show 'Confirm Delivered' btn
+          confirmDeliveredRef.current.classList.remove(styles.hide);
+          confirmDeliveredRef.current.classList.add(styles.show);
         }
       }
     });
@@ -98,9 +122,7 @@ export default function OrderHistoryDetailView(props) {
     selectElement.disabled = !selectElement.disabled;
     const ETCElement = document.getElementsByClassName(styles.ETC)[0];
     ETCElement.disabled = !ETCElement.disabled;
-    let message = document.querySelector(
-      `.${styles.errormessage}.order_status`
-    );
+    let message = document.querySelector(`.${styles.errormessage}.order_status`);
     message.innerHTML = "Click order status and choose!";
     message.style.display = "inline-block";
     const ETCmessage = document.querySelector(`.${styles.errormessage}.ETC`);
@@ -149,9 +171,7 @@ export default function OrderHistoryDetailView(props) {
       };
 
       const toggleGuidingMessage = (newStatusSetMessage) => {
-        let message = document.querySelector(
-          `.${styles.errormessage}.order_status`
-        );
+        let message = document.querySelector(`.${styles.errormessage}.order_status`);
         message.innerHTML = newStatusSetMessage;
         setTimeout(() => {
           message.style.display = "none";
@@ -179,8 +199,10 @@ export default function OrderHistoryDetailView(props) {
         toast.warn(
           <ConfirmationDiaglog
             text="Once set to 'Closed', the order is locked and unchangable. Are you sure you want to continue?"
-            yesCallback={yesCallback}
-            noCallback={noCallback}
+            btn1Text="Yes"
+            btn1Callback={yesCallback}
+            btn2Text="No"
+            btn2Callback={noCallback}
           />,
           { autoClose: false, closeOnClick: false }
         );
@@ -195,11 +217,37 @@ export default function OrderHistoryDetailView(props) {
   };
 
   const getRestaurantName = (idrestaurants) => {
-    const matchedRestaurant = props.restaurantData.find(
-      (restaurant) => restaurant.idrestaurants === idrestaurants
-    );
+    const matchedRestaurant = props.restaurantData.find((restaurant) => restaurant.idrestaurants === idrestaurants);
     if (matchedRestaurant) return matchedRestaurant.name;
     else return undefined;
+  };
+
+  const handleConfirmDelivered = () => {
+    const token = window.localStorage.getItem("appAuthData");
+    const idorders = props.orderData.idorders;
+
+    axios
+      .get(`${API_ADDRESS}/orders/confirmDelivered/${idorders}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(
+            <ConfirmationDiaglog
+              text="Done! Now waiting for the restaurant owner to close this order."
+              btn1Text="OK"
+              btn1Callback={() => window.location.reload()}
+            />,
+            { autoClose: false, closeOnClick: false, closeButton: false, draggable: false }
+          );
+          setOrderStatus("Delivered");
+          confirmDeliveredRef.current.classList.add(styles.hide);
+          confirmDeliveredRef.current.classList.remove(styles.show);
+        }
+      })
+      .catch(console.error);
   };
 
   return (
@@ -213,10 +261,7 @@ export default function OrderHistoryDetailView(props) {
                 <div className={styles.formwrapper}>
                   <label htmlFor="order_status">
                     Order Status
-                    <span
-                      htmlFor=""
-                      className={cx(styles.errormessage, "order_status")}
-                    >
+                    <span htmlFor="" className={cx(styles.errormessage, "order_status")}>
                       Click order status and choose!
                     </span>
                   </label>
@@ -235,18 +280,9 @@ export default function OrderHistoryDetailView(props) {
                         );
                       })}
                     </select>
-                    <div
-                      onClick={editOrderStatus}
-                      className={styles.editButton}
-                    >
-                      <FaEdit
-                        size="2em"
-                        className={cx(styles.show, "FaEdit")}
-                      />
-                      <FaCheck
-                        size="2em"
-                        className={cx(styles.hide, "FaCheck")}
-                      />
+                    <div onClick={editOrderStatus} className={styles.editButton}>
+                      <FaEdit size="2em" className={cx(styles.show, "FaEdit")} />
+                      <FaCheck size="2em" className={cx(styles.hide, "FaCheck")} />
                     </div>
                   </div>
                 </div>
@@ -266,9 +302,7 @@ export default function OrderHistoryDetailView(props) {
                     name="order_status_extra_info"
                     className={cx(styles.formcontrol, styles.ETC)}
                     value={orderStatusExtraInfo}
-                    onChange={(event) =>
-                      setOrderStatusExtraInfo(event.target.value)
-                    }
+                    onChange={(event) => setOrderStatusExtraInfo(event.target.value)}
                   />
                 </div>
               )}
@@ -279,32 +313,19 @@ export default function OrderHistoryDetailView(props) {
                   disabled
                   type="text"
                   className={styles.formcontrol}
-                  value={getRestaurantName(
-                    props.orderData.restaurants_idrestaurants
-                  )}
+                  value={getRestaurantName(props.orderData.restaurants_idrestaurants)}
                 />
               </div>
 
               <div className={styles.formwrapper}>
                 <label htmlFor="">Order Number</label>
-                <input
-                  disabled
-                  type="text"
-                  className={styles.formcontrol}
-                  value={props.orderData.idorders}
-                />
+                <input disabled type="text" className={styles.formcontrol} value={props.orderData.idorders} />
               </div>
 
               {props.isManagerView && (
                 <div className={styles.formwrapper}>
                   <label htmlFor="">Customer Name</label>
-                  <input
-                    disabled
-                    type="text"
-                    className={styles.formcontrol}
-                    value={props.orderData.customer_name}
-                    // value={props.orderData[0].customer_name}
-                  />
+                  <input disabled type="text" className={styles.formcontrol} value={props.orderData.customer_name} />
                 </div>
               )}
 
@@ -320,24 +341,14 @@ export default function OrderHistoryDetailView(props) {
 
               <div className={styles.formwrapper}>
                 <label htmlFor="">Order Delivery Location</label>
-                <input
-                  disabled
-                  type="text"
-                  className={styles.formcontrol}
-                  value={props.orderData.order_delivery_location}
-                />
+                <input disabled type="text" className={styles.formcontrol} value={props.orderData.order_delivery_location} />
               </div>
 
               <div className={styles.formwrapper}>
                 <label htmlFor="">Total Cost</label>
                 <div className={styles.flex}>
                   <span>&euro;</span>
-                  <input
-                    disabled
-                    type="text"
-                    className={styles.formcontrol}
-                    value={props.orderData.order_total_cost}
-                  />
+                  <input disabled type="text" className={styles.formcontrol} value={props.orderData.order_total_cost} />
                 </div>
               </div>
             </form>
@@ -349,48 +360,12 @@ export default function OrderHistoryDetailView(props) {
                   <div className={styles.line}></div>
                   <div className={styles.flex}>
                     <div className={styles.statusImages}>
-                      <div
-                        data-sibling-order="1"
-                        className={cx(
-                          styles.orderStatusPlaceholderImage,
-                          styles.defaultStatus
-                        )}
-                      ></div>
-                      <div
-                        data-sibling-order="2"
-                        className={cx(
-                          styles.orderStatusPlaceholderImage,
-                          styles.defaultStatus
-                        )}
-                      ></div>
-                      <div
-                        data-sibling-order="3"
-                        className={cx(
-                          styles.orderStatusPlaceholderImage,
-                          styles.defaultStatus
-                        )}
-                      ></div>
-                      <div
-                        data-sibling-order="4"
-                        className={cx(
-                          styles.orderStatusPlaceholderImage,
-                          styles.defaultStatus
-                        )}
-                      ></div>
-                      <div
-                        data-sibling-order="5"
-                        className={cx(
-                          styles.orderStatusPlaceholderImage,
-                          styles.defaultStatus
-                        )}
-                      ></div>
-                      <div
-                        data-sibling-order="6"
-                        className={cx(
-                          styles.orderStatusPlaceholderImage,
-                          styles.defaultStatus
-                        )}
-                      ></div>
+                      <div data-sibling-order="1" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
+                      <div data-sibling-order="2" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
+                      <div data-sibling-order="3" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
+                      <div data-sibling-order="4" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
+                      <div data-sibling-order="5" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
+                      <div data-sibling-order="6" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
                     </div>
                     <div className={styles.statusTexts}>
                       <div className={styles.orderStatusText}>
@@ -403,10 +378,7 @@ export default function OrderHistoryDetailView(props) {
                         <div>
                           <b>Preparing</b>
                         </div>
-                        <div
-                          data-sibling-order="2"
-                          className={cx(styles.hide, styles.customerETC)}
-                        >
+                        <div data-sibling-order="2" className={cx(styles.hide, styles.customerETC)}>
                           (in about {orderStatusExtraInfo})
                         </div>
                       </div>
@@ -414,10 +386,7 @@ export default function OrderHistoryDetailView(props) {
                         <div>
                           <b>Ready for delivery</b>
                         </div>
-                        <div
-                          data-sibling-order="3"
-                          className={cx(styles.hide, styles.customerETC)}
-                        >
+                        <div data-sibling-order="3" className={cx(styles.hide, styles.customerETC)}>
                           (in about {orderStatusExtraInfo})
                         </div>
                       </div>
@@ -425,10 +394,7 @@ export default function OrderHistoryDetailView(props) {
                         <div>
                           <b>Delivering</b>
                         </div>
-                        <div
-                          data-sibling-order="4"
-                          className={cx(styles.hide, styles.customerETC)}
-                        >
+                        <div data-sibling-order="4" className={cx(styles.hide, styles.customerETC)}>
                           (in about {orderStatusExtraInfo})
                         </div>
                       </div>
@@ -436,7 +402,13 @@ export default function OrderHistoryDetailView(props) {
                         <div>
                           <b>Delivered</b>
                         </div>
-                        <div></div>
+                        <div
+                          ref={confirmDeliveredRef}
+                          className={cx(styles.button, styles.smallButton, styles.hide)}
+                          onClick={handleConfirmDelivered}
+                        >
+                          Confirm Delivered
+                        </div>
                       </div>
                       <div className={styles.orderStatusText}>
                         <div>
@@ -451,7 +423,7 @@ export default function OrderHistoryDetailView(props) {
               </div>
             )}
 
-            <table>
+            <table className={styles.tableOrderDetail}>
               <thead>
                 <tr>
                   <th>No.</th>
@@ -462,38 +434,51 @@ export default function OrderHistoryDetailView(props) {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1.</td>
-                  <td>Salad</td>
-                  <td>20</td>
-                  <td>2</td>
-                  <td>&euro;40</td>
-                </tr>
+                {orderDetailData.map((detail, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}.</td>
+                    <td>{detail.product_name}</td>
+                    <td>{detail.product_amount}</td>
+                    <td>{detail.product_cost}</td>
+                    <td>&euro;{detail.product_amount * detail.product_cost}</td>
+                  </tr>
+                ))}
               </tbody>
               <tfoot>
+                <tr className={styles.tableHorizontalLine}></tr>
                 <tr>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>TOTAL</td>
-                  <td>&euro;100</td>
+                  <td>Subtotal</td>
+                  <td>&euro;{subTotal}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>Shipping Fee</td>
+                  <td>&euro;5</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className={styles.tableHorizontalLine} colSpan="2"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>Grand Total</td>
+                  <td>&euro;{subTotal + 5}</td>
                 </tr>
               </tfoot>
             </table>
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

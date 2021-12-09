@@ -55,3 +55,19 @@ P {
   margin: auto;
   margin-bottom: 26px;
 }
+
+.floatingBigPlus {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  border: 1px solid gray;
+  padding: 10px;
+  z-index: 1;
+  background: #b1e761;
+  cursor: pointer;
+}
+
+.floatingBigPlus:hover {
+  filter: brightness(0.8);
+}

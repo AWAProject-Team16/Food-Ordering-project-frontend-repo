@@ -17,6 +17,7 @@ import CategoryModify from "../components/CategoryModify";
 import ManagerDashboard from "../components/ManagerDashboard";
 import ManagerRestaurants from "../components/ManagerRestaurants";
 import ManagerCategories from "../components/ManagerCategories";
+import ManagerProducts from "../components/ManagerProducts";
 
 export default class RouterURL extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class RouterURL extends Component {
       authRoutes = (
         <>
           <Route path="/paymentpage" element={<PaymentPage />} />
-          <Route path="/customers/orders" element={<OrderHistoryCustomer />} />
+          <Route path="/orders" element={<OrderHistoryCustomer />} />
         </>
       );
     }
@@ -48,6 +49,7 @@ export default class RouterURL extends Component {
           <Route path="/managers/restaurants/:idOfRestaurant" element={<Restaurant isManagerView={true} />} />
           <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />
 
+          <Route path="/managers/products" element={<ManagerProducts />} />
           <Route path="/managers/products/create" element={<ProductCreateNew />} />
           <Route path="/managers/products/modify/:idproducts" element={<ProductModify />} />
           <Route path="/managers/" element={<ManagerDashboard />} />

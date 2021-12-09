@@ -58,7 +58,7 @@
   align-items: center;
 }
 
-.orderDetailContainer{
+.orderDetailContainer {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -211,7 +211,7 @@
 }
 
 .formcontrol:focus {
-  border: 1px solid #ae3c33;
+  border: 1px solid #b1e761;
   outline: none;
 }
 
@@ -237,7 +237,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  background: #ae3c33;
+  background: #b1e761;
   font-size: 13px;
   color: #fff;
   text-transform: uppercase;
@@ -261,7 +261,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #f11a09;
+  background: #b1e761;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform-origin: 0 50%;
@@ -279,6 +279,14 @@
   transform: scaleX(1);
   -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
   transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+
+.smallButton {
+  margin-top: 5px;
+  height: fit-content;
+  text-transform: capitalize;
+  width: fit-content;
+  padding: 5px 10px;
 }
 
 .checkbox {
@@ -385,7 +393,7 @@ label[for="file_picker"] {
 }
 
 .editButton *:hover {
-  color: red;
+  color: #b1e761;
 }
 
 .ETC {
@@ -483,3 +491,14 @@ label[for="file_picker"] {
   height: 68px;
 }
 
+.tableHorizontalLine {
+  border-bottom: 1px solid black;
+}
+
+.tableOrderDetail {
+}
+
+.tableOrderDetail th,
+.tableOrderDetail td {
+  padding: 5px 10px;
+}

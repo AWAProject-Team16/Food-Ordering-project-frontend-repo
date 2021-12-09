@@ -4,23 +4,25 @@ import axios from "axios";
 import cx from "classnames";
 import Modal from "react-modal";
 import CategoryCreateNew from "./CategoryCreateNew";
+import RestaurantCreateNew from "./RestaurantCreateNew";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+Modal.setAppElement("#root");
+
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
+const token = localStorage.getItem("appAuthData");
+
 const productImageRef = createRef();
 
 export default function ProductCreateNew() {
-  const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([
-    { idrestaurants: 0, name: "" },
-  ]);
+  const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([{ idrestaurants: 0, name: "" }]);
 
   const initialCategoryDropdownItems = [{ idcategories: 0, category_name: "" }];
-  const [categoryDropdownItems, setCategoryDropdownItems] = useState(
-    initialCategoryDropdownItems
-  );
+  const [categoryDropdownItems, setCategoryDropdownItems] = useState(initialCategoryDropdownItems);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [componentWillShowInModal, setComponentWillShowInModal] = useState("restaurant");
 
   useEffect(() => {
     if (!token) {
@@ -47,17 +49,38 @@ export default function ProductCreateNew() {
       });
   }, []);
 
+  const handleModal = () => {
+    if (componentWillShowInModal == "restaurant") toggleModalAndUpdateRestaurantDropdown();
+    else toggleModalAndUpdateCategoryDropdown();
+  };
+
+  const toggleModalAndUpdateRestaurantDropdown = () => {
+    setComponentWillShowInModal("restaurant");
+    setIsModalOpen(!isModalOpen);
+
+    axios
+      .get(`${API_ADDRESS}/restaurants/ownRestaurants2`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setRestaurantDropdownItems(res.data.Own_Restaurants);
+          handleCategoryDropdown();
+        }
+      })
+      .catch(console.error);
+  };
+
   const toggleModalAndUpdateCategoryDropdown = () => {
+    setComponentWillShowInModal("category");
     setIsModalOpen(!isModalOpen);
     handleCategoryDropdown();
   };
 
-  const token = localStorage.getItem("appAuthData");
-
   function handleCategoryDropdown() {
-    const idrestaurants = document.querySelector(
-      'select[name="select_a_restaurant'
-    ).value;
+    const idrestaurants = document.querySelector('select[name="select_a_restaurant').value;
 
     axios
       .get(`${API_ADDRESS}/categories/restaurant/${idrestaurants}`, {
@@ -68,11 +91,7 @@ export default function ProductCreateNew() {
       .then((res) => {
         if (res.status === 200) {
           setCategoryDropdownItems(
-            res.data.Categories.sort((a, b) =>
-              a.category_name.toLowerCase() < b.category_name.toLowerCase()
-                ? -1
-                : 1
-            )
+            res.data.Categories.sort((a, b) => (a.category_name.toLowerCase() < b.category_name.toLowerCase() ? -1 : 1))
           );
         } else if (res.status === 404) {
           setCategoryDropdownItems(initialCategoryDropdownItems);
@@ -83,38 +102,25 @@ export default function ProductCreateNew() {
       });
   }
 
-  function showCategoryCreateNew() {
-    toggleModalAndUpdateCategoryDropdown();
-  }
-
   function resetForm() {
     document.querySelector('form[name="createProduct"]').reset();
     document.getElementsByClassName(styles.productImage)[0].src = " ";
-    document.querySelector('label[for="file_picker"]').textContent =
-      "Click to choose an image";
+    document.querySelector('label[for="file_picker"]').textContent = "Click to choose an image";
   }
 
   function getFormDataAndCallAPI() {
-    const formData = new FormData(
-      document.querySelector('form[name="createProduct"]')
-    );
+    const formData = new FormData(document.querySelector('form[name="createProduct"]'));
 
     const token = localStorage.getItem("appAuthData");
-    const idcategories = document.querySelector(
-      'select[name="select_a_category"]'
-    ).value;
+    const idcategories = document.querySelector('select[name="select_a_category"]').value;
 
     axios
-      .post(
-        `${API_ADDRESS}/products/category/${idcategories}/addProductMultipart`,
-        formData,
-        {
-          headers: {
-            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`${API_ADDRESS}/products/category/${idcategories}/addProductMultipart`, formData, {
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         if (res.status === 201) {
           toast.success("Product created.");
@@ -177,11 +183,7 @@ export default function ProductCreateNew() {
             <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Select a Restaurant</label>
-              <select
-                className={cx(styles.formcontrol, styles.select)}
-                name="select_a_restaurant"
-                onChange={handleCategoryDropdown}
-              >
+              <select className={cx(styles.formcontrol, styles.select)} name="select_a_restaurant" onChange={handleCategoryDropdown}>
                 {restaurantDropdownItems.map((item, index) => (
                   <option value={item.idrestaurants} key={index}>
                     {item.name}
@@ -189,12 +191,12 @@ export default function ProductCreateNew() {
                 ))}
               </select>
             </div>
+            <a className={styles.addProductLink} href="/managers/restaurants/create">
+              Add New Restaurant
+            </a>
             <div className={styles.formwrapper}>
               <label htmlFor="">Select a Category</label>
-              <select
-                className={cx(styles.formcontrol, styles.select)}
-                name="select_a_category"
-              >
+              <select className={cx(styles.formcontrol, styles.select)} name="select_a_category">
                 {categoryDropdownItems.map((item, index) => (
                   <option value={item.idcategories} key={index}>
                     {item.category_name}
@@ -202,55 +204,31 @@ export default function ProductCreateNew() {
                 ))}
               </select>
             </div>
-            <a
-              className={styles.addCategoryLink}
-              onClick={showCategoryCreateNew}
-            >
+            <div className={cx(styles.button, styles.smallButton)} onClick={toggleModalAndUpdateCategoryDropdown}>
               Add New Category
-            </a>
-            <Modal
-              isOpen={isModalOpen}
-              onRequestClose={toggleModalAndUpdateCategoryDropdown}
-            >
-              <span
-                className={styles.close}
-                onClick={toggleModalAndUpdateCategoryDropdown}
-              ></span>
+            </div>
+            <Modal isOpen={isModalOpen} onRequestClose={handleModal}>
+              <span className={styles.close} onClick={handleModal}></span>
               <CategoryCreateNew />
             </Modal>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Product Name
-                <span
-                  htmlFor=""
-                  className={cx(styles.errormessage, "product_name")}
-                >
+                <span htmlFor="" className={cx(styles.errormessage, "product_name")}>
                   Product Name cannot be empty!
                 </span>
               </label>
-              <input
-                type="text"
-                className={styles.formcontrol}
-                name="product_name"
-              />
+              <input type="text" className={styles.formcontrol} name="product_name" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Product Description</label>
-              <textarea
-                rows="12"
-                className={cx(styles.formcontrol, styles.textarea)}
-                name="product_description"
-              />
+              <textarea rows="12" className={cx(styles.formcontrol, styles.textarea)} name="product_description" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Product Cost</label>
               <div className={styles.flex}>
                 <div>&euro;</div>
-                <input
-                  type="number"
-                  className={styles.formcontrol}
-                  name="product_cost"
-                />
+                <input type="number" className={styles.formcontrol} name="product_cost" />
               </div>
             </div>
             <div className={styles.formwrapper}>
@@ -279,14 +257,6 @@ export default function ProductCreateNew() {
       </div>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
       />
     </div>
   );

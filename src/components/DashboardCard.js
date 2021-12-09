@@ -34,7 +34,10 @@ export default function DashboardCard({ title, text, icon, link, color }) {
       moreInfoRef.current.style.background = color;
     }
 
-    if (link) cardRef.current.style.cursor = "pointer";
+    if (link) {
+      cardRef.current.style.cursor = "pointer";
+      cardRef.current.onclick = () => (window.location.href = link);
+    }
   }, []);
 
   return (

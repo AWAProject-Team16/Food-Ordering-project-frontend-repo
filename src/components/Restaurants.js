@@ -4,11 +4,11 @@ import styles from "../css/Restaurants.module.css";
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaSearch } from "react-icons/fa";
+import { BsPlusLg } from "react-icons/bs";
+import jwt from "jsonwebtoken";
 
 export default function Restaurants(props) {
-  const [searchString, setSearchString] = useState(
-    localStorage.getItem("valueOfInput") || ""
-  );
+  const [searchString, setSearchString] = useState(localStorage.getItem("valueOfInput") || "");
 
   const onSearchFieldChange = (event) => {
     console.log("Keyboard event");
@@ -19,8 +19,25 @@ export default function Restaurants(props) {
   if (localStorage.getItem("valueOfInput")) {
     localStorage.removeItem("valueOfInput");
   }
+
+  function getIsManager() {
+    const token = window.localStorage.getItem("appAuthData");
+    if (!token) console.error("No app auth data");
+    return jwt.decode(token).account_type == 2;
+  }
+
   return (
     <div className={styles.presentationModeGrid}>
+      {getIsManager() && (
+        <div
+          className={styles.floatingBigPlus}
+          title="Add a New Restaurant"
+          onClick={() => (window.location.href = "/managers/restaurants/create")}
+        >
+          <BsPlusLg size="3em" />
+        </div>
+      )}
+
       <div className={styles.header}>
         <img className={styles.image} src={`/images/event.png`} />
       </div>
@@ -44,9 +61,7 @@ export default function Restaurants(props) {
       <Container>
         {
           <RestaurantsSearchView
-            items={props.restaurants.filter((item) =>
-              item.name.toLowerCase().includes(searchString.toLowerCase())
-            )}
+            items={props.restaurants.filter((item) => item.name.toLowerCase().includes(searchString.toLowerCase()))}
           />
         }
       </Container>

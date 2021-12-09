@@ -3,20 +3,7 @@ import Restaurants from "./Restaurants";
 import axios from "axios";
 
 export default function ManagerRestaurants() {
-  const [restaurants, setRestaurants] = useState([
-    {
-      address: "",
-      idrestaurants: 1,
-      image: "placeholder.png",
-      name: "",
-      operating_hours: "",
-      phonenumber: "",
-      price_level: 1,
-      restaurant_description: "",
-      restaurant_type: "",
-      users_idusers: 1,
-    },
-  ]);
+  const [restaurants, setRestaurants] = useState([]);
 
   const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
   const token = window.localStorage.getItem("appAuthData");

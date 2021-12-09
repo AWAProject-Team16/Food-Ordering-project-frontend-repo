@@ -21,3 +21,10 @@
   background-color: peru;
   padding-bottom: 20px;
 }
+
+.processingText {
+  color: white;
+  font-size: 2em;
+  height: 4em;
+  line-height: 1em;
+}

@@ -17,9 +17,7 @@ export default class OrderHistory extends React.Component {
 
   updateAnOrder = (newOrder) => {
     let orderData = [...this.state.orderData];
-    const matchedOrderIndex = this.state.orderData.findIndex(
-      (order) => order.idorders === newOrder.idorders
-    );
+    const matchedOrderIndex = this.state.orderData.findIndex((order) => order.idorders === newOrder.idorders);
     if (matchedOrderIndex > -1) {
       orderData[matchedOrderIndex] = newOrder;
       this.setState({ orderData });
@@ -48,21 +46,18 @@ export default class OrderHistory extends React.Component {
         {this.state.orderData.length == 0 && "(You have no orders)"}
         {this.state.restaurantData.map((restaurant, index) => {
           return (
-            <>
-              <div className={styles.orderHistoryPerRestaurant} key={index}>
+            <div key={index}>
+              <div className={styles.orderHistoryPerRestaurant}>
                 <OrderHistoryPerRestaurant
                   {...this.state}
                   updateAnOrder={this.updateAnOrder}
                   name={restaurant.name}
                   orderData={this.state.orderData.filter((order) => {
-                    return (
-                      order.restaurants_idrestaurants ===
-                      restaurant.idrestaurants
-                    );
+                    return order.restaurants_idrestaurants === restaurant.idrestaurants;
                   })}
                 />
               </div>
-            </>
+            </div>
           );
         })}
       </div>
@@ -107,14 +102,7 @@ export default class OrderHistory extends React.Component {
 
         console.log("restaurantData", restaurantData);
 
-        const orderStatusData = [
-          "Received",
-          "Preparing",
-          "Ready for delivery",
-          "Delivering",
-          "Delivered",
-          "Closed",
-        ];
+        const orderStatusData = ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"];
 
         const isManagerView = true;
 

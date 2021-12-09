@@ -5,16 +5,17 @@ import cx from "classnames";
 import jwt from "jsonwebtoken";
 import { BsPlusLg } from "react-icons/bs";
 
-export default function ManagerCategories() {
+const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
+
+export default function ManagerProducts() {
   const [data, setData] = useState([]);
   const [searchString, setSearchString] = useState("");
 
   useEffect(() => {
-    const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
     const token = window.localStorage.getItem("appAuthData");
 
     axios
-      .get(`${API_ADDRESS}/categories/myCategories`, {
+      .get(`${API_ADDRESS}/products/myProducts`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -36,18 +37,18 @@ export default function ManagerCategories() {
       {getIsManager() && (
         <div
           className={styles.floatingBigPlus}
-          title="Add a New Category"
-          onClick={() => (window.location.href = "/managers/categories/create")}
+          title="Add a New Product"
+          onClick={() => (window.location.href = "/managers/products/create")}
         >
           <BsPlusLg size="3em" />
         </div>
       )}
 
       {data.length > 0 && (
-        <div>
+        <>
           <div className={cx(styles.flex, styles.marginTop1)}>
             <div>
-              <b>Search for categories: &nbsp;</b>
+              <b>Search for products: &nbsp;</b>
             </div>
             <input
               className={cx(styles.formcontrol, styles.width300)}
@@ -57,26 +58,20 @@ export default function ManagerCategories() {
             />
           </div>
           <table className={cx(styles.marginTop2)}>
-            <thead>
-              <tr>
-                <th className={cx(styles.center, styles.uppercase, styles.fontSize15, styles.pb1)}>Category</th>
-                <th className={cx(styles.center, styles.uppercase, styles.fontSize15, styles.pb1)}>Belongs to the restaurant</th>
-              </tr>
-            </thead>
             <tbody>
               {data
-                .filter((d) => d.category_name.toLowerCase().includes(searchString.toLowerCase()))
+                .filter((d) => d.product_name.toLowerCase().includes(searchString.toLowerCase()))
                 .map((d, index) => (
                   <tr key={index}>
                     <td>
                       {/* cannot use classNames={styles.textDecorNone} */}
-                      <a href={`/managers/categories/modify/${d.idcategories}`} style={{ textDecoration: "none" }}>
+                      <a href={`/managers/products/modify/${d.idproducts}`} style={{ textDecoration: "none" }}>
                         {/* <a href={`/managers/categories/modify/${d.idcategories}`} style={{ textDecoration: "none" }}> */}
                         <div className={styles.formwrapper}>
                           <input
                             disabled
                             type="text"
-                            value={d.category_name}
+                            value={d.product_name}
                             className={cx(styles.formcontrol, styles.cursorPointer, styles.onHoverColor1)}
                           />
                         </div>
@@ -84,25 +79,18 @@ export default function ManagerCategories() {
                     </td>
                     <td>
                       {/* cannot use classNames={styles.textDecorNone} */}
-                      <a href={`/managers/restaurants/${d.restaurants_idrestaurants}`} style={{ textDecoration: "none" }}>
-                        <div className={styles.formwrapper}>
-                          <input
-                            disabled
-                            type="text"
-                            value={d.restaurant_name}
-                            className={cx(styles.formcontrol, styles.cursorPointer, styles.onHoverColor1)}
-                          />
-                        </div>
+                      <a href={`/managers/products/modify/${d.idproducts}`} style={{ textDecoration: "none" }}>
+                        <img src={`${API_ADDRESS}/images/${d.product_image}`}></img>
                       </a>
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
-        </div>
+        </>
       )}
 
-      {data.length <= 0 && <div className={cx(styles.marginTop2, styles.marginLeft1)}>(You have no categories!)</div>}
+      {data.length <= 0 && <div className={cx(styles.marginTop2, styles.marginLeft1)}>(You have no products!)</div>}
     </div>
   );
 }
