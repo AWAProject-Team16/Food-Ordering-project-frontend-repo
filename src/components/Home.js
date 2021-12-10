@@ -45,7 +45,6 @@ class Home extends React.Component {
 
     return (
       <div>
-        <div>User login status:{this.props.userLoggedIn ? "is logged in" : "not logged in"}</div>
         <h3 className={styles.header}>Food types</h3>
         <div className={styles.categoryGrid}>
           {foodTypes.map((types, index) => (
