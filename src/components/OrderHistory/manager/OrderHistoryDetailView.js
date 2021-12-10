@@ -223,31 +223,51 @@ export default function OrderHistoryDetailView(props) {
   };
 
   const handleConfirmDelivered = () => {
-    const token = window.localStorage.getItem("appAuthData");
-    const idorders = props.orderData.idorders;
+    const noCallback = () => {
+      toast.dismiss(toastId);
+      return;
+    };
 
-    axios
-      .get(`${API_ADDRESS}/orders/confirmDelivered/${idorders}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          toast.success(
-            <ConfirmationDiaglog
-              text="Done! Now waiting for the restaurant owner to close this order."
-              btn1Text="OK"
-              btn1Callback={() => window.location.reload()}
-            />,
-            { autoClose: false, closeOnClick: false, closeButton: false, draggable: false }
-          );
-          setOrderStatus("Delivered");
-          confirmDeliveredRef.current.classList.add(styles.hide);
-          confirmDeliveredRef.current.classList.remove(styles.show);
-        }
-      })
-      .catch(console.error);
+    const yesCallback = () => {
+      toast.dismiss(toastId);
+
+      const token = window.localStorage.getItem("appAuthData");
+      const idorders = props.orderData.idorders;
+
+      axios
+        .get(`${API_ADDRESS}/orders/confirmDelivered/${idorders}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success(
+              <ConfirmationDiaglog
+                text="Done! Now waiting for the restaurant owner to close this order."
+                btn1Text="OK"
+                btn1Callback={() => window.location.reload()}
+              />,
+              { autoClose: false, closeOnClick: false, closeButton: false, draggable: false }
+            );
+            setOrderStatus("Delivered");
+            confirmDeliveredRef.current.classList.add(styles.hide);
+            confirmDeliveredRef.current.classList.remove(styles.show);
+          }
+        })
+        .catch(console.error);
+    };
+
+    const toastId = toast.info(
+      <ConfirmationDiaglog
+        text="Are you sure you want to confirm this order as delivered?"
+        btn1Text="Yes"
+        btn1Callback={yesCallback}
+        btn2Text="No"
+        btn2Callback={noCallback}
+      />,
+      { autoClose: false, closeOnClick: false, closeButton: false, draggable: false }
+    );
   };
 
   return (
