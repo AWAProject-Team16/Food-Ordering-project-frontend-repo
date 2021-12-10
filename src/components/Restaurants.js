@@ -22,7 +22,11 @@ export default function Restaurants(props) {
 
   function getIsManager() {
     const token = window.localStorage.getItem("appAuthData");
-    if (!token) console.error("No app auth data");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
+
     return jwt.decode(token).account_type == 2;
   }
 
