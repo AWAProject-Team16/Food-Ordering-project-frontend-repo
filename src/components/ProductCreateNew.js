@@ -215,9 +215,7 @@ export default function ProductCreateNew() {
                 ))}
               </select>
             </div>
-            <div className={cx(styles.button, styles.smallButton)} onClick={toggleModalAndUpdateCategoryDropdown}>
-              Add New Category
-            </div>
+            
             <Modal
               isOpen={isModalOpen}
               onRequestClose={handleModal}
