@@ -1,4 +1,5 @@
 import React, { useEffect, createRef } from "react";
+import { useNavigate } from "react-router";
 import styles from "../css/DashboardCard.module.css";
 import { GiReceiveMoney } from "react-icons/gi";
 import { IoReceipt } from "react-icons/io5";
@@ -6,7 +7,7 @@ import { BsPeopleFill } from "react-icons/bs";
 import { IoRestaurant } from "react-icons/io5";
 import cx from "classnames";
 
-export default function DashboardCard({ title, text, icon, link, color }) {
+export default function DashboardCard({ title, text, icon, link, color, textSize }) {
   let _icon = <></>;
 
   switch (icon) {
@@ -27,6 +28,9 @@ export default function DashboardCard({ title, text, icon, link, color }) {
   const cardRef = createRef();
   const moreInfoRef = createRef();
   const textRef = createRef();
+  const textParentRef = createRef();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (color) {
@@ -36,14 +40,18 @@ export default function DashboardCard({ title, text, icon, link, color }) {
 
     if (link) {
       cardRef.current.style.cursor = "pointer";
-      cardRef.current.onclick = () => (window.location.href = link);
+      cardRef.current.onclick = () => navigate(link);
+    }
+
+    if (textSize) {
+      textRef.current.style.fontSize = textSize;
     }
   }, []);
 
   return (
     <div ref={cardRef} className={cx(styles.card)}>
       <div className={cx(styles.title)}>{title}</div>
-      <div className={cx(styles.flex)}>
+      <div ref={textParentRef} className={cx(styles.flex)}>
         <div ref={textRef} className={cx(styles.text)}>
           {text}
         </div>

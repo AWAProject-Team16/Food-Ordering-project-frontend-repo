@@ -6,7 +6,7 @@ import Data from "./data.json";
 import jwt from "jsonwebtoken";
 import styles from "./App.module.css";
 import React, { Component } from "react";
-import { CartContext } from "./context/Contexts";
+import { CartContext, NewOrdersContext } from "./context/Contexts";
 // import Data from './data.json';
 import axios from "axios";
 
@@ -23,8 +23,12 @@ export default class App extends Component {
       isUserLoggedIn: jwtFromStorage,
       typeValue: typeFromStorage,
       // typeContextValue: null
-      items: [], // Data.Restaurants
+      items: [], // Data.Restaurants,
+      hasNewOrders: false,
+      loadNewOrderOnClick: false,
     };
+
+    this.setUpNotification();
   }
 
   componentDidMount() {
@@ -44,7 +48,6 @@ export default class App extends Component {
     if (Array.isArray(StorageCart)) {
       CartQty = StorageCart.reduce((Total, Current) => Total + Current.qty, 0);
     }
-    // console.log(CartQty);
     this.setState({ CartQty: CartQty });
   };
 
@@ -56,6 +59,49 @@ export default class App extends Component {
       })
       .catch((err) => console.log(err));
   }
+
+  setHasNewOrders = (value) => {
+    this.setState({ hasNewOrders: value });
+  };
+
+  setLoadNewOrderOnClick = (value) => {
+    this.setState({ loadNewOrderOnClick: value });
+  };
+
+  setUpNotification = () => {
+    setInterval(() => {
+      const token = window.localStorage.getItem("appAuthData");
+      if (!token || jwt.decode(token).account_type == 1) {
+        // guess view or customer view
+        return;
+      }
+
+      axios
+        .get(`${API_ADDRESS}/orders/myLatestOrderDate`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          let latestOrderDate = localStorage.getItem("latestOrderDate");
+          if (latestOrderDate === null) {
+            return;
+          }
+
+          latestOrderDate = new Date(JSON.parse(latestOrderDate)).getTime();
+          const apiLatestOrderDate = new Date(res.data.latest_date).getTime();
+
+          if (latestOrderDate < apiLatestOrderDate) {
+            // console.log("this.context", this.context);
+            if (this.context) this.setHasNewOrders(true);
+          } else {
+            // console.log("this.context 222", this);
+            if (this.context) this.setHasNewOrders(false);
+          }
+        })
+        .catch(console.error);
+    }, 1000);
+  };
 
   render() {
     return (
@@ -72,10 +118,19 @@ export default class App extends Component {
             navType={(newTypeJwt) => {
               this.setState({ typeValue: newTypeJwt });
             }}
+            hasNewOrders={this.state.hasNewOrders}
+            setLoadNewOrderOnClick={this.setLoadNewOrderOnClick}
           />
 
           <CartContext.Provider value={{ CartCounter: this.CartCounter }}>
-            <RouterURL userLoggedIn={this.state.isUserLoggedIn} restaurants={this.state.items} typeValue={this.state.typeValue} />
+            <RouterURL
+              userLoggedIn={this.state.isUserLoggedIn}
+              restaurants={this.state.items}
+              typeValue={this.state.typeValue}
+              hasNewOrders={this.state.hasNewOrders}
+              loadNewOrderOnClick={this.state.loadNewOrderOnClick}
+              setLoadNewOrderOnClick={this.setLoadNewOrderOnClick}
+            />
           </CartContext.Provider>
           <Footer />
         </div>

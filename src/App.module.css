@@ -2,15 +2,15 @@
   --white-color: #fff;
   --back-color: #000;
   --text-color: #333;
-  --main-color: #CD1718;
-  --ground-color: #F4F5F7;
+  --main-color: #cd1718;
+  --ground-color: #f4f5f7;
 }
 
 * {
   /* box-sizing: inherit; */
   font-size: 16px;
   line-height: 16px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: var(--text-color);
 }
 

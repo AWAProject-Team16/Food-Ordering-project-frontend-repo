@@ -43,7 +43,7 @@
       "image": "sp02.png",
       "restaurant_type": "Burger",
       "price_level": 5,
-      "restaurant_description":"Better place for burger and fastfood",
+      "restaurant_description": "Better place for burger and fastfood",
       "phonenumber": "12345678"
     },
     {
@@ -127,7 +127,7 @@
       "image": "sp09.png",
       "restaurant_type": "type of restaurant",
       "price_level": 5,
-      "restaurant_description":"Bugger and pizzza",
+      "restaurant_description": "Bugger and pizzza",
       "phonenumber": "12345678"
     },
     {
@@ -167,7 +167,7 @@
       "phonenumber": "12345678"
     }
   ],
-  
+
   "categories": [
     {
       "idcategories": 1,
@@ -190,7 +190,7 @@
       "category_name": "Dinner"
     }
   ],
-  
+
   "products": [
     {
       "idproducts": 1,

@@ -3,7 +3,7 @@
   height: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -11,12 +11,16 @@
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 20px;
+  position: relative;
+  color: black;
+  text-decoration: none;
 }
 
 .navItem:hover {
-  border: 1px solid #999;
-  border-radius: 20px;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  background-color: white;
+  /* border: 1px solid #999; */
+  /* border-radius: 20px; */
+  /* box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
 }
 
 .logo {
@@ -84,11 +88,14 @@
   background-color: white;
   border: solid;
   border-radius: 8px;
+  width: 321px;
 }
 
 .searchbar {
   border: none;
   outline: none;
+  background: none;
+  width: 311px;
 }
 
 .wrapButtons {
@@ -98,6 +105,78 @@
   align-items: center;
 }
 
-.active {
-  background: white;
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.notification {
+  background-color: red;
+  animation-name: zoomInOut;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  width: 30px;
+  height: 22px;
+  font-size: 0.8em;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: -25px;
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.5, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.notificationText {
+  color: white;
+  margin-top: 3px;
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 0.9em;
+  margin-left: 1px;
+}
+
+.closeSticky {
+  position: absolute;
+  left: 50%;
+  top: 40px;
+  width: 22px;
+  height: 22px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.closeSticky:hover {
+  opacity: 1;
+}
+
+.closeSticky:before,
+.closeSticky:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+
+.closeSticky:before {
+  transform: rotate(45deg);
+}
+
+.closeSticky:after {
+  transform: rotate(-45deg);
 }

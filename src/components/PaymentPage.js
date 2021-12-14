@@ -57,7 +57,6 @@ class PaymentPage extends Component {
       RestaurantID: Restaurant,
       ShoppingCart: ShoppingCart,
     });
-    // console.log(this.props.navigate)
   }
 
   SelectProvider = (id) => {
@@ -90,12 +89,7 @@ class PaymentPage extends Component {
       let DeliveryLocation = this.state.DeliveryLocation;
       let Restaurant = this.state.RestaurantID;
       const JWTtoken = localStorage.getItem("appAuthData");
-      // Restaurant = JSON.parse(Restaurant)
       let TotalCost = this.state.TotalCost;
-      // const TotalCost = ProductCosts + DeliveryCost
-      // console.log(TotalCost)
-      // console.log(`Bearer ${JWTtoken}`)
-      console.log("xxx", { DeliveryLocation, JWTtoken, Restaurant, TotalCost, ShoppingCart });
 
       const orderInfo = {
         restaurants_idrestaurants: Restaurant,
@@ -104,13 +98,10 @@ class PaymentPage extends Component {
         ShoppingCart: ShoppingCart,
       };
 
-      console.log("orderInfo", JSON.stringify(orderInfo));
-
       const response = await axios.post(API_ADDRESS + "/orders/addOrder", orderInfo, {
         headers: { Authorization: `Bearer ${JWTtoken}` },
       });
-      console.log(response);
-      // console.log(Restaurant.Restaurant)
+
       if (response.status === 201) {
         const redirectToOrderHistory = () => {
           this.context.CartCounter(0);
@@ -130,11 +121,7 @@ class PaymentPage extends Component {
           }
         );
       }
-
-      // const article = { title: 'React POST Request Example' };
-      // const test = await axios.post('https://reqres.in/api/articles', article);
-      // console.log(test.data)
-    }, 3000);
+    }, 1000);
   };
 
   CostCalc(Cart, DeliveryCost) {

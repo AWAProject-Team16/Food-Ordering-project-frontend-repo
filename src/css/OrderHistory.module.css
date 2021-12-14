@@ -1,3 +1,12 @@
+.componentTitle {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 1em;
+  font-weight: 600;
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
 .orderHistoryPerRestaurant {
   margin-bottom: 20px !important;
   padding-bottom: 20px !important;
@@ -45,7 +54,7 @@
 }
 
 .orderList {
-  margin-left: 20px;
+  margin-left: 3em;
   margin-right: 20px;
 }
 
@@ -159,6 +168,7 @@
   padding-top: 68px;
   padding-bottom: 48px;
   background-image: url("./registration-form-background.jpg");
+  background-repeat: round;
 }
 
 .inner h3 {
@@ -281,6 +291,22 @@
   transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
 
+.button2 {
+  font-size: large;
+  padding: 12px 23px;
+  border-radius: 10px;
+  background-color: aqua;
+  color: white;
+  position: fixed;
+  cursor: pointer;
+}
+.button2:hover {
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  color: aqua;
+  padding: 15px 26px;
+}
+
 .smallButton {
   margin-top: 5px;
   height: fit-content;
@@ -397,6 +423,8 @@ label[for="file_picker"] {
 }
 
 .ETC {
+  width: 100px;
+  margin-right: 10px;
 }
 
 .customerETC {
@@ -496,9 +524,18 @@ label[for="file_picker"] {
 }
 
 .tableOrderDetail {
+  margin-left: 2em;
 }
 
 .tableOrderDetail th,
 .tableOrderDetail td {
   padding: 5px 10px;
+}
+
+.mL1 {
+  margin-left: 1em;
+}
+
+.mL2 {
+  margin-left: 2em;
 }

@@ -1,9 +1,9 @@
-import React from 'react'
-import Register from '../components/Register';
-import RestaurantCreateNew from '../components/RestaurantCreateNew';
-import OrderHistoryManger from './OrderHistory/manager/OrderHistoryManger';
-import OrderHistoryCustomer from '../components/OrderHistory/customer/OrderHistoryCustomer';
-import ProductCreateNew from '../components/ProductCreateNew';
+import React from "react";
+import Register from "../components/Register";
+import RestaurantCreateNew from "../components/RestaurantCreateNew";
+import OrderHistoryManger from "./OrderHistory/manager/OrderHistoryManger";
+import OrderHistoryCustomer from "../components/OrderHistory/customer/OrderHistoryCustomer";
+import ProductCreateNew from "../components/ProductCreateNew";
 
 export default function DevThucTestingArea() {
   return (
@@ -14,5 +14,5 @@ export default function DevThucTestingArea() {
       <RestaurantCreateNew />
       <Register />
     </div>
-  )
+  );
 }

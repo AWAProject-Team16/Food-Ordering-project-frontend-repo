@@ -24,9 +24,7 @@ export default function ProductModify() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get(
-          `${API_ADDRESS}/products/product/${idproducts}`
-        );
+        const res = await axios.get(`${API_ADDRESS}/products/product/${idproducts}`);
         setData(res.data[0]);
       } catch (err) {
         console.error(err);
@@ -37,23 +35,20 @@ export default function ProductModify() {
   }, []);
 
   function getFormDataAndCallAPI(idproducts) {
-    const formData = new FormData(
-      document.querySelector('form[name="modifyProduct"]')
-    );
+    const formData = new FormData(document.querySelector('form[name="modifyProduct"]'));
 
     const token = localStorage.getItem("appAuthData");
-
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
     axios
-      .post(
-        `${API_ADDRESS}/products/${idproducts}/editProductMultipart`,
-        formData,
-        {
-          headers: {
-            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`${API_ADDRESS}/products/${idproducts}/editProductMultipart`, formData, {
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         if (response.status === 200) {
           toast.success("Product modified.");
@@ -115,9 +110,7 @@ export default function ProductModify() {
                 className={styles.formcontrol}
                 name="product_name"
                 value={data.product_name}
-                onChange={(e) =>
-                  setData({ ...data, product_name: e.target.value })
-                }
+                onChange={(e) => setData({ ...data, product_name: e.target.value })}
               />
             </div>
             <div className={styles.formwrapper}>
@@ -128,9 +121,7 @@ export default function ProductModify() {
                 className={cx(styles.formcontrol, styles.textarea)}
                 name="product_description"
                 value={data.product_description}
-                onChange={(e) =>
-                  setData({ ...data, product_description: e.target.value })
-                }
+                onChange={(e) => setData({ ...data, product_description: e.target.value })}
               />
             </div>
             <div className={styles.formwrapper}>
@@ -143,20 +134,14 @@ export default function ProductModify() {
                   className={styles.formcontrol}
                   name="product_cost"
                   value={data.product_cost}
-                  onChange={(e) =>
-                    setData({ ...data, product_cost: e.target.value })
-                  }
+                  onChange={(e) => setData({ ...data, product_cost: e.target.value })}
                 />
               </div>
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <img
-                  ref={productImageRef}
-                  className={styles.productImage}
-                  src={`${API_ADDRESS}/images/${data.product_image}`}
-                />
+                <img ref={productImageRef} className={styles.productImage} src={`${API_ADDRESS}/images/${data.product_image}`} />
                 <input
                   type="file"
                   accept="image/*"
@@ -171,18 +156,13 @@ export default function ProductModify() {
               </div>
             </div>
 
-            <button
-              onClick={() => modifyProduct(idproducts)}
-              className={styles.button}
-            >
+            <button onClick={() => modifyProduct(idproducts)} className={styles.button}>
               Save
             </button>
           </form>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-      />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

@@ -6,9 +6,13 @@ export default function ManagerRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
 
   const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-  const token = window.localStorage.getItem("appAuthData");
 
   useEffect(() => {
+    const token = window.localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
     axios
       .get(`${API_ADDRESS}/restaurants/ownRestaurants2`, {
         headers: {
@@ -16,7 +20,6 @@ export default function ManagerRestaurants() {
         },
       })
       .then((res) => {
-        console.log(res.data.Own_Restaurants);
         setRestaurants(res.data.Own_Restaurants);
       })
       .catch(console.error);

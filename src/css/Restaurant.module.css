@@ -1,4 +1,4 @@
-/* img {  error =]]]] */  
+/* img {  error =]]]] */
 .image {
   height: 300px;
   width: 100%;
@@ -38,7 +38,7 @@
   padding-left: 20px;
 }
 
-@media (max-width: 680px) { 
+@media (max-width: 680px) {
   .categories {
     display: none;
   }
@@ -49,11 +49,11 @@
     display: none;
   }
 }
-  .image {
-    /* width: fit-content; */
-    height: auto;
-    max-height: 360px;
-  }
+.image {
+  /* width: fit-content; */
+  height: auto;
+  max-height: 360px;
+}
 /* --------- detail --------- */
 h4 {
   padding-top: 44px;

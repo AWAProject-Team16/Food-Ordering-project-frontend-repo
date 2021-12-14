@@ -1,9 +1,6 @@
 import styles from "./../css/Home.module.css";
 import React from "react";
-import { Link, Route } from "react-router-dom";
-import axios from "axios";
-import { TypeContext } from "../context/Contexts";
-import RestaurantsCategories from "./RestaurantsCategories";
+import { Link } from "react-router-dom";
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,14 +9,6 @@ class Home extends React.Component {
   }
 
   render() {
-    // Temporarily added by Thuc. For better performance, use RouterURL
-    /*  const jwt = require('jsonwebtoken');
-    const token = window.localStorage.getItem('appAuthData');
-    if (token) {
-      const payload = jwt.decode(token);
-      if(payload.account_type===2) window.location.href = '/managers/';
-    } */
-
     const foodTypes = [
       {
         name: "Fast-food",

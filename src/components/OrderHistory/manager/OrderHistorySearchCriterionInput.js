@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from '../../../css/OrderHistory.module.css';
+import React from "react";
+import styles from "../../../css/OrderHistory.module.css";
 
 export default function OrderHistorySearchCriterionInput(props) {
   // Required props: title
@@ -9,9 +9,9 @@ export default function OrderHistorySearchCriterionInput(props) {
       <div className={styles.criterion}>
         <div className={styles.criterionTitle}>{props.title}</div>
         <div className={styles.criterionInput}>
-          <input type={props.type || 'text'}></input>
+          <input type={props.type || "text"}></input>
         </div>
       </div>
     </div>
-  )
+  );
 }

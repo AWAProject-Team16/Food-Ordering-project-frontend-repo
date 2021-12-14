@@ -8,15 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 export default function CategoryCreateNew() {
-  const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([
-    { idrestaurants: 0, name: "" },
-  ]);
-
-  const token = localStorage.getItem("appAuthData");
+  const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([{ idrestaurants: 0, name: "" }]);
 
   useEffect(() => {
+    const token = localStorage.getItem("appAuthData");
+
     if (!token) {
-      console.error("Token not found");
+      console.error("App auth data not found");
       return;
     }
 
@@ -30,7 +28,7 @@ export default function CategoryCreateNew() {
         if (res.status === 200) {
           setRestaurantDropdownItems(res.data.Own_Restaurants);
         } else {
-          console.log("Something went wrong!");
+          console.error("Something went wrong!");
         }
       })
       .catch((err) => {
@@ -39,28 +37,26 @@ export default function CategoryCreateNew() {
   }, []);
 
   function getFormDataAndCallAPI() {
-    const formData = new FormData(
-      document.querySelector('form[name="createCategory"]')
-    );
+    const formData = new FormData(document.querySelector('form[name="createCategory"]'));
 
     let categoryObj = {};
     formData.forEach((value, key) => (categoryObj[key] = value));
 
     const token = localStorage.getItem("appAuthData");
-    const idrestaurants = document.querySelector(
-      'select[name="select_a_restaurant"]'
-    ).value;
+
+    if (!token) {
+      console.error("App auth data not found");
+      return;
+    }
+
+    const idrestaurants = document.querySelector('select[name="select_a_restaurant"]').value;
 
     axios
-      .post(
-        `${API_ADDRESS}/categories/restaurant/${idrestaurants}/addCategory2`,
-        categoryObj,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`${API_ADDRESS}/categories/restaurant/${idrestaurants}/addCategory2`, categoryObj, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         if (res.status === 201) {
           toast.success("Category created.");
@@ -81,9 +77,7 @@ export default function CategoryCreateNew() {
       event.preventDefault();
     };
 
-    const isDataValid =
-      Number(form.select_a_restaurant.value) > 0 &&
-      form.name.value.trim() != "";
+    const isDataValid = Number(form.select_a_restaurant.value) > 0 && form.name.value.trim() != "";
 
     if (!isDataValid) {
       toast.error("All data are required");
@@ -101,10 +95,7 @@ export default function CategoryCreateNew() {
             <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Select a Restaurant</label>
-              <select
-                className={cx(styles.formcontrol, styles.select)}
-                name="select_a_restaurant"
-              >
+              <select className={cx(styles.formcontrol, styles.select)} name="select_a_restaurant">
                 {restaurantDropdownItems.map((item, index) => (
                   <option value={item.idrestaurants} key={index}>
                     {item.name}
@@ -119,12 +110,7 @@ export default function CategoryCreateNew() {
                   Category Name cannot be empty!
                 </span>
               </label>
-              <input
-                required
-                type="text"
-                className={styles.formcontrol}
-                name="name"
-              />
+              <input required type="text" className={styles.formcontrol} name="name" />
             </div>
 
             <button onClick={createCategory} className={styles.button}>
@@ -133,9 +119,7 @@ export default function CategoryCreateNew() {
           </form>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-      />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

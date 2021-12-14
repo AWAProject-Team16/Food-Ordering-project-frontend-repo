@@ -9,12 +9,13 @@ const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 const productImageRef = createRef();
 
 function getFormDataAndCallAPI() {
-  const formData = new FormData(
-    document.querySelector('form[name="createRestaurantForm"]')
-  );
+  const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
 
   const token = localStorage.getItem("appAuthData");
-
+  if (!token) {
+    console.error("No app auth data");
+    return;
+  }
   axios
     .post(API_ADDRESS + "/restaurants/newRestaurantMultipart", formData, {
       headers: {
@@ -62,8 +63,7 @@ function createRestaurant() {
 function resetForm() {
   document.querySelector('form[name="createRestaurantForm"]').reset();
   document.getElementsByClassName(styles.productImage)[0].src = " ";
-  document.querySelector('label[for="file_picker"]').textContent =
-    "Click to choose an image";
+  document.querySelector('label[for="file_picker"]').textContent = "Click to choose an image";
 }
 
 function showNewImageChosenFileName() {
@@ -104,34 +104,19 @@ function render() {
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Address</label>
-              <input
-                type="text"
-                className={styles.formcontrol}
-                name="address"
-              />
+              <input type="text" className={styles.formcontrol} name="address" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Operating Hours</label>
-              <textarea
-                rows="12"
-                className={cx(styles.formcontrol, styles.textarea)}
-                name="operating_hours"
-              />
+              <textarea rows="12" className={cx(styles.formcontrol, styles.textarea)} name="operating_hours" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Phone Number</label>
-              <input
-                type="tel"
-                className={styles.formcontrol}
-                name="phonenumber"
-              />
+              <input type="tel" className={styles.formcontrol} name="phonenumber" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Type</label>
-              <select
-                className={cx(styles.formcontrol, styles.select)}
-                name="restaurant_type"
-              >
+              <select className={cx(styles.formcontrol, styles.select)} name="restaurant_type">
                 <option value="Buffet">Buffet</option>
                 <option value="Fast food">Fast food</option>
                 <option value="Fast casual">Fast casual</option>
@@ -141,10 +126,7 @@ function render() {
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Price Level</label>
-              <select
-                className={cx(styles.formcontrol, styles.select)}
-                name="price_level"
-              >
+              <select className={cx(styles.formcontrol, styles.select)} name="price_level">
                 <option value="1">&euro;</option>
                 <option value="2">&euro;&euro;</option>
                 <option value="3">&euro;&euro;&euro;</option>
@@ -153,11 +135,7 @@ function render() {
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Restaurant Description</label>
-              <textarea
-                rows="12"
-                className={cx(styles.formcontrol, styles.textarea)}
-                name="restaurant_description"
-              />
+              <textarea rows="12" className={cx(styles.formcontrol, styles.textarea)} name="restaurant_description" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
@@ -183,9 +161,7 @@ function render() {
           </form>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-      />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

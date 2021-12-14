@@ -130,6 +130,22 @@
   transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
 
+.button2 {
+  font-size: large;
+  padding: 12px 23px;
+  border-radius: 10px;
+  background-color: aqua;
+  color: white;
+  position: fixed;
+  cursor: pointer;
+}
+.button2:hover {
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  color: aqua;
+  padding: 15px 26px;
+}
+
 .smallButton {
   margin-left: 20px;
   margin-top: 0;
@@ -243,6 +259,12 @@ label[for="file_picker"] {
   align-items: center;
 }
 
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .center {
   text-align: center;
 }
@@ -311,10 +333,17 @@ label[for="file_picker"] {
 }
 
 .cardContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: repeat(4, 1fr);
+  grid-gap: 40px; */
   padding: 40px;
+}
+
+.cardContainer > * {
+  flex-basis: 20%;
+  margin-right: 40px;
+  margin-bottom: 40px;
 }
 
 .quickActionContainer {
@@ -329,8 +358,17 @@ label[for="file_picker"] {
   width: 190px;
 }
 
+.paddlingLeftRight2 {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
 .marginLeft1 {
   margin-left: 1em;
+}
+
+.marginLeft2 {
+  margin-left: 2em;
 }
 
 .marginRight1 {
@@ -366,7 +404,7 @@ label[for="file_picker"] {
 }
 
 .textDecorNone {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .onHoverColor1 {
@@ -378,6 +416,10 @@ label[for="file_picker"] {
 
 .width300 {
   width: 300px;
+}
+
+.width400 {
+  width: 400px;
 }
 
 .floatingBigPlus {
@@ -394,4 +436,43 @@ label[for="file_picker"] {
 
 .floatingBigPlus:hover {
   filter: brightness(0.8);
+}
+
+.componentTitle {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
+.productContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2em;
+}
+
+.imgZoom {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.imgZoom > img:hover {
+  transform: scale(1.5);
+  -ms-transform: scale(1.5); /* IE 9 */
+  -moz-transform: scale(1.5); /* Firefox */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transition: all 0.4s ease;
+  vertical-align: middle;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.myProductsName {
+  text-align: center;
+  padding: 0px 20px;
 }

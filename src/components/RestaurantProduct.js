@@ -23,27 +23,16 @@ export default function RestaurantDetail(props) {
       >
         <div className={styles.productLeft}>
           <div className={styles.name}> {props.item.product_name} </div>
-          <div className={styles.description}>
-            {" "}
-            {props.item.product_description}{" "}
-          </div>
+          <div className={styles.description}> {props.item.product_description} </div>
           <div className={styles.price}> {"$ " + props.item.product_cost} </div>
         </div>
         <div className={styles.productRight}>
-          <img
-            alt="true"
-            className={styles.imageM}
-            src={`${API_ADDRESS}/images/${props.item.product_image}`}
-          />
+          <img alt="true" className={styles.imageM} src={`${API_ADDRESS}/images/${props.item.product_image}`} />
         </div>
       </div>
       {/* {modalOpen && <ModalClickBuy handleModalOpen={setModalOpen} item={ props.item }/>} */}
       <Modal isOpen={modalOpen} className={styles.modal}>
-        <ModalClickBuy
-          handleModalOpen={setModalOpen}
-          item={props.item}
-          idrestaurants={props.idrestaurants}
-        />
+        <ModalClickBuy handleModalOpen={setModalOpen} item={props.item} idrestaurants={props.idrestaurants} />
       </Modal>
     </div>
   );

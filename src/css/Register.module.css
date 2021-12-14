@@ -10,12 +10,22 @@ body {
   margin: 0;
 }
 
-input, textarea, select, button {
+input,
+textarea,
+select,
+button {
   color: #333;
   font-size: 13px;
 }
 
-p, h1, h2, h3, h4, h5, h6, ul {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul {
   margin: 0;
 }
 
@@ -49,7 +59,7 @@ a:hover {
   margin: auto;
   padding-top: 68px;
   padding-bottom: 48px;
-  background-image: url('./registration-form-background.jpg');
+  background-image: url("./registration-form-background.jpg");
 }
 
 .inner h3 {
@@ -182,7 +192,7 @@ button:hover:before {
   cursor: pointer;
 }
 
-.checkbox input:checked~.checkmark:after {
+.checkbox input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -207,7 +217,7 @@ button:hover:before {
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
-  content: '\2713';
+  content: "\2713";
 }
 
 @media (max-width: 991px) {
@@ -230,7 +240,8 @@ button:hover:before {
   }
 }
 
-.errormessage, .checkboxerrormessage {
+.errormessage,
+.checkboxerrormessage {
   color: red;
   font-size: 0.8em;
   margin-left: 10px;

@@ -2,6 +2,10 @@ import React from "react";
 import styles from "../../../css/OrderHistory.module.css";
 import OrderHistoryPerRestaurant from "./OrderHistoryPerRestaurant";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ConfirmationDiaglog from "../../ConfirmationDiaglog";
+
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 export default class OrderHistory extends React.Component {
@@ -12,6 +16,7 @@ export default class OrderHistory extends React.Component {
       restaurantData: [],
       orderStatusData: [],
       isManagerView: true,
+      newOrdersConfirmDiaglogShowed: false,
     };
   }
 
@@ -38,11 +43,58 @@ export default class OrderHistory extends React.Component {
     return stdData;
   }
 
+  fetchData = async () => {
+    const token = window.localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
+    try {
+      const res = await axios.get(`${API_ADDRESS}/orders/myOrdersPlusNames`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = res.data;
+      const orderData = data;
+
+      const _restaurantData = data.map((item) => {
+        return {
+          idrestaurants: item.restaurants_idrestaurants,
+          name: item.restaurant_name,
+        };
+      });
+
+      const restaurantData = _restaurantData.filter((item, index) => {
+        return (
+          _restaurantData.findIndex((element) => {
+            return element.idrestaurants == item.idrestaurants;
+          }) == index
+        );
+      });
+
+      const orderStatusData = ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"];
+
+      const isManagerView = true;
+
+      this.setState({
+        orderData,
+        restaurantData,
+        orderStatusData,
+        isManagerView,
+      });
+
+      localStorage.setItem("latestOrderDate", JSON.stringify(new Date(data[0].order_date)));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
-    console.log("this.state", this.state);
     return (
       <div>
-        <h2>Order History</h2>
+        <div className={styles.componentTitle}>Order History</div>
         {this.state.orderData.length == 0 && "(You have no orders)"}
         {this.state.restaurantData.map((restaurant, index) => {
           return (
@@ -60,63 +112,34 @@ export default class OrderHistory extends React.Component {
             </div>
           );
         })}
+        <ToastContainer position="top-center" />
       </div>
     );
   }
 
   componentDidMount() {
-    const token = window.localStorage.getItem("appAuthData");
+    this.fetchData();
+  }
 
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${API_ADDRESS}/orders/myOrdersPlusNames`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = res.data;
-        const orderData = data;
-
-        const _restaurantData = data.map((item) => {
-          return {
-            idrestaurants: item.restaurants_idrestaurants,
-            name: item.restaurant_name,
-          };
-        });
-        console.log("_restaurantData", _restaurantData);
-
-        // const restaurantData = _restaurantData.filter(
-        //   (item, index, self) =>
-        //     self.findIndex(
-        //       (i) => i.place === item.place && i.name === item.name
-        //     ) === index
-        // );
-        const restaurantData = _restaurantData.filter((item, index) => {
-          return (
-            _restaurantData.findIndex((element) => {
-              return element.idrestaurants == item.idrestaurants;
-            }) == index
-          );
-        });
-
-        console.log("restaurantData", restaurantData);
-
-        const orderStatusData = ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"];
-
-        const isManagerView = true;
-
-        this.setState({
-          orderData,
-          restaurantData,
-          orderStatusData,
-          isManagerView,
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
+  componentDidUpdate() {
+    // console.log("jjjjjj");
+    // console.log("this.props.hasNewOrders", this.props.hasNewOrders);
+    // console.log("this.props.loadNewOrderOnClick", this.props.loadNewOrderOnClick);
+    // console.log("this.state.newOrdersConfirmDiaglogShowed", this.state.newOrdersConfirmDiaglogShowed);
+    if (this.props.loadNewOrderOnClick) {
+      this.fetchData();
+      this.props.setLoadNewOrderOnClick(false);
+      // const okcb = () => {
+      //   this.fetchData();
+      //   // toast.dismiss();
+      //   // this.setState({ newOrdersConfirmDiaglogShowed: false });
+      // };
+      // toast.info(<ConfirmationDiaglog text="You have new orders. Click OK to view them." btn1Text="OK" btn1Callback={okcb} />, {
+      //   autoClose: false,
+      //   closeOnClick: false,
+      //   closeButton: false,
+      // });
+      // this.setState({ newOrdersConfirmDiaglogShowed: true });
+    }
   }
 }

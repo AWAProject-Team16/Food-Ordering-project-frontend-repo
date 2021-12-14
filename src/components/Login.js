@@ -20,15 +20,12 @@ export default function Login(props) {
           password: event.target.password.value,
         },
       });
-      console.log(result);
       const receivedJWT = result.data.token;
-      console.log("token " + receivedJWT);
       setLoginProcessState("success");
       setTimeout(() => {
         setLoginProcessState("idle");
         props.loginToken(receivedJWT);
         const decodedToken = jwt.decode(receivedJWT);
-        console.log("user account type loginissa " + decodedToken.account_type);
         const typeToken = decodedToken.account_type;
         props.typeToken(typeToken);
 
@@ -39,7 +36,7 @@ export default function Login(props) {
         }
       }, 1500);
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       setLoginProcessState("error");
       setTimeout(() => setLoginProcessState("idle"), 1500);
     }
@@ -48,19 +45,19 @@ export default function Login(props) {
   let loginUIControls = null;
   switch (loginProcessState) {
     case "idle":
-      loginUIControls = <button type="submit">Login</button>;
+      loginUIControls = (
+        <button type="submit" className={styles.button}>
+          Login
+        </button>
+      );
       break;
 
     case "processing":
-      loginUIControls = (
-        <span style={{ color: "blue" }}>Processing login...</span>
-      );
+      loginUIControls = <span style={{ color: "blue" }}>Processing login...</span>;
       break;
 
     case "success":
-      loginUIControls = (
-        <span style={{ color: "green" }}>Login successful</span>
-      );
+      loginUIControls = <span style={{ color: "green" }}>Login successful</span>;
       break;
 
     case "error":
@@ -68,13 +65,17 @@ export default function Login(props) {
       break;
 
     default:
-      loginUIControls = <button type="submit">Login</button>;
+      loginUIControls = (
+        <button type="submit" className={styles.button}>
+          Login
+        </button>
+      );
   }
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner}>
-        <form onSubmit={handleLoginSubmit}>
+        <form onSubmit={handleLoginSubmit} className={styles.paddlingLeftRight2}>
           <h3>Login</h3>
           <div className={styles.formwrapper}>
             <label>Enter Username</label>
@@ -82,11 +83,7 @@ export default function Login(props) {
           </div>
           <div className={styles.formwrapper}>
             <label>Enter password</label>
-            <input
-              type="password"
-              name="password"
-              className={styles.formcontrol}
-            />
+            <input type="password" name="password" className={styles.formcontrol} />
           </div>
           {loginUIControls}
         </form>

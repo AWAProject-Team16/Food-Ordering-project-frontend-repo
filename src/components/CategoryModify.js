@@ -18,26 +18,20 @@ export default function CategoryModify(props) {
 
   const idcategories = useParams().idcategories || props.idcategories;
 
-  const token = localStorage.getItem("appAuthData");
-  if (!token) {
-    console.error("Token not found. Operation terminated!");
-  }
-
   useEffect(() => {
     async function fetchData() {
+      const token = localStorage.getItem("appAuthData");
+      if (!token) {
+        console.error("App auth data not found");
+        return;
+      }
       try {
-        const res = await axios.get(
-          `${API_ADDRESS}/categories/categoryInfoWithRestaurantName/${idcategories}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (res.data.length == 0) {
-          toast.error("Access denied");
-          window.location.href = "/"
-          return;
-        } else {
+        const res = await axios.get(`${API_ADDRESS}/categories/categoryInfoWithRestaurantName/${idcategories}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        
           setData(res.data[0]);
           document.querySelector('input[name="name"]').disabled = false;
-        }
       } catch (err) {
         console.error(err);
       }
@@ -62,31 +56,25 @@ export default function CategoryModify(props) {
   }
 
   function getFormDataAndCallAPI(idcategories) {
-    const formData = new FormData(
-      document.querySelector('form[name="modifyCategory"]')
-    );
+    const formData = new FormData(document.querySelector('form[name="modifyCategory"]'));
 
     let categoryObj = {};
     formData.forEach((value, key) => (categoryObj[key] = value));
 
     const token = localStorage.getItem("appAuthData");
     if (!token) {
-      console.error("Token not found. Operation terminated!");
+      console.error("App data not found");
       return;
     }
 
     const idrestaurants = data.restaurants_idrestaurants;
 
     axios
-      .post(
-        `${API_ADDRESS}/categories/restaurant/${idrestaurants}/category/${idcategories}/renameCategory`,
-        categoryObj,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`${API_ADDRESS}/categories/restaurant/${idrestaurants}/category/${idcategories}/renameCategory`, categoryObj, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         if (response.status === 200) {
           toast.success("Category modified.");
@@ -120,9 +108,7 @@ export default function CategoryModify(props) {
                 className={styles.formcontrol}
                 name="name"
                 value={data.category_name}
-                onChange={(e) =>
-                  setData({ ...data, category_name: e.target.value })
-                }
+                onChange={(e) => setData({ ...data, category_name: e.target.value })}
               />
             </div>
             <div className={styles.formwrapper}>
@@ -138,18 +124,13 @@ export default function CategoryModify(props) {
               </div>
             </div>
 
-            <button
-              onClick={() => modifyCategory(idcategories)}
-              className={styles.button}
-            >
+            <button onClick={() => modifyCategory(idcategories)} className={styles.button}>
               Save
             </button>
           </form>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-      />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

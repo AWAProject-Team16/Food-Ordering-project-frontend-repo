@@ -16,6 +16,10 @@ export default function OrderHistoryDetailView(props) {
 
   useEffect(() => {
     const token = window.localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
     const idorders = props.orderData.idorders;
 
     axios
@@ -29,7 +33,6 @@ export default function OrderHistoryDetailView(props) {
         }
       )
       .then((res) => {
-        console.log("res.data", res.data);
         setOrderDetailData(res.data);
         setSubTotal(res.data.reduce((total, item) => item.product_cost * item.product_amount + total, 0));
       })
@@ -94,8 +97,6 @@ export default function OrderHistoryDetailView(props) {
       } else if (Array.from(element.classList).includes(styles.hide)) {
         element.classList.remove(styles.hide);
         element.classList.add(styles.show);
-      } else {
-        console.log("Unexpected case!");
       }
     } catch (e) {
       console.error("Null/Invalid element arg");
@@ -146,6 +147,10 @@ export default function OrderHistoryDetailView(props) {
 
       const callAPIToSaveNewStatus = () => {
         const token = window.localStorage.getItem("appAuthData");
+        if (!token) {
+          console.error("No app auth data");
+          return;
+        }
 
         axios
           .post(
@@ -232,6 +237,10 @@ export default function OrderHistoryDetailView(props) {
       toast.dismiss(toastId);
 
       const token = window.localStorage.getItem("appAuthData");
+      if (!token) {
+        console.error("No app auth data");
+        return;
+      }
       const idorders = props.orderData.idorders;
 
       axios
@@ -244,7 +253,7 @@ export default function OrderHistoryDetailView(props) {
           if (res.status === 200) {
             toast.success(
               <ConfirmationDiaglog
-                text="Done! Now waiting for the restaurant owner to close this order."
+                text="Thank you for your confirmation. This order will be closed soon."
                 btn1Text="OK"
                 btn1Callback={() => window.location.reload()}
               />,
@@ -276,7 +285,7 @@ export default function OrderHistoryDetailView(props) {
         <div className={styles.wrapper}>
           <div className={cx(styles.inner, styles.orderDetailContainer)}>
             <form action="" className={styles.form}>
-              <h3>Order Details</h3>
+              <h3>Order Information</h3>
               {props.isManagerView && (
                 <div className={styles.formwrapper}>
                   <label htmlFor="order_status">
@@ -316,14 +325,17 @@ export default function OrderHistoryDetailView(props) {
                       Dont't forget ETC!
                     </span>
                   </label>
-                  <input
-                    disabled
-                    type="text"
-                    name="order_status_extra_info"
-                    className={cx(styles.formcontrol, styles.ETC)}
-                    value={orderStatusExtraInfo}
-                    onChange={(event) => setOrderStatusExtraInfo(event.target.value)}
-                  />
+                  <div className={styles.flex}>
+                    <input
+                      disabled
+                      type="number"
+                      name="order_status_extra_info"
+                      className={cx(styles.formcontrol, styles.ETC)}
+                      value={orderStatusExtraInfo}
+                      onChange={(event) => setOrderStatusExtraInfo(event.target.value)}
+                    />
+                    <div>minutes</div>
+                  </div>
                 </div>
               )}
 
@@ -337,7 +349,7 @@ export default function OrderHistoryDetailView(props) {
                 />
               </div>
 
-              <div className={styles.formwrapper}>
+              <div className={cx(styles.formwrapper, styles.width300)}>
                 <label htmlFor="">Order Number</label>
                 <input disabled type="text" className={styles.formcontrol} value={props.orderData.idorders} />
               </div>
@@ -399,7 +411,7 @@ export default function OrderHistoryDetailView(props) {
                           <b>Preparing</b>
                         </div>
                         <div data-sibling-order="2" className={cx(styles.hide, styles.customerETC)}>
-                          (in about {orderStatusExtraInfo})
+                          {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
                         </div>
                       </div>
                       <div className={styles.orderStatusText}>
@@ -407,7 +419,7 @@ export default function OrderHistoryDetailView(props) {
                           <b>Ready for delivery</b>
                         </div>
                         <div data-sibling-order="3" className={cx(styles.hide, styles.customerETC)}>
-                          (in about {orderStatusExtraInfo})
+                          {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
                         </div>
                       </div>
                       <div className={styles.orderStatusText}>
@@ -415,7 +427,7 @@ export default function OrderHistoryDetailView(props) {
                           <b>Delivering</b>
                         </div>
                         <div data-sibling-order="4" className={cx(styles.hide, styles.customerETC)}>
-                          (in about {orderStatusExtraInfo})
+                          {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
                         </div>
                       </div>
                       <div className={styles.orderStatusText}>
@@ -443,58 +455,61 @@ export default function OrderHistoryDetailView(props) {
               </div>
             )}
 
-            <table className={styles.tableOrderDetail}>
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Product</th>
-                  <th>Amount</th>
-                  <th>Unit Price</th>
-                  <th>Line Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderDetailData.map((detail, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}.</td>
-                    <td>{detail.product_name}</td>
-                    <td>{detail.product_amount}</td>
-                    <td>{detail.product_cost}</td>
-                    <td>&euro;{detail.product_amount * detail.product_cost}</td>
+            <div>
+              <h3>ORDER DETAILS</h3>
+              <table className={styles.tableOrderDetail}>
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Unit Price</th>
+                    <th>Line Total</th>
                   </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr className={styles.tableHorizontalLine}></tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>Subtotal</td>
-                  <td>&euro;{subTotal}</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>Shipping Fee</td>
-                  <td>&euro;5</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td className={styles.tableHorizontalLine} colSpan="2"></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>Grand Total</td>
-                  <td>&euro;{subTotal + 5}</td>
-                </tr>
-              </tfoot>
-            </table>
+                </thead>
+                <tbody>
+                  {orderDetailData.map((detail, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}.</td>
+                      <td>{detail.product_name}</td>
+                      <td>{detail.product_amount}</td>
+                      <td>{detail.product_cost}</td>
+                      <td>&euro;{detail.product_amount * detail.product_cost}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className={styles.tableHorizontalLine}></tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Subtotal</td>
+                    <td>&euro;{subTotal}</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Shipping Fee</td>
+                    <td>&euro;5</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td className={styles.tableHorizontalLine} colSpan="2"></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Grand Total</td>
+                    <td>&euro;{subTotal + 5}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
         </div>
       </div>

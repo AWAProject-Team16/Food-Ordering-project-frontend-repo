@@ -13,9 +13,7 @@ export default function OrderHistoryListItem(props) {
     setIsModalOpen(!isModalOpen);
   };
 
-  const statusIndex = props.orderStatusData.indexOf(
-    props.orderData.order_status
-  );
+  const statusIndex = props.orderStatusData.indexOf(props.orderData.order_status);
   const colors = [
     styles.order_status_color_0,
     styles.order_status_color_1,
@@ -34,27 +32,36 @@ export default function OrderHistoryListItem(props) {
     jsx = (
       <div className={cx(styles.flex, styles.OrderHistoryListItem)}>
         <div className={styles.column1}>{props.orderData.idorders}</div>
-        <div className={cx(styles.column2, statusColor)}>
-          {props.orderData.order_status}
-        </div>
-        <div className={styles.column3}>
-          &euro;{props.orderData.order_total_cost}
-        </div>
+        <div className={cx(styles.column2, statusColor)}>{props.orderData.order_status}</div>
+        <div className={styles.column3}>&euro;{props.orderData.order_total_cost}</div>
         <div className={styles.column4}>
           {new Date(props.orderData.order_date).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           })}
         </div>
-        <button
-          onClick={toggleModal}
-          className={cx(styles.column5, styles.viewDetails)}
-        >
+        <button onClick={toggleModal} className={cx(styles.column5, styles.viewDetails)}>
           View Details
         </button>
 
-        <Modal isOpen={isModalOpen} onRequestClose={toggleModal}>
-          <span className={styles.close} onClick={toggleModal}></span>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={toggleModal}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.75)",
+            },
+            content: {
+              top: "0px",
+              left: "0px",
+              border: "none",
+              background: "none",
+            },
+          }}
+        >
+          <button className={styles.button2} onClick={toggleModal}>
+            CLOSE
+          </button>
           <OrderHistoryDetailView {...props} />
         </Modal>
       </div>

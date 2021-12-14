@@ -10,29 +10,10 @@ export default function RestaurantsCategories(props) {
   // This is a set of restaurants of the same food type (aka restaurant type)
 
   const result = useParams();
-  //const obj = props.restaurants.find(item => item.type === types.name);
-  //const foodType = props.foodTypes;
-  //console.log("category prop "+props.foodTypes)
-  console.log(result.foodtype);
-  console.log(props.restaurants);
+
   if (result == null) {
     return <div>No restaurants</div>;
   }
-
-  // const handleTypeSubmit = async (event) => {
-  //   try {
-  //     const result = await axios.post(
-  //       "http://localhost:5000/restaurants/type/",
-  //       {
-  //         result
-  //       }
-
-  //     )
-  //     console.log(result)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
   let typefilter = MakeFilter();
 
@@ -54,42 +35,15 @@ export default function RestaurantsCategories(props) {
 
   function FilterRestaurants(arr, foodtype) {
     return arr.filter(function (item) {
-      console.log("foodtype", foodtype);
-      return (
-        item.restaurant_type
-          .toLowerCase()
-          .indexOf(foodtype.toString().toLowerCase()) !== -1
-      );
+      return item.restaurant_type.toLowerCase().indexOf(foodtype.toString().toLowerCase()) !== -1;
     });
   }
-
-  console.log("filtered are:", filteredRestaurants);
 
   return (
     <div>
       <div>
         <Restaurants restaurants={filteredRestaurants} />
       </div>
-      {/*<div className={styles.restaurant}>
-              <Link to={obj.idRestaurant}>
-              <div>
-              <img src={`/images/${obj.image}`}/>
-              </div>
-
-             <div className={styles.name}>
-               {obj.name}
-               </div>
-
-               <div className={styles.description}>
-                 {obj.description}
-               </div>
-
-               <div className={ styles.more }>
-              <div className={ styles.time }>15-25 min</div>
-              </div>
-             <div>{obj.type}</div>
-             </Link>
-    </div> */}
     </div>
   );
 }

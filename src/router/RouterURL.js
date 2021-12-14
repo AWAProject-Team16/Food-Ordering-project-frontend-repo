@@ -44,7 +44,16 @@ export default class RouterURL extends Component {
           <Route path="/managers/categories/create" element={<CategoryCreateNew />} />
           <Route path="/managers/categories/modify/:idcategories" element={<CategoryModify />} />
 
-          <Route path="/managers/orders" element={<OrderHistoryManger />} />
+          <Route
+            path="/managers/orders"
+            element={
+              <OrderHistoryManger
+                hasNewOrders={this.props.hasNewOrders}
+                loadNewOrderOnClick={this.props.loadNewOrderOnClick}
+                setLoadNewOrderOnClick={this.props.setLoadNewOrderOnClick}
+              />
+            }
+          />
           <Route path="/managers/restaurants" element={<ManagerRestaurants />} />
           <Route path="/managers/restaurants/:idOfRestaurant" element={<Restaurant isManagerView={true} />} />
           <Route path="/managers/restaurants/create" element={<RestaurantCreateNew />} />

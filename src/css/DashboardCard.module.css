@@ -17,6 +17,8 @@
 .text {
   font-weight: 500;
   font-size: 3em;
+  line-height: 1.2em;
+  margin-left: 10px;
 }
 
 .moreInfo {
@@ -30,4 +32,8 @@
 .title {
   margin-left: 10px;
   margin-top: 20px;
+}
+
+.fontSize1 {
+  font-size: 1em;
 }

@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FaSearch } from "react-icons/fa";
 import { BsPlusLg } from "react-icons/bs";
 import jwt from "jsonwebtoken";
+import { Link } from "react-router-dom";
 
 export default class Restaurants extends Component {
   constructor(props) {
@@ -17,19 +18,13 @@ export default class Restaurants extends Component {
   }
 
   onSearchFieldChange = (event) => {
-    console.log("Keyboard event");
-    console.log(event.target.value);
     this.setState({ searchString: event.target.value });
   };
 
   getIsManager() {
     const token = window.localStorage.getItem("appAuthData");
-    if (!token) {
-      console.error("No app auth data");
-      return;
-    }
-
-    return jwt.decode(token).account_type == 2;
+    if (!token) return false;
+    else return jwt.decode(token).account_type == 2;
   }
 
   render() {
@@ -39,18 +34,11 @@ export default class Restaurants extends Component {
     return (
       <div className={styles.presentationModeGrid}>
         {this.getIsManager() && (
-          <div
-            className={styles.floatingBigPlus}
-            title="Add a New Restaurant"
-            onClick={() => (window.location.href = "/managers/restaurants/create")}
-          >
+          <Link to="/managers/restaurants/create" className={styles.floatingBigPlus} title="Add a New Restaurant">
             <BsPlusLg size="3em" />
-          </div>
+          </Link>
         )}
 
-        <div className={styles.header}>
-          <img className={styles.image} src={`/images/event.png`} />
-        </div>
         <div className={styles.title}>
           <div className={styles.name}>
             <p>RESTAURANTS</p>

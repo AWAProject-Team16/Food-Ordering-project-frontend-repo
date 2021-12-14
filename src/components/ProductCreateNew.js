@@ -7,11 +7,11 @@ import CategoryCreateNew from "./CategoryCreateNew";
 import RestaurantCreateNew from "./RestaurantCreateNew";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 Modal.setAppElement("#root");
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-const token = localStorage.getItem("appAuthData");
 
 const productImageRef = createRef();
 
@@ -25,8 +25,9 @@ export default function ProductCreateNew() {
   const [componentWillShowInModal, setComponentWillShowInModal] = useState("restaurant");
 
   useEffect(() => {
+    const token = localStorage.getItem("appAuthData");
     if (!token) {
-      console.error("Token not found");
+      console.error("App auth data not found");
       return;
     }
 
@@ -41,7 +42,7 @@ export default function ProductCreateNew() {
           setRestaurantDropdownItems(res.data.Own_Restaurants);
           handleCategoryDropdown();
         } else {
-          console.log("Something went wrong!");
+          console.error("Something went wrong!");
         }
       })
       .catch((err) => {
@@ -57,6 +58,12 @@ export default function ProductCreateNew() {
   const toggleModalAndUpdateRestaurantDropdown = () => {
     setComponentWillShowInModal("restaurant");
     setIsModalOpen(!isModalOpen);
+
+    const token = window.localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
 
     axios
       .get(`${API_ADDRESS}/restaurants/ownRestaurants2`, {
@@ -81,6 +88,11 @@ export default function ProductCreateNew() {
 
   function handleCategoryDropdown() {
     const idrestaurants = document.querySelector('select[name="select_a_restaurant').value;
+    const token = window.localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
 
     axios
       .get(`${API_ADDRESS}/categories/restaurant/${idrestaurants}`, {
@@ -106,12 +118,17 @@ export default function ProductCreateNew() {
     document.querySelector('form[name="createProduct"]').reset();
     document.getElementsByClassName(styles.productImage)[0].src = " ";
     document.querySelector('label[for="file_picker"]').textContent = "Click to choose an image";
+    // use states
   }
 
   function getFormDataAndCallAPI() {
     const formData = new FormData(document.querySelector('form[name="createProduct"]'));
 
     const token = localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
     const idcategories = document.querySelector('select[name="select_a_category"]').value;
 
     axios
@@ -191,9 +208,9 @@ export default function ProductCreateNew() {
                 ))}
               </select>
             </div>
-            <a className={styles.addProductLink} href="/managers/restaurants/create">
+            <Link className={styles.addProductLink} to="/managers/restaurants/create">
               Add New Restaurant
-            </a>
+            </Link>
             <div className={styles.formwrapper}>
               <label htmlFor="">Select a Category</label>
               <select className={cx(styles.formcontrol, styles.select)} name="select_a_category">
@@ -207,8 +224,25 @@ export default function ProductCreateNew() {
             <div className={cx(styles.button, styles.smallButton)} onClick={toggleModalAndUpdateCategoryDropdown}>
               Add New Category
             </div>
-            <Modal isOpen={isModalOpen} onRequestClose={handleModal}>
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={handleModal}
+              style={{
+                overlay: {
+                  backgroundColor: "rgba(0, 0, 0, 0.75)",
+                },
+                content: {
+                  top: "0px",
+                  left: "0px",
+                  border: "none",
+                  background: "none",
+                },
+              }}
+            >
               <span className={styles.close} onClick={handleModal}></span>
+              <button className={styles.button2} onClick={handleModal}>
+                CLOSE
+              </button>
               <CategoryCreateNew />
             </Modal>
             <div className={styles.formwrapper}>
@@ -255,9 +289,7 @@ export default function ProductCreateNew() {
           </form>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-      />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

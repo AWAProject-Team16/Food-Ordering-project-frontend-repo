@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from '../../../css/OrderHistory.module.css';
-import OrderHistorySearchCriterionSelect from './OrderHistorySearchCriterionSelect';
+import React from "react";
+import styles from "../../../css/OrderHistory.module.css";
+import OrderHistorySearchCriterionSelect from "./OrderHistorySearchCriterionSelect";
 
 export default function OrderHistorySearch() {
   return (
@@ -13,8 +13,10 @@ export default function OrderHistorySearch() {
         <OrderHistorySearchCriterionSelect title="From" type="date" />
         <OrderHistorySearchCriterionSelect title="To" type="date" />
 
-        <div className={styles.criterion}><button>Search</button></div>
+        <div className={styles.criterion}>
+          <button>Search</button>
+        </div>
       </div>
     </div>
-  )
+  );
 }

@@ -19,10 +19,13 @@ export default function ManagerDashboard() {
   const [mostPopularProducts, setMostPopularProducts] = useState(mostPopularProductsInitValue);
 
   const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-  const token = window.localStorage.getItem("appAuthData");
-  const name = jwt.decode(token).name;
 
   useEffect(() => {
+    const token = window.localStorage.getItem("appAuthData");
+    if (!token) {
+      console.error("No app auth data");
+      return;
+    }
     axios
       .get(`${API_ADDRESS}/users/totalRevenueOrdersCustomersForManager`, {
         headers: {
@@ -30,7 +33,6 @@ export default function ManagerDashboard() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setTotalRevenue(res.data.total_revenue);
         settotalOrders(res.data.total_orders);
         setTotalCustomers(res.data.total_customers);
@@ -85,18 +87,22 @@ export default function ManagerDashboard() {
       .catch(console.error);
   }, []);
 
+  const token = window.localStorage.getItem("appAuthData");
+  const name = jwt.decode(token).name;
+
   return (
-    <div>
+    <div className={styles.marginLeft2}>
       <h1>Hello {name} !</h1>
       <div>Here is your statistics</div>
       <br />
       <div className={styles.cardContainer}>
         <DashboardCard
           title="Total Revenue"
-          text={<>&euro;{totalRevenue}</>}
+          text={totalRevenue ? <>&euro;{totalRevenue.toFixed(2)}</> : <>&euro;0</>}
           icon="GiReceiveMoney"
           link="/managers/orders"
           color="orange"
+          textSize="2.5em"
         />
         <DashboardCard title="Total Orders" text={totalOrders} icon="IoReceipt" link="/managers/orders" color="lightblue" />
         <DashboardCard title="Total Customers" text={totalCustomers} icon="BsPeopleFill" color="lightgreen" />
@@ -107,13 +113,13 @@ export default function ManagerDashboard() {
           link="/managers/restaurants"
           color="lightpink"
         />
-        <DashboardCard title="Most Popular Day" text={mostPopularDays[0].day_name.substring(0, 3)} color="white" />
+        <DashboardCard title="Most Popular Day" text={mostPopularDays[0].day_name} color="white" textSize="2.5em" />
         <DashboardCard
           title="Most Popular Time"
           text={mostPopularTimes[0]?.hour ? mostPopularTimes[0].hour + ":00" : ""}
           color="white"
         />
-        <DashboardCard title="Most Ordered Product" text={mostPopularProducts[0].product_name} color="white" />
+        <DashboardCard title="Most Ordered Product" text={mostPopularProducts[0].product_name} color="white" textSize="2em" />
       </div>
       <h4>Quick Action</h4>
       <div className={styles.quickActionContainer}>
