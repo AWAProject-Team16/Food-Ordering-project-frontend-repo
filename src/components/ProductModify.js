@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-const productImageRef = createRef();
 
 export default function ProductModify() {
   const [data, setData] = useState({
@@ -16,8 +15,11 @@ export default function ProductModify() {
     product_name: "",
     product_description: "",
     product_cost: 0,
-    product_image: "",
+    product_image: "/images/placeholder.png",
   });
+
+  const [filePickerLabelText, setFilePickerLabelText] = useState("Click to choose an image");
+  const [imgSource, setImgSource] = useState("/images/placeholder.png");
 
   const idproducts = useParams().idproducts;
 
@@ -34,8 +36,32 @@ export default function ProductModify() {
     fetchData();
   }, []);
 
-  function getFormDataAndCallAPI(idproducts) {
-    const formData = new FormData(document.querySelector('form[name="modifyProduct"]'));
+  useEffect(() => {
+    setImgSource(`${API_ADDRESS}/images/${data.product_image}`);
+  }, [data.product_image]);
+
+  function showNewImageChosenFileName(e) {
+    const filePicker = e.target;
+
+    if (FileReader && filePicker.files && filePicker.files.length) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        setImgSource(fileReader.result);
+      };
+      fileReader.readAsDataURL(filePicker.files[0]);
+    }
+
+    if (filePicker.files.length > 0) {
+      setFilePickerLabelText(filePicker.files[0].name);
+    } else {
+      setFilePickerLabelText("Click to choose an image");
+    }
+  }
+
+  const submit = (e) => {
+    const form = e.target;
+    e.preventDefault();
+    const formData = new FormData(form);
 
     const token = localStorage.getItem("appAuthData");
     if (!token) {
@@ -56,45 +82,14 @@ export default function ProductModify() {
           toast.error("Something went wrong!");
         }
       })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  function modifyProduct(idproducts) {
-    const form = document.querySelector('form[name="modifyProduct"]');
-
-    form.onsubmit = (event) => {
-      event.preventDefault();
-    };
-
-    getFormDataAndCallAPI(idproducts);
-  }
-
-  function showNewImageChosenFileName() {
-    const imageLabel = document.querySelector('label[for="file_picker"]');
-    const filePicker = document.querySelector('input[type="file"]');
-
-    if (FileReader && filePicker.files && filePicker.files.length) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        productImageRef.current.src = fileReader.result;
-      };
-      fileReader.readAsDataURL(filePicker.files[0]);
-    }
-
-    if (filePicker.files.length > 0) {
-      imageLabel.textContent = filePicker.files[0].name;
-    } else {
-      imageLabel.textContent = "Click to choose an image";
-    }
-  }
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="modifyProduct" className={styles.form}>
+          <form action="" name="modifyProduct" className={styles.form} onSubmit={submit}>
             <h3>Modify A Product</h3>
             <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
@@ -141,22 +136,22 @@ export default function ProductModify() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <img ref={productImageRef} className={styles.productImage} src={`${API_ADDRESS}/images/${data.product_image}`} />
+                <img className={styles.productImage} src={imgSource} />
                 <input
                   type="file"
                   accept="image/*"
                   className={cx(styles.formcontrol, styles.input_file)}
                   name="product_image"
                   id="file_picker"
-                  onChange={showNewImageChosenFileName}
+                  onChange={(e) => showNewImageChosenFileName(e)}
                 />
                 <label className={styles.formcontrol} htmlFor="file_picker">
-                  Click to choose another image
+                  {filePickerLabelText}
                 </label>
               </div>
             </div>
 
-            <button onClick={() => modifyProduct(idproducts)} className={styles.button}>
+            <button type="submit" className={styles.button}>
               Save
             </button>
           </form>

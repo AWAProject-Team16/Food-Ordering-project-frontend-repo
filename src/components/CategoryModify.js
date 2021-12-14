@@ -16,6 +16,8 @@ export default function CategoryModify(props) {
     restaurant_name: "",
   });
 
+  const [isDisabled, setIsDisable] = useState(true);
+
   const idcategories = useParams().idcategories || props.idcategories;
 
   useEffect(() => {
@@ -29,9 +31,9 @@ export default function CategoryModify(props) {
         const res = await axios.get(`${API_ADDRESS}/categories/categoryInfoWithRestaurantName/${idcategories}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        
-          setData(res.data[0]);
-          document.querySelector('input[name="name"]').disabled = false;
+
+        setData(res.data[0]);
+        setIsDisable(false);
       } catch (err) {
         console.error(err);
       }
@@ -40,58 +42,48 @@ export default function CategoryModify(props) {
     fetchData();
   }, []);
 
-  function modifyCategory(idcategories) {
-    const form = document.querySelector('form[name="modifyCategory"]');
+  const submit = (e) => {
+    e.preventDefault();
+    const idrestaurants = data.restaurants_idrestaurants;
+    const categoryName = e.target.name.value.trim();
 
-    form.onsubmit = (event) => {
-      event.preventDefault();
-    };
-
-    if (!form.name.value.trim()) {
+    if (!categoryName) {
       toast.error("Category name is required.");
       return;
+    } else {
+      const token = localStorage.getItem("appAuthData");
+
+      if (!token) {
+        console.error("App auth data not found");
+        return;
+      }
+
+      axios
+        .post(
+          `${API_ADDRESS}/categories/restaurant/${idrestaurants}/category/${idcategories}/renameCategory`,
+          { name: categoryName },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("Category modified.");
+          } else {
+            toast.error("Something went wrong!");
+          }
+        })
+        .catch((err) => console.error(err));
     }
-
-    getFormDataAndCallAPI(idcategories);
-  }
-
-  function getFormDataAndCallAPI(idcategories) {
-    const formData = new FormData(document.querySelector('form[name="modifyCategory"]'));
-
-    let categoryObj = {};
-    formData.forEach((value, key) => (categoryObj[key] = value));
-
-    const token = localStorage.getItem("appAuthData");
-    if (!token) {
-      console.error("App data not found");
-      return;
-    }
-
-    const idrestaurants = data.restaurants_idrestaurants;
-
-    axios
-      .post(`${API_ADDRESS}/categories/restaurant/${idrestaurants}/category/${idcategories}/renameCategory`, categoryObj, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Category modified.");
-        } else {
-          toast.error("Something went wrong!");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  };
 
   return (
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="modifyCategory" className={styles.form}>
+          <form action="" name="modifyCategory" className={styles.form} onSubmit={submit}>
             <h3>Modify A Category</h3>
             <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
@@ -102,7 +94,7 @@ export default function CategoryModify(props) {
                 </span>
               </label>
               <input
-                disabled
+                disabled={isDisabled}
                 required
                 type="text"
                 className={styles.formcontrol}
@@ -124,7 +116,7 @@ export default function CategoryModify(props) {
               </div>
             </div>
 
-            <button onClick={() => modifyCategory(idcategories)} className={styles.button}>
+            <button type="submit" className={styles.button}>
               Save
             </button>
           </form>

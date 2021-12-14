@@ -9,6 +9,7 @@ const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 export default function CategoryCreateNew() {
   const [restaurantDropdownItems, setRestaurantDropdownItems] = useState([{ idrestaurants: 0, name: "" }]);
+  const [categoryName, setCategoryName] = useState([""]);
 
   useEffect(() => {
     const token = localStorage.getItem("appAuthData");
@@ -31,66 +32,53 @@ export default function CategoryCreateNew() {
           console.error("Something went wrong!");
         }
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   }, []);
 
-  function getFormDataAndCallAPI() {
-    const formData = new FormData(document.querySelector('form[name="createCategory"]'));
-
-    let categoryObj = {};
-    formData.forEach((value, key) => (categoryObj[key] = value));
-
-    const token = localStorage.getItem("appAuthData");
-
-    if (!token) {
-      console.error("App auth data not found");
-      return;
-    }
-
-    const idrestaurants = document.querySelector('select[name="select_a_restaurant"]').value;
-
-    axios
-      .post(`${API_ADDRESS}/categories/restaurant/${idrestaurants}/addCategory2`, categoryObj, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          toast.success("Category created.");
-          document.querySelector('form[name="createCategory"]').name.value = "";
-        } else {
-          toast.error("Something went wrong!");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  function createCategory() {
-    const form = document.querySelector('form[name="createCategory"]');
-
-    form.onsubmit = (event) => {
-      event.preventDefault();
-    };
-
-    const isDataValid = Number(form.select_a_restaurant.value) > 0 && form.name.value.trim() != "";
+  const submit = (e) => {
+    e.preventDefault();
+    const idrestaurants = e.target.select_a_restaurant.value;
+    const categoryName = e.target.name.value.trim();
+    const isDataValid = Number(idrestaurants) > 0 && categoryName != "";
 
     if (!isDataValid) {
       toast.error("All data are required");
+      return;
     } else {
-      getFormDataAndCallAPI();
+      const token = localStorage.getItem("appAuthData");
+
+      if (!token) {
+        console.error("App auth data not found");
+        return;
+      }
+
+      axios
+        .post(
+          `${API_ADDRESS}/categories/restaurant/${idrestaurants}/addCategory2`,
+          { name: categoryName },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 201) {
+            toast.success("Category created.");
+            setCategoryName("");
+          } else {
+            toast.error("Something went wrong!");
+          }
+        })
+        .catch((err) => console.error(err));
     }
-  }
+  };
 
   return (
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="createCategory" className={styles.form}>
+          <form action="" name="createCategory" className={styles.form} onSubmit={submit}>
             <h3>Create A New Category</h3>
             <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
@@ -110,10 +98,17 @@ export default function CategoryCreateNew() {
                   Category Name cannot be empty!
                 </span>
               </label>
-              <input required type="text" className={styles.formcontrol} name="name" />
+              <input
+                required
+                type="text"
+                className={styles.formcontrol}
+                name="name"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
             </div>
 
-            <button onClick={createCategory} className={styles.button}>
+            <button type="submit" className={styles.button}>
               Create
             </button>
           </form>

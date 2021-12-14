@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../../css/OrderHistory.module.css";
 import cx from "classnames";
 import { FaEdit, FaCheck } from "react-icons/fa";
@@ -8,11 +8,22 @@ import "react-toastify/dist/ReactToastify.css";
 import ConfirmationDiaglog from "../../ConfirmationDiaglog";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-const confirmDeliveredRef = createRef();
 
 export default function OrderHistoryDetailView(props) {
   const [orderDetailData, setOrderDetailData] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
+  const [isConfirmDeliveredBtnShowed, setIsConfirmDeliveredBtnShowed] = useState(false);
+  const [orderStatusEnable, setOrderStatusEnable] = useState(false);
+  const [orderStatusMessageVisible, setOrderStatusMessageVisible] = useState(false);
+  const [orderStatusMessageText, setOrderStatusMessageText] = useState("Click order status and choose!");
+  const [ETCEnable, setETCEnable] = useState(false);
+  const [ETCMessageText] = useState("Dont't forget ETC!");
+  const [ETCMessageVisible, setETCMessageVisible] = useState(false);
+  const [FaEditVisible, setFaEditVisible] = useState(true);
+  const [FaCheckVisible, setFaCheckVisible] = useState(false);
+  const [imgStatuses] = useState([0, 0, 0, 0, 0, 0]);
+
+  const statusTexts = ["Received", "Preparing", "Ready for delivery", "Delivering", "Delivered", "Closed"];
 
   useEffect(() => {
     const token = window.localStorage.getItem("appAuthData");
@@ -48,93 +59,40 @@ export default function OrderHistoryDetailView(props) {
 
   useEffect(() => {
     const orderStatusNumber = props.orderStatusData.indexOf(orderStatus) + 1;
-    const statusImages = Array.from(document.getElementsByClassName(styles.defaultStatus));
-    const customerETCs = Array.from(document.getElementsByClassName(styles.customerETC));
 
-    statusImages.forEach((element) => {
-      const siblingOrder = Number(element.getAttribute("data-sibling-order"));
-
-      if (siblingOrder < orderStatusNumber) {
-        element.classList.remove(styles.currentStatus);
-        element.classList.add(styles.prevStatus);
-      } else if (siblingOrder === orderStatusNumber) {
-        element.classList.remove(styles.prevStatus);
-        element.classList.add(styles.currentStatus);
-
-        if (orderStatusNumber === 6) {
-          // Last "Closed" status
-          element.classList.remove(styles.currentStatus);
-          element.classList.add(styles.prevStatus);
-        }
-
-        if (orderStatusNumber === 4) {
-          // Show 'Confirm Delivered' btn
-          confirmDeliveredRef.current.classList.remove(styles.hide);
-          confirmDeliveredRef.current.classList.add(styles.show);
-        }
+    for (let i = 0; i < imgStatuses.length; i++) {
+      if (i + 1 < orderStatusNumber) {
+        imgStatuses[i] = -1;
+      } else if (i + 1 == orderStatusNumber) {
+        imgStatuses[i] = 1;
+        if (orderStatusNumber == 6) imgStatuses[i] = -1;
+        if (orderStatusNumber === 4) setIsConfirmDeliveredBtnShowed(true);
       }
-    });
-
-    customerETCs.forEach((element) => {
-      const siblingOrder = Number(element.getAttribute("data-sibling-order"));
-
-      if (siblingOrder < orderStatusNumber) {
-        element.classList.remove(styles.show);
-        element.classList.add(styles.hide);
-      } else if (siblingOrder === orderStatusNumber) {
-        element.classList.remove(styles.hide);
-        element.classList.add(styles.show);
-      }
-    });
-  }, [orderStatus]);
-
-  const toggleShowHide = (element) => {
-    //Toggle the 'show' and 'hide' className of an element
-    try {
-      if (Array.from(element.classList).includes(styles.show)) {
-        element.classList.remove(styles.show);
-        element.classList.add(styles.hide);
-      } else if (Array.from(element.classList).includes(styles.hide)) {
-        element.classList.remove(styles.hide);
-        element.classList.add(styles.show);
-      }
-    } catch (e) {
-      console.error("Null/Invalid element arg");
     }
-  };
+  }, [orderStatus]);
 
   const hideEditButtonIfClosedStatus = () => {
     if (orderStatus === "Closed") {
-      const FaEdit = document.querySelector(".FaEdit");
-      FaEdit.classList.remove(styles.show);
-      FaEdit.classList.add(styles.hide);
+      setFaEditVisible(false);
     }
   };
 
   const editOrderStatus = () => {
     //Toggle icon
-    const FaEdit = document.querySelector(".FaEdit");
-    const FaCheck = document.querySelector(".FaCheck");
-    toggleShowHide(FaEdit);
-    toggleShowHide(FaCheck);
+    setFaEditVisible(!FaEditVisible);
+    setFaCheckVisible(!FaCheckVisible);
 
     //Toggle dropdown and ETC's enability
-    const selectElement = document.getElementsByClassName(styles.select)[0];
-    selectElement.disabled = !selectElement.disabled;
-    const ETCElement = document.getElementsByClassName(styles.ETC)[0];
-    ETCElement.disabled = !ETCElement.disabled;
-    let message = document.querySelector(`.${styles.errormessage}.order_status`);
-    message.innerHTML = "Click order status and choose!";
-    message.style.display = "inline-block";
-    const ETCmessage = document.querySelector(`.${styles.errormessage}.ETC`);
-    ETCmessage.style.display = "inline-block";
+    setOrderStatusEnable(!orderStatusEnable);
+    setETCEnable(!ETCEnable);
+    setOrderStatusMessageText("Click order status and choose!");
+    setOrderStatusMessageVisible(true);
+    setETCMessageVisible(true);
 
     //If icon=check icon
     //  Save new status: client & backend
     //  Disable this button for 1 second before enabling it again
-    if (Array.from(FaCheck.classList).includes(styles.hide)) {
-      // After clicked, FaCheck change to hide
-
+    if (FaCheckVisible) {
       const updateParent = () => {
         // For better UX
         const newOrder = {
@@ -176,11 +134,11 @@ export default function OrderHistoryDetailView(props) {
       };
 
       const toggleGuidingMessage = (newStatusSetMessage) => {
-        let message = document.querySelector(`.${styles.errormessage}.order_status`);
-        message.innerHTML = newStatusSetMessage;
+        setOrderStatusMessageText(newStatusSetMessage);
         setTimeout(() => {
-          message.style.display = "none";
-          ETCmessage.style.display = "none";
+          setOrderStatusMessageVisible(false);
+          setETCMessageVisible(false);
+          setETCEnable(false);
         }, 1000);
       };
 
@@ -209,7 +167,7 @@ export default function OrderHistoryDetailView(props) {
             btn2Text="No"
             btn2Callback={noCallback}
           />,
-          { autoClose: false, closeOnClick: false }
+          { autoClose: false, closeOnClick: false, closeButton: false, draggable: false }
         );
 
         if (!actionConfirmed) return;
@@ -260,8 +218,7 @@ export default function OrderHistoryDetailView(props) {
               { autoClose: false, closeOnClick: false, closeButton: false, draggable: false }
             );
             setOrderStatus("Delivered");
-            confirmDeliveredRef.current.classList.add(styles.hide);
-            confirmDeliveredRef.current.classList.remove(styles.show);
+            setIsConfirmDeliveredBtnShowed(false);
           }
         })
         .catch(console.error);
@@ -290,13 +247,13 @@ export default function OrderHistoryDetailView(props) {
                 <div className={styles.formwrapper}>
                   <label htmlFor="order_status">
                     Order Status
-                    <span htmlFor="" className={cx(styles.errormessage, "order_status")}>
-                      Click order status and choose!
+                    <span htmlFor="" className={cx(styles.errormessage, orderStatusMessageVisible ? styles.show : styles.hide)}>
+                      {orderStatusMessageText}
                     </span>
                   </label>
                   <div className={styles.flex}>
                     <select
-                      disabled
+                      disabled={!orderStatusEnable}
                       className={cx(styles.formcontrol, styles.select)}
                       value={orderStatus}
                       onChange={(event) => setOrderStatus(event.target.value)}
@@ -310,8 +267,8 @@ export default function OrderHistoryDetailView(props) {
                       })}
                     </select>
                     <div onClick={editOrderStatus} className={styles.editButton}>
-                      <FaEdit size="2em" className={cx(styles.show, "FaEdit")} />
-                      <FaCheck size="2em" className={cx(styles.hide, "FaCheck")} />
+                      <FaEdit size="2em" className={cx(FaEditVisible ? styles.show : styles.hide)} />
+                      <FaCheck size="2em" className={cx(FaCheckVisible ? styles.show : styles.hide)} />
                     </div>
                   </div>
                 </div>
@@ -321,13 +278,13 @@ export default function OrderHistoryDetailView(props) {
                 <div className={styles.formwrapper}>
                   <label htmlFor="">
                     Estimated Time of Completion
-                    <span htmlFor="" className={cx(styles.errormessage, "ETC")}>
-                      Dont't forget ETC!
+                    <span htmlFor="" className={cx(styles.errormessage, ETCMessageVisible ? styles.show : styles.hide)}>
+                      {ETCMessageText}
                     </span>
                   </label>
                   <div className={styles.flex}>
                     <input
-                      disabled
+                      disabled={!ETCEnable}
                       type="number"
                       name="order_status_extra_info"
                       className={cx(styles.formcontrol, styles.ETC)}
@@ -392,64 +349,43 @@ export default function OrderHistoryDetailView(props) {
                   <div className={styles.line}></div>
                   <div className={styles.flex}>
                     <div className={styles.statusImages}>
-                      <div data-sibling-order="1" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
-                      <div data-sibling-order="2" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
-                      <div data-sibling-order="3" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
-                      <div data-sibling-order="4" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
-                      <div data-sibling-order="5" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
-                      <div data-sibling-order="6" className={cx(styles.orderStatusPlaceholderImage, styles.defaultStatus)}></div>
+                      {imgStatuses.map((value, index) => (
+                        <div
+                          key={index}
+                          className={cx(
+                            styles.image,
+                            styles.defaultStatus,
+                            value == 0 ? "" : value == -1 ? styles.prevStatus : styles.currentStatus
+                          )}
+                        ></div>
+                      ))}
                     </div>
                     <div className={styles.statusTexts}>
-                      <div className={styles.orderStatusText}>
-                        <div>
-                          <b>Received</b>
+                      {statusTexts.map((value, index) => (
+                        <div className={styles.orderStatusText} key={index}>
+                          <div>
+                            <b>{value}</b>
+                          </div>
+                          {1 <= index && index <= 3 && (
+                            <div className={cx(styles.customerETC, imgStatuses[index] == 1 ? styles.show : styles.hide)}>
+                              {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
+                            </div>
+                          )}
+                          {index == 4 && (
+                            <div
+                              className={cx(
+                                styles.button,
+                                styles.smallButton,
+                                isConfirmDeliveredBtnShowed ? styles.show : styles.hide
+                              )}
+                              onClick={handleConfirmDelivered}
+                            >
+                              Confirm Delivered
+                            </div>
+                          )}
                         </div>
-                        <div></div>
-                      </div>
-                      <div className={styles.orderStatusText}>
-                        <div>
-                          <b>Preparing</b>
-                        </div>
-                        <div data-sibling-order="2" className={cx(styles.hide, styles.customerETC)}>
-                          {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
-                        </div>
-                      </div>
-                      <div className={styles.orderStatusText}>
-                        <div>
-                          <b>Ready for delivery</b>
-                        </div>
-                        <div data-sibling-order="3" className={cx(styles.hide, styles.customerETC)}>
-                          {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
-                        </div>
-                      </div>
-                      <div className={styles.orderStatusText}>
-                        <div>
-                          <b>Delivering</b>
-                        </div>
-                        <div data-sibling-order="4" className={cx(styles.hide, styles.customerETC)}>
-                          {orderStatusExtraInfo && `(in about ${orderStatusExtraInfo} minutes)`}
-                        </div>
-                      </div>
-                      <div className={styles.orderStatusText}>
-                        <div>
-                          <b>Delivered</b>
-                        </div>
-                        <div
-                          ref={confirmDeliveredRef}
-                          className={cx(styles.button, styles.smallButton, styles.hide)}
-                          onClick={handleConfirmDelivered}
-                        >
-                          Confirm Delivered
-                        </div>
-                      </div>
-                      <div className={styles.orderStatusText}>
-                        <div>
-                          <b>Closed</b>
-                        </div>
-                        <div></div>
-                      </div>
+                      ))}
                     </div>
-                    <div className={styles.statusTexts}></div>
                   </div>
                 </div>
               </div>

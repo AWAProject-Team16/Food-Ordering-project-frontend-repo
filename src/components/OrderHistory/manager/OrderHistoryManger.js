@@ -122,24 +122,9 @@ export default class OrderHistory extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log("jjjjjj");
-    // console.log("this.props.hasNewOrders", this.props.hasNewOrders);
-    // console.log("this.props.loadNewOrderOnClick", this.props.loadNewOrderOnClick);
-    // console.log("this.state.newOrdersConfirmDiaglogShowed", this.state.newOrdersConfirmDiaglogShowed);
     if (this.props.loadNewOrderOnClick) {
       this.fetchData();
       this.props.setLoadNewOrderOnClick(false);
-      // const okcb = () => {
-      //   this.fetchData();
-      //   // toast.dismiss();
-      //   // this.setState({ newOrdersConfirmDiaglogShowed: false });
-      // };
-      // toast.info(<ConfirmationDiaglog text="You have new orders. Click OK to view them." btn1Text="OK" btn1Callback={okcb} />, {
-      //   autoClose: false,
-      //   closeOnClick: false,
-      //   closeButton: false,
-      // });
-      // this.setState({ newOrdersConfirmDiaglogShowed: true });
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { useState } from "react";
 import styles from "../css/_Common.module.css";
 import axios from "axios";
 import cx from "classnames";
@@ -6,91 +6,79 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
-const productImageRef = createRef();
 
-function getFormDataAndCallAPI() {
-  const formData = new FormData(document.querySelector('form[name="createRestaurantForm"]'));
+export default function RestaurantCreateNew() {
+  const [filePickerLabelText, setFilePickerLabelText] = useState("Click to choose another image");
+  const [imgSource, setImgSource] = useState("/images/placeholder.png");
 
-  const token = localStorage.getItem("appAuthData");
-  if (!token) {
-    console.error("No app auth data");
-    return;
+  function showNewImageChosenFileName(e) {
+    const filePicker = e.target;
+
+    if (FileReader && filePicker.files && filePicker.files.length) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        setImgSource(fileReader.result);
+      };
+      fileReader.readAsDataURL(filePicker.files[0]);
+    }
+
+    if (filePicker.files.length > 0) {
+      setFilePickerLabelText(filePicker.files[0].name);
+    } else {
+      setFilePickerLabelText("Click to choose an image");
+    }
   }
-  axios
-    .post(API_ADDRESS + "/restaurants/newRestaurantMultipart", formData, {
-      headers: {
-        "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      if (response.status === 201) {
-        toast.success("Restaurant created.");
-        resetForm();
-      } else {
-        toast.error("Something went wrong!");
+
+  function submit(e) {
+    const form = e.target;
+    e.preventDefault();
+
+    const isDataValid =
+      form.name.value.trim() != "" &&
+      form.address.value.trim() != "" &&
+      form.operating_hours.value.trim() != "" &&
+      form.phonenumber.value.trim() != "" &&
+      form.restaurant_type.value.trim() != "" &&
+      form.price_level.value.trim() != "" &&
+      form.restaurant_description.value.trim() != "" &&
+      form.image.files.length > 0;
+
+    if (!isDataValid) {
+      toast.error("All data are required and price must be greater than 0");
+    } else {
+      const formData = new FormData(form);
+
+      const token = localStorage.getItem("appAuthData");
+      if (!token) {
+        console.error("No app auth data");
+        return;
       }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function createRestaurant() {
-  const form = document.querySelector('form[name="createRestaurantForm"]');
-
-  form.onsubmit = (event) => {
-    event.preventDefault();
-  };
-
-  const isDataValid =
-    form.name.value.trim() != "" &&
-    form.address.value.trim() != "" &&
-    form.operating_hours.value.trim() != "" &&
-    form.phonenumber.value.trim() != "" &&
-    form.restaurant_type.value.trim() != "" &&
-    form.price_level.value.trim() != "" &&
-    form.restaurant_description.value.trim() != "" &&
-    form.image.files.length > 0;
-
-  if (!isDataValid) {
-    toast.error("All data are required and price must be greater than 0");
-  } else {
-    getFormDataAndCallAPI();
-  }
-}
-
-function resetForm() {
-  document.querySelector('form[name="createRestaurantForm"]').reset();
-  document.getElementsByClassName(styles.productImage)[0].src = " ";
-  document.querySelector('label[for="file_picker"]').textContent = "Click to choose an image";
-}
-
-function showNewImageChosenFileName() {
-  const imageLabel = document.querySelector('label[for="file_picker"]');
-  const filePicker = document.querySelector('input[type="file"]');
-
-  if (FileReader && filePicker.files && filePicker.files.length) {
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      productImageRef.current.src = fileReader.result;
-    };
-    fileReader.readAsDataURL(filePicker.files[0]);
+      axios
+        .post(API_ADDRESS + "/restaurants/newRestaurantMultipart", formData, {
+          headers: {
+            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            toast.success("Restaurant created.");
+            form.reset();
+          } else {
+            toast.error("Something went wrong!");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }
 
-  if (filePicker.files.length > 0) {
-    imageLabel.textContent = filePicker.files[0].name;
-  } else {
-    imageLabel.textContent = "Click to choose an image";
-  }
-}
-
-function render() {
   return (
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="createRestaurantForm" className={styles.form}>
+          <form action="" name="createRestaurantForm" className={styles.form} onSubmit={submit}>
             <h3>Create A New Restaurant</h3>
             <div className={styles.formgroup}></div>
             <div className={styles.formwrapper}>
@@ -140,7 +128,7 @@ function render() {
             <div className={styles.formwrapper}>
               <label htmlFor="">Image</label>
               <div>
-                <img ref={productImageRef} className={styles.productImage} />
+                <img className={styles.productImage} src={imgSource} />
                 <input
                   type="file"
                   accept="image/*"
@@ -150,12 +138,12 @@ function render() {
                   onChange={showNewImageChosenFileName}
                 />
                 <label className={styles.formcontrol} htmlFor="file_picker">
-                  Click to choose another image
+                  {filePickerLabelText}
                 </label>
               </div>
             </div>
 
-            <button onClick={createRestaurant} className={styles.button}>
+            <button type="submit" className={styles.button}>
               Create
             </button>
           </form>
@@ -164,8 +152,4 @@ function render() {
       <ToastContainer position="top-center" />
     </div>
   );
-}
-
-export default function RestaurantCreateNew() {
-  return render();
 }

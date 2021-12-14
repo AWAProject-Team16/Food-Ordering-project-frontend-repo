@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../css/_Common.module.css";
 import axios from "axios";
 import cx from "classnames";
@@ -9,6 +9,12 @@ import ConfirmationDiaglog from "./ConfirmationDiaglog";
 const API_ADDRESS = process.env.REACT_APP_API_ADDRESS;
 
 export default function Register(props) {
+  const [usernameErrorMessageVisible, setUserNameErrorMessageVisible] = useState(false);
+  const [emailErrorMessageVisible, setEmailErrorMessageVisible] = useState(false);
+  const [passwordErrorMessageVisible, setPasswordErrorMessageVisible] = useState(false);
+  const [confirmPasswordErrorMessageVisible, setConfirmPasswordErrorMessageVisible] = useState(false);
+  const [checkboxErrorMessageVisible, setCheckboxErrorMessageVisible] = useState(false);
+
   function isEmailValid(email) {
     const regex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -21,175 +27,148 @@ export default function Register(props) {
     return regex.test(password);
   }
 
-  function validateUsername() {
-    const username = document.querySelector('input[name="username"]');
-    const usernameErrorMessage = document.querySelector(`.${styles.errormessage}.username`);
-
+  function validateUsername(username) {
     if (!username.value.trim()) {
-      usernameErrorMessage.style.display = "inline-block";
+      setUserNameErrorMessageVisible(true);
       return false;
     } else {
-      usernameErrorMessage.style.display = "none";
+      setUserNameErrorMessageVisible(false);
       return true;
     }
   }
 
-  function validateEmail() {
-    const email = document.querySelector('input[name="email"]');
-    const emailErrorMessage = document.querySelector(`.${styles.errormessage}.email`);
-
+  function validateEmail(email) {
     if (!isEmailValid(email.value)) {
-      emailErrorMessage.style.display = "inline-block";
+      setEmailErrorMessageVisible(true);
       return false;
     } else {
-      emailErrorMessage.style.display = "none";
+      setEmailErrorMessageVisible(false);
       return true;
     }
   }
 
-  function validatePassword() {
-    const password = document.querySelector('input[name="password"]');
-    const passwordErrorMessage = document.querySelector(`.${styles.errormessage}.password`);
-
+  function validatePassword(password) {
     if (!isPasswordStrong(password.value)) {
-      passwordErrorMessage.style.display = "inline-block";
+      setPasswordErrorMessageVisible(true);
       return false;
     } else {
-      passwordErrorMessage.style.display = "none";
+      setPasswordErrorMessageVisible(false);
       return true;
     }
   }
 
-  function validateConfirmPassword() {
-    const password = document.querySelector('input[name="password"]');
-    const confirmPassword = document.querySelector('input[name="confirm_password"]');
-    const confirmPasswordErrorMessage = document.querySelector(`.${styles.errormessage}.confirm_password`);
-
+  function validateConfirmPassword(password, confirmPassword) {
     if (password.value !== confirmPassword.value) {
-      confirmPasswordErrorMessage.style.display = "inline-block";
+      setConfirmPasswordErrorMessageVisible(true);
       return false;
     } else {
-      confirmPasswordErrorMessage.style.display = "none";
+      setConfirmPasswordErrorMessageVisible(false);
       return true;
     }
   }
 
-  function validateAcceptTerms() {
-    const checkbox = document.querySelector('input[type="checkbox"]');
-    const checkboxErrorMessage = document.getElementsByClassName(styles.checkboxerrormessage)[0];
-
+  function validateAcceptTerms(checkbox) {
     if (!checkbox.checked) {
-      checkboxErrorMessage.style.display = "block";
+      setCheckboxErrorMessageVisible(true);
       return false;
     } else {
-      checkboxErrorMessage.style.display = "none";
+      setCheckboxErrorMessageVisible(false);
       return true;
     }
   }
 
-  function hideErrorMessage(event) {
-    const errorMessage = event.target?.parentNode?.getElementsByClassName(styles.errormessage)[0];
-    if (errorMessage) errorMessage.style.display = "none";
-  }
+  function submit(e) {
+    e.preventDefault();
+    const form = e.target;
 
-  function hideCheckboxErrorMessage(event) {
-    const checkboxErrorMessage = document.getElementsByClassName(styles.checkboxerrormessage)[0];
-    checkboxErrorMessage.style.display = "none";
-  }
-
-  function getFormDataAndCallAPI() {
-    const formData = new FormData(document.querySelector('form[name="registrationForm"]'));
-    let userObj = {};
-    formData.forEach((value, key) => (userObj[key] = value));
-
-    axios
-      .post(API_ADDRESS + "/users/register", userObj)
-      .then((response) => {
-        if (response.status === 201) {
-          const okCb = () => {
-            if (props.onCloseRegister) props.onCloseRegister();
-          };
-          toast.success(<ConfirmationDiaglog text="Register successfully. You can log in now." btn1Text="OK" btn1Callback={okCb} />, {
-            autoClose: false,
-            closeOnClick: false,
-            closeButton: false,
-            draggable: false,
-          });
-        } else {
-          toast.error("Something went wrong!");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  function registerNow() {
-    const form = document.querySelector('form[name="registrationForm"]');
-
-    form.onsubmit = (event) => {
-      event.preventDefault();
-    };
-
-    validateUsername();
-    validateEmail();
-    validatePassword();
-    validateConfirmPassword();
-    validateAcceptTerms();
+    validateUsername(form.username);
+    validateEmail(form.email);
+    validatePassword(form.password);
+    validateConfirmPassword(form.password, form.confirm_password);
+    validateAcceptTerms(form.checkbox);
 
     let isDataValid = false;
-    isDataValid = validateUsername() && validateEmail() && validatePassword() && validateConfirmPassword() && validateAcceptTerms();
+    isDataValid =
+      validateUsername(form.username) &&
+      validateEmail(form.email) &&
+      validatePassword(form.password) &&
+      validateConfirmPassword(form.password, form.confirm_password) &&
+      validateAcceptTerms(form.checkbox);
 
-    if (isDataValid) getFormDataAndCallAPI();
-    else toast.error("Error, plase check your form");
+    if (!isDataValid) {
+      toast.error("Input error, please check your form");
+    } else {
+      const formData = new FormData(form);
+      let userObj = {};
+      formData.forEach((value, key) => (userObj[key] = value));
+
+      axios
+        .post(API_ADDRESS + "/users/register", userObj)
+        .then((response) => {
+          if (response.status === 201) {
+            const okCb = () => {
+              if (props.onCloseRegister) props.onCloseRegister();
+            };
+            toast.success(
+              <ConfirmationDiaglog text="Register successfully. You can log in now." btn1Text="OK" btn1Callback={okCb} />,
+              {
+                autoClose: false,
+                closeOnClick: false,
+                closeButton: false,
+                draggable: false,
+              }
+            );
+          } else {
+            toast.error("Something went wrong!");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }
 
   return (
     <div>
       <div className={styles.wrapper}>
         <div className={styles.inner}>
-          <form action="" name="registrationForm" className={styles.form}>
+          <form action="" name="registrationForm" className={styles.form} onSubmit={submit}>
             <h3>Registration Form</h3>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Username
-                <span htmlFor="" className={cx(styles.errormessage, "username")}>
+                <span htmlFor="" className={cx(styles.errormessage, usernameErrorMessageVisible ? styles.show : styles.hide)}>
                   Username cannot be empty!
                 </span>
               </label>
-              <input type="text" className={styles.formcontrol} name="username" onFocus={(event) => hideErrorMessage(event)} />
+              <input type="text" className={styles.formcontrol} name="username" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Password
-                <span htmlFor="" className={cx(styles.errormessage, "password")}>
+                <span htmlFor="" className={cx(styles.errormessage, passwordErrorMessageVisible ? styles.show : styles.hide)}>
                   Password must have lowercase letters, uppercase letters, numbers, special characters, and at least 12 characters!
                 </span>
               </label>
-              <input type="password" className={styles.formcontrol} name="password" onFocus={(event) => hideErrorMessage(event)} />
+              <input type="password" className={styles.formcontrol} name="password" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Confirm Password
-                <span htmlFor="" className={cx(styles.errormessage, "confirm_password")}>
+                <span htmlFor="" className={cx(styles.errormessage, confirmPasswordErrorMessageVisible ? styles.show : styles.hide)}>
                   Password does not match!
                 </span>
               </label>
-              <input
-                type="password"
-                className={styles.formcontrol}
-                name="confirm_password"
-                onFocus={(event) => hideErrorMessage(event)}
-              />
+              <input type="password" className={styles.formcontrol} name="confirm_password" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">
                 Email Address
-                <span htmlFor="" className={cx(styles.errormessage, "email")}>
+                <span htmlFor="" className={cx(styles.errormessage, emailErrorMessageVisible ? styles.show : styles.hide)}>
                   Please enter a valid email!
                 </span>
               </label>
-              <input type="text" className={styles.formcontrol} name="email" onFocus={(event) => hideErrorMessage(event)} />
+              <input type="text" className={styles.formcontrol} name="email" />
             </div>
             <div className={styles.formwrapper}>
               <label htmlFor="">Full Name</label>
@@ -212,15 +191,14 @@ export default function Register(props) {
             </div>
             <div className={styles.checkbox}>
               <label>
-                <input type="checkbox" onFocus={(event) => hideCheckboxErrorMessage(event)} />I accept the Terms of Use & Privacy
-                Policy.
-                <div htmlFor="" className={styles.checkboxerrormessage}>
+                <input type="checkbox" name="checkbox" />I accept the Terms of Use & Privacy Policy.
+                <div htmlFor="" className={cx(styles.errormessage, checkboxErrorMessageVisible ? styles.show : styles.hide)}>
                   You must agree with our terms and policy!
                 </div>
                 <span className={styles.checkmark}></span>
               </label>
             </div>
-            <button onClick={registerNow} className={styles.button}>
+            <button type="submit" className={styles.button}>
               Register Now
             </button>
           </form>
